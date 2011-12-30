@@ -9,11 +9,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
 
-/**
- * まとめてドーンなテーブルデーター用
- * @author aki
- *
- */
+
 public abstract class SimpleCellTable<T> extends VerticalPanel{
 	NaturalPager pager;
 	private CellTable<T> table;

@@ -42,5 +42,22 @@ public LineSplitter(String text,int consumeTime,SplitterListener listener){
 		public void onSuccess(List<String> lines);
 	}
 	
+	public static List<String> splitLines(String text){
+		text=text.replace("\r", "");
+		List<String> result=new ArrayList<String>();
+		int find=0;
+		int cindex=0;
+		while(find!=-1){
+			find=text.indexOf("\n", cindex);
+			if(find!=-1){
+				result.add(text.substring(cindex,find));
+				cindex=find+1;
+			}else{
+				result.add(text.substring(cindex));
+			}
+		}
+		return result;
+	}
+	
 
 }
