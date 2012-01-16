@@ -42,6 +42,10 @@ public LineSplitter(String text,int consumeTime,SplitterListener listener){
 		public void onSuccess(List<String> lines);
 	}
 	
+	public static String[] splitLineAsArray(String text){
+		List<String> values=splitLines(text);
+		return values.toArray(new String[values.size()]);
+	}
 	public static List<String> splitLines(String text){
 		text=text.replace("\r", "");
 		List<String> result=new ArrayList<String>();
