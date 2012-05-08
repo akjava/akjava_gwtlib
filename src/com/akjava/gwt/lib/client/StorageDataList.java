@@ -54,6 +54,15 @@ private StorageControler controler;
 		controler.setValue(key+KEY_HEADER+id, header);
 	}
 	
+	
+	public void updateDataHeader(int id,String header){
+		controler.setValue(key+KEY_HEADER+id, header);
+	}
+	
+	public void updateDataValue(int id,String value){
+		controler.setValue(key+KEY_DATA+id, value);
+	}
+	
 	public HeaderAndValue getDataValue(int id){
 		String header=controler.getValue(key+KEY_HEADER+id, null);
 		if(header!=null){
