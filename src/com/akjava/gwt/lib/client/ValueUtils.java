@@ -1,7 +1,9 @@
 package com.akjava.gwt.lib.client;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.google.gwt.user.client.ui.RootPanel;
@@ -43,6 +45,18 @@ public static String[][] csvToArray(String line,char separator){
 		for (int j = 0; j < csv.length; j++) {
 			ret[i][j]=csv[j];
 		}
+	}
+	return ret;
+}
+
+public static List<String[]> csvToArrayList(String line,char separator){
+	line=ValueUtils.toNLineSeparator(line);
+	String[] lines=line.split("\n");
+	
+	List<String[]> ret=new ArrayList<String[]>();
+	for (int i = 0; i < lines.length; i++) {
+		String csv[]=lines[i].split(""+separator);
+		ret.add(csv);
 	}
 	return ret;
 }

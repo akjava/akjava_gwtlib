@@ -47,11 +47,35 @@ private StorageControler controler;
 		controler.removeValue(key+KEY_DATA+id);
 		controler.removeValue(key+KEY_HEADER+id);
 	}
-	
+	/**
+	 * @deprecated
+	 * @param header
+	 * @param value
+	 */
 	public void setDataValue(String header,String value){
 		int id=getCurrentId();
 		controler.setValue(key+KEY_DATA+id, value);
 		controler.setValue(key+KEY_HEADER+id, header);
+	}
+	
+	public int addData(String header,String value) throws QuotaExceededError{
+	int id=-1;
+	try{
+		id=getCurrentId();
+		controler.setValue(key+KEY_DATA+id, value);
+		controler.setValue(key+KEY_HEADER+id, header);
+		incrementId();
+		return id;
+	}catch(Exception e){
+		if(id!=-1){
+			clearData(id);//maybe success data but faild header
+		}
+		if(e.getMessage().indexOf("QUOTA_EXCEEDED_ERR")!=-1){
+			throw new QuotaExceededError(e.getMessage());
+			}else{
+				throw new RuntimeException(e);
+			}
+		}
 	}
 	
 	
@@ -70,6 +94,25 @@ private StorageControler controler;
 			return new HeaderAndValue(id, header, data);
 		}
 		return null;
+	}
+	
+	public static class QuotaExceededError extends Error{
+		private String message;
+		public String getMessage() {
+			return message;
+		}
+
+		public void setMessage(String message) {
+			this.message = message;
+		}
+
+		public QuotaExceededError(String message) {
+			this.message=message;
+		}
+
+		private static final long serialVersionUID = 1L;
+
+		
 	}
 	
 	public  static class HeaderAndValue{
