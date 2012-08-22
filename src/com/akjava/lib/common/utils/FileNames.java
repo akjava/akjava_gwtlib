@@ -72,8 +72,25 @@ public class FileNames {
 		}
 		return path;
 	}
+	public String getRemovedDomainName(String path){
+		int s=path.indexOf("://");
+		if(s!=-1){
+			int n=path.indexOf("/",s+"://".length());
+			if(n==-1){
+				return "";
+			}else{
+				return path.substring(n);
+			}
+		}
+		return path;
+	}
 	
-	
+	/**
+	 * 
+	 * @param path
+	 * @param isNoExtensionIsDir  recognie  filename which has no extension as folder 
+	 * @return
+	 */
 	public  String getDirectoryPath(String path,boolean isNoExtensionIsDir){
 		String extension=getExtension(path);
 		if(extension.isEmpty() && (path.endsWith(""+fileSeparator) || isNoExtensionIsDir)){

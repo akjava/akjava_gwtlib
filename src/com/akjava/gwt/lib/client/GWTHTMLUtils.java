@@ -1,5 +1,6 @@
 package com.akjava.gwt.lib.client;
 
+import com.google.gwt.dom.client.CanvasElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.ScriptElement;
@@ -52,4 +53,13 @@ public class GWTHTMLUtils {
 			return RootPanel.get();
 		}
 	}
+	
+	/*
+	 * canvas never annoying selected
+	 * via http://stackoverflow.com/questions/3684285/how-to-prevent-text-select-outside-html5-canvas-on-double-click
+	 * canvas element
+	 */
+	public native final static void unselectiveCanvas(Element element)/*-{
+	element.onselectstart = function () { return false; }
+	}-*/;
 }

@@ -1,5 +1,11 @@
 package com.akjava.lib.common.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import com.google.gwt.core.client.GWT;
+
 public class HTMLUtils {
 
 	//SHOULD i use commons lang?
@@ -44,5 +50,21 @@ public class HTMLUtils {
 	   
 	   public static String createHiddenInput(String name,String value){
 		   return "<input type='hidden' name='"+name+"' value='"+value+"'/>";
+	   }
+	   public static List<String> getLinks(String html){
+		  List<String> links=new ArrayList<String>();
+		   List<String> alinks=TagUtil.getTagByName(html, "a");
+		   GWT.log("alink:"+alinks);
+		   for(int i=0;i<alinks.size();i++){
+			  // GWT.log(""+alinks.get(i));
+		   }
+		  for(String link:alinks){
+			  Map<String,String> attr=TagUtil.getAttribute(link);
+			  if(attr.get("href")!=null){
+				  links.add(attr.get("href"));
+			  }
+			  
+		  }
+		   return links;
 	   }
 }
