@@ -4,7 +4,7 @@ package com.akjava.lib.common.utils;
 
 
 public class FileNames {
-	public static final char SLAST='/';
+	public static final char SLASH='/';
 	private char fileSeparator;
 	private FileNames(char fileSeparator){
 		this.fileSeparator=fileSeparator;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.akjava.gwt.lib.client.LogUtils;
 import com.google.gwt.core.client.GWT;
 
 public class HTMLUtils {
@@ -66,5 +67,62 @@ public class HTMLUtils {
 			  
 		  }
 		   return links;
+	   }
+	   
+	   public static boolean isHexColor(String text){
+		   if(!text.startsWith("#")){
+			   return false;
+		   }
+		   
+		   if(text.length()!=4 && text.length()!=7){
+			   return false;
+		   }
+		   
+		   return true;
+	   }
+	   public static String rgbaToHex(String color){
+		   if(isHexColor(color)){
+			   return color;
+		   }
+		   String f=color.substring("rgba(".length());
+		   int l=f.lastIndexOf(",");
+		   if(l==-1){
+			   return color;
+		   }
+		   String t=f.substring(0,l);
+		   String[] rgb=t.split(",");
+		   int r=Integer.parseInt(rgb[0], 10);
+		   int g=Integer.parseInt(rgb[1], 10);
+		   int b=Integer.parseInt(rgb[2], 10);
+		   
+		   //LogUtils.log(r+","+g+","+b);
+		   String rColor=Integer.toHexString(r);
+		   if(rColor.length()<2){
+			   rColor="0"+r;
+		   }
+		   String gColor=Integer.toHexString(g);
+		   if(gColor.length()<2){
+			   gColor="0"+g;
+		   }
+		   String bColor=Integer.toHexString(b);
+		   if(bColor.length()<2){
+			   bColor="0"+b;
+		   }
+		   return "#"+rColor+gColor+bColor;
+	   }
+	   public static String hexColorToRGBA(String color,double start){
+		   if(!isHexColor(color)){
+			   return color;
+		   }
+		   String colorText=color.substring(1);
+		   String rColor=colorText.length()==3?colorText.substring(0,1)+colorText.substring(0,1):colorText.substring(0,2);
+		   String gColor=colorText.length()==3?colorText.substring(1,2)+colorText.substring(1,2):colorText.substring(2,4);
+		   String bColor=colorText.length()==3?colorText.substring(2,3)+colorText.substring(2,3):colorText.substring(4,6);
+		   
+		   int r=Integer.parseInt(rColor, 16);
+		   int g=Integer.parseInt(gColor, 16);
+		   int b=Integer.parseInt(bColor, 16);
+		   
+		   return "rgba("+r+","+g+","+b+","+start+")";
 	   }
 }
