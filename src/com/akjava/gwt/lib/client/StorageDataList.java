@@ -8,8 +8,8 @@ private String key;
 public static final String KEY_INDEX="_IND_";
 public static final String KEY_DATA="_DAT_";
 public static final String KEY_HEADER="_HED_";
-private StorageControler controler;
-	public StorageDataList(StorageControler controler,String key){
+private IStorageControler controler;
+	public StorageDataList(IStorageControler controler,String key){
 		this.controler=controler;
 		this.key=key;
 	}
