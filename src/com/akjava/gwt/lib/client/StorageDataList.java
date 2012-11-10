@@ -15,37 +15,70 @@ private IStorageControler controler;
 	}
 	
 	public int incrementId(){
+		try{
 		int index=controler.getValue(key+KEY_INDEX, 0);
 		int ret=index;
 		index++;
 		controler.setValue(key+KEY_INDEX, index);
 		return ret;
+		}catch(StorageException e){
+			onError(e);
+		}
+		return -1;
+	}
+
+	private void onError(StorageException e){
+		if(exceptionListener!=null){
+			exceptionListener.onError(e);
+		}else{
+			LogUtils.log("Storage-Error:"+e.getMessage());
+		}
 	}
 	
 	public int getCurrentId(){
-		return controler.getValue(key+KEY_INDEX, 0);
+		try{
+			return controler.getValue(key+KEY_INDEX, 0);
+		}catch(StorageException e){
+			onError(e);
+		}
+		return -1;
 	}
 	//becareful
 	public void setCurrentId(int index){
-		controler.setValue(key+KEY_INDEX, index);
+try{
+	controler.setValue(key+KEY_INDEX, index);
+		}catch(StorageException e){
+			onError(e);
+		}
+		
 	}
 	
 	public List<HeaderAndValue> getDataList(){
-		List<HeaderAndValue> values=new ArrayList<HeaderAndValue>();
-		int id=getCurrentId();
-		for(int i=0;i<id;i++){
-			String header=controler.getValue(key+KEY_HEADER+i, null);
-			if(header!=null){
-				String data=controler.getValue(key+KEY_DATA+i, null);
-				values.add(new HeaderAndValue(i, header, data));
-			}
+try{
+	List<HeaderAndValue> values=new ArrayList<HeaderAndValue>();
+	int id=getCurrentId();
+	for(int i=0;i<id;i++){
+		String header=controler.getValue(key+KEY_HEADER+i, null);
+		if(header!=null){
+			String data=controler.getValue(key+KEY_DATA+i, null);
+			values.add(new HeaderAndValue(i, header, data));
 		}
-		return values;
+	}
+	return values;
+		}catch(StorageException e){
+			onError(e);
+		}
+		return null;
 	}
 	
 	public void clearData(int id){
-		controler.removeValue(key+KEY_DATA+id);
-		controler.removeValue(key+KEY_HEADER+id);
+try{
+	controler.removeValue(key+KEY_DATA+id);
+	controler.removeValue(key+KEY_HEADER+id);
+		}catch(StorageException e){
+			onError(e);
+		}
+		
 	}
 	/**
 	 * @deprecated
@@ -53,12 +86,19 @@ private IStorageControler controler;
 	 * @param value
 	 */
 	public void setDataValue(String header,String value){
-		int id=getCurrentId();
-		controler.setValue(key+KEY_DATA+id, value);
-		controler.setValue(key+KEY_HEADER+id, header);
+try{
+	int id=getCurrentId();
+	controler.setValue(key+KEY_DATA+id, value);
+	controler.setValue(key+KEY_HEADER+id, header);
+	
+		}catch(StorageException e){
+			onError(e);
+		}
+		
+		
 	}
 	
-	public int addData(String header,String value) throws QuotaExceededError{
+	public int addData(String header,String value){
 	int id=-1;
 	try{
 		id=getCurrentId();
@@ -66,40 +106,59 @@ private IStorageControler controler;
 		controler.setValue(key+KEY_HEADER+id, header);
 		incrementId();
 		return id;
-	}catch(Exception e){
-		if(id!=-1){
-			clearData(id);//maybe success data but faild header
-		}
-		if(e.getMessage().indexOf("QUOTA_EXCEEDED_ERR")!=-1){
-			throw new QuotaExceededError(e.getMessage());
-			}else{
-				throw new RuntimeException(e);
-			}
-		}
+	}catch(StorageException e){
+		onError(e);
+	}
+	return -1;
 	}
 	
 	
 	public void updateDataHeader(int id,String header){
-		controler.setValue(key+KEY_HEADER+id, header);
+try{
+	controler.setValue(key+KEY_HEADER+id, header);
+		}catch(StorageException e){
+			onError(e);
+		}
+		
 	}
 	
 	public void updateDataValue(int id,String value){
-		controler.setValue(key+KEY_DATA+id, value);
+try{
+	controler.setValue(key+KEY_DATA+id, value);
+		}catch(StorageException e){
+			onError(e);
+		}
+		
 	}
 	public void updateData(int id,String header,String value){
-		controler.setValue(key+KEY_HEADER+id, header);
-		controler.setValue(key+KEY_DATA+id, value);
+try{
+	controler.setValue(key+KEY_HEADER+id, header);
+	controler.setValue(key+KEY_DATA+id, value);
+		}catch(StorageException e){
+			onError(e);
+		}
+		
 	}
 	
 	public HeaderAndValue getDataValue(int id){
-		String header=controler.getValue(key+KEY_HEADER+id, null);
-		if(header!=null){
-			String data=controler.getValue(key+KEY_DATA+id, null);
-			return new HeaderAndValue(id, header, data);
+try{
+	String header=controler.getValue(key+KEY_HEADER+id, null);
+	if(header!=null){
+		String data=controler.getValue(key+KEY_DATA+id, null);
+		return new HeaderAndValue(id, header, data);
+	}
+	return null;
+		}catch(StorageException e){
+			onError(e);
 		}
-		return null;
+	return null;
 	}
 	
+	/**
+	 * @deprecated
+	 * @author aki
+	 *
+	 */
 	public static class QuotaExceededError extends Error{
 		private String message;
 		public String getMessage() {
@@ -117,6 +176,18 @@ private IStorageControler controler;
 		private static final long serialVersionUID = 1L;
 
 		
+	}
+	private StorageExceptionListener exceptionListener;
+	public StorageExceptionListener getExceptionListener() {
+		return exceptionListener;
+	}
+
+	public void setExceptionListener(StorageExceptionListener exceptionListener) {
+		this.exceptionListener = exceptionListener;
+	}
+
+	public interface StorageExceptionListener{
+		public void onError(StorageException exception);
 	}
 	
 

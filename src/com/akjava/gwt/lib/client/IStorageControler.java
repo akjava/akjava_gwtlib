@@ -4,14 +4,14 @@ public interface IStorageControler {
 
 	public abstract boolean isAvailable();
 
-	public abstract void setValue(String key, String value);
+	public abstract void setValue(String key, String value) throws StorageException;
 
-	public abstract void setValue(String key, int value);
+	public abstract void setValue(String key, int value)  throws StorageException;
 
-	public abstract void removeValue(String key);
+	public abstract void removeValue(String key)  throws StorageException;
 
-	public abstract int getValue(String key, int defaultValue);
+	public abstract int getValue(String key, int defaultValue)  throws StorageException;
 
-	public abstract String getValue(String key, String defaultValue);
+	public abstract String getValue(String key, String defaultValue)  throws StorageException;
 
 }
