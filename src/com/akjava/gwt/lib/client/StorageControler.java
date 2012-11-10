@@ -1,10 +1,15 @@
 package com.akjava.gwt.lib.client;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.google.gwt.storage.client.Storage;
 
 public class StorageControler implements IStorageControler {
 	private Storage storage;
-	private StorageControler(){
+	
+	
+	public StorageControler(){
 		storage = Storage.getLocalStorageIfSupported();
 		
 	}
@@ -92,5 +97,21 @@ public class StorageControler implements IStorageControler {
 				return v;
 			}
 		}
+	}
+	
+	public int getLength(){
+		return storage.getLength();
+	}
+	public String key(int index){
+		return storage.key(index);
+	}
+	public Map<String,String> toHashMap(){
+		Map<String,String> hashMap=new HashMap<String, String>();
+		for(int i=0;i<getLength();i++){
+			String key=key(i);
+			String value=getValue(key, "");
+			hashMap.put(key, value);
+		}
+		return hashMap;
 	}
 }

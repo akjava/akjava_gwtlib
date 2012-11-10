@@ -2,6 +2,10 @@ package com.akjava.gwt.lib.client;
 
 public class StorageException extends Exception{
 
+	public StorageException(String string) {
+		super(string);
+	}
+
 	/**
 	 * 
 	 */
