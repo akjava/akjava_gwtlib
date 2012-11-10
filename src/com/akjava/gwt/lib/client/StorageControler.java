@@ -4,7 +4,7 @@ import com.google.gwt.storage.client.Storage;
 
 public class StorageControler implements IStorageControler {
 	private Storage storage;
-	public StorageControler(){
+	private StorageControler(){
 		storage = Storage.getLocalStorageIfSupported();
 		
 	}

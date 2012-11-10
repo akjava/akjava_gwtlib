@@ -26,6 +26,10 @@ public double length(double x,double y){
 	return dx+dy;
 }
 
+public PointD createOffsetedPoint(double offx,double offy){
+	return new PointD(x+offx,y+offy);
+}
+
 public double y ;
 	public PointD(double x,double y){
 		this.x=x;
