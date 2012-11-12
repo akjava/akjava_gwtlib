@@ -25,14 +25,18 @@ public class StorageControler implements IStorageControler {
 	 * @see com.akjava.gwt.lib.client.IStorageControler#setValue(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void  setValue(String key,String value){
+	public void  setValue(String key,String value) throws StorageException{
 		if(storage==null){
-			return;
+			throw new StorageException("Storage not found");
 		}else{
-			if(value==null){
+			try{
+			if(value==null){//for null set
 			storage.removeItem(key);	
 			}else{
 			storage.setItem(key, value);
+			}
+			}catch (Exception e) {
+				throw new StorageException(e.getMessage());
 			}
 		}
 	}
@@ -41,11 +45,15 @@ public class StorageControler implements IStorageControler {
 	 * @see com.akjava.gwt.lib.client.IStorageControler#setValue(java.lang.String, int)
 	 */
 	@Override
-	public void  setValue(String key,int value){
+	public void  setValue(String key,int value) throws StorageException{
 		if(storage==null){
-			return;
+			throw new StorageException("Storage not found");
 		}else{
+			try{
 			storage.setItem(key, ""+value);
+			}catch(Exception e){
+				throw new StorageException(e.getMessage());
+			}
 		}
 	}
 	/* (non-Javadoc)
