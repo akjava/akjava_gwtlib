@@ -30,6 +30,11 @@ public PointD createOffsetedPoint(double offx,double offy){
 	return new PointD(x+offx,y+offy);
 }
 
+public double distance(PointD pt){
+	double v=Math.sqrt((pt.x-x)*(pt.x-x)+(pt.y-y)*(pt.y-y));
+	return v;
+}
+
 public double y ;
 	public PointD(double x,double y){
 		this.x=x;
