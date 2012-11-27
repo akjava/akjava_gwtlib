@@ -146,6 +146,16 @@ public class URLUtils {
 	}
 	
 	
+	public static String getFirstTokenValue(String key,String defaultValue){
+		Map<String,List<String>> token=parseToken(History.getToken(), true);
+		String value=getFirstValue(token,key);
+		if(value!=null){
+		return value;
+		}else{
+			return defaultValue;
+		}
+	}
+	
 	public static Map<String,List<String>> parseToken(String token,boolean ignoreEmpty){
 		Map<String,List<String>> params=new HashMap<String,List<String>>();
 		String values[]=token.split("&");
