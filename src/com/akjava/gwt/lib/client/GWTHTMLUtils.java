@@ -59,7 +59,13 @@ public class GWTHTMLUtils {
 	 * via http://stackoverflow.com/questions/3684285/how-to-prevent-text-select-outside-html5-canvas-on-double-click
 	 * canvas element
 	 */
-	public native final static void unselectiveCanvas(Element element)/*-{
+	public native final static void disableSelectionStart(Element element)/*-{
 	element.onselectstart = function () { return false; }
+
+	}-*/;
+	public native final static void disableOnDragAndDrop(Element element)/*-{
+		element.ondrag = function (){return false;};
+	element.ondragstart = function (){return false;};
+	element.ondragend = function (){return false;};
 	}-*/;
 }
