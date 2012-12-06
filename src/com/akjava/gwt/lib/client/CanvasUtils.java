@@ -31,4 +31,27 @@ public static String createColorImageDataUrl(int r,int g,int b,double opacity,in
 	String image1=canvas.toDataUrl();
 	return image1;
 }
+
+public static String createCircleImageDataUrl(int r,int g,int b,double opacity,double radius,double lineWidth,boolean stroke){
+	double center=radius+lineWidth;
+	Canvas canvas=CanvasUtils.createCanvas((int)center*2,(int)center*2);
+	if(stroke){
+	canvas.getContext2d().setStrokeStyle("rgba("+r+","+g+","+b+","+opacity+")");
+	canvas.getContext2d().setLineWidth(lineWidth);
+	}else{
+	canvas.getContext2d().setFillStyle("rgba("+r+","+g+","+b+","+opacity+")");	
+	}
+	canvas.getContext2d().beginPath();
+	
+	canvas.getContext2d().arc(center, center, radius, 0, 360);
+	canvas.getContext2d().closePath();
+	if(stroke){
+		canvas.getContext2d().stroke();
+	}else{
+		canvas.getContext2d().fill();
+	}
+	String image1=canvas.toDataUrl();
+	return image1;
+}
+
 }
