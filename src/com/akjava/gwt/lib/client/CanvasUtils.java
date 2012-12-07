@@ -24,7 +24,7 @@ public static ImageElement toImageElement(Canvas canvas){
 	return imageElement;
 }
 
-public static String createColorImageDataUrl(int r,int g,int b,double opacity,int w,int h){
+public static String createColorRectImageDataUrl(int r,int g,int b,double opacity,int w,int h){
 	Canvas canvas=CanvasUtils.createCanvas(w, h);
 	canvas.getContext2d().setFillStyle("rgba("+r+","+g+","+b+","+opacity+")");
 	canvas.getContext2d().fillRect(0, 0, w, h);
