@@ -1,6 +1,7 @@
 package com.akjava.gwt.lib.client;
 
 import com.google.gwt.canvas.client.Canvas;
+import com.google.gwt.dom.client.CanvasElement;
 import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.user.client.ui.Image;
 
@@ -52,6 +53,11 @@ public static String createCircleImageDataUrl(int r,int g,int b,double opacity,d
 	}
 	String image1=canvas.toDataUrl();
 	return image1;
+}
+public static void drawImageByCordinate(Canvas target,CanvasElement canvas, int sx1, int sy1,
+		int sx2, int sy2,int dx1, int dy1, int dx2, int dy2){
+
+	target.getContext2d().drawImage(canvas, sx1, sy1, sx2-sx1, sy2-sy1, dx1, dy1, dx2-dx1, dy2-dy1);
 }
 
 }
