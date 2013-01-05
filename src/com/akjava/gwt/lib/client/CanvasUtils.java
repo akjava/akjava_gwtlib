@@ -16,6 +16,9 @@ public static Canvas createCanvas(int w,int h){
 	}
 	return canvas;
 }
+public static void disableSelection(Canvas canvas){
+	GWTHTMLUtils.disableSelectionStart(canvas.getCanvasElement());
+}
 /*
  * if you need use ImageElementLoader
  */
@@ -31,6 +34,28 @@ public static String createColorRectImageDataUrl(int r,int g,int b,double opacit
 	canvas.getContext2d().fillRect(0, 0, w, h);
 	String image1=canvas.toDataUrl();
 	return image1;
+}
+
+public static Canvas createCircleImageCanvas(int r,int g,int b,double opacity,double radius,double lineWidth,boolean stroke){
+	double center=radius+lineWidth;
+	Canvas canvas=CanvasUtils.createCanvas((int)center*2,(int)center*2);
+	if(stroke){
+	canvas.getContext2d().setStrokeStyle("rgba("+r+","+g+","+b+","+opacity+")");
+	canvas.getContext2d().setLineWidth(lineWidth);
+	}else{
+	canvas.getContext2d().setFillStyle("rgba("+r+","+g+","+b+","+opacity+")");	
+	}
+	canvas.getContext2d().beginPath();
+	
+	canvas.getContext2d().arc(center, center, radius, 0, 360);
+	canvas.getContext2d().closePath();
+	if(stroke){
+		canvas.getContext2d().stroke();
+	}else{
+		canvas.getContext2d().fill();
+	}
+	
+	return canvas;
 }
 
 public static String createCircleImageDataUrl(int r,int g,int b,double opacity,double radius,double lineWidth,boolean stroke){
