@@ -1,5 +1,6 @@
 package com.akjava.gwt.lib.client;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -48,6 +49,8 @@ public static String[][] csvToArray(String line,char separator){
 	}
 	return ret;
 }
+
+
 
 public static List<String[]> csvToArrayList(String line,char separator){
 	line=ValueUtils.toNLineSeparator(line);
