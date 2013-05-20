@@ -55,4 +55,31 @@ public class ValuesUtils {
 		}
 		return ret;
 	}
+	/*
+	 * for the case without Guava
+	 */
+	public static String toUpperCamel(String text){
+		if(text==null || text.length()==0){
+			return text;
+		}
+		if(Character.isLowerCase(text.charAt(0))){
+			return Character.toUpperCase(text.charAt(0))+text.substring(1);
+		}else{
+			return text;
+		}
+	}
+	
+	/*
+	 * for the case without Guava
+	 */
+	public static String toLowerCamel(String text){
+		if(text==null || text.length()==0){
+			return text;
+		}
+		if(Character.isUpperCase(text.charAt(0))){
+			return Character.toLowerCase(text.charAt(0))+text.substring(1);
+		}else{
+			return text;
+		}
+	}
 }
