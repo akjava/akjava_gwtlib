@@ -1,5 +1,6 @@
 package com.akjava.lib.common.utils;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class TemplateUtils {
@@ -15,5 +16,11 @@ public class TemplateUtils {
 			result=result.replace("${"+key+"}", map.get(key));
 		}
 		return result;
+	}
+	
+	public static String createText(String template,String value){
+		Map<String,String> map=new HashMap<String, String>();
+		map.put("value", value);
+		return createText(template,map);
 	}
 }
