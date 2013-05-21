@@ -69,6 +69,23 @@ public class ValuesUtils {
 		}
 	}
 	
+	public static String toUnderBarToUpperCamel(String text){
+		if(text==null || text.length()==0){
+			return text;
+		}
+		String vs[]=text.split("_");
+		if(vs.length==1){
+			return text;
+		}else{
+			String result=vs[0];
+			for(int i=1;i<vs.length;i++){
+				result+=toUpperCamel(vs[i]);
+			}
+			return result;
+		}
+		
+	}
+	
 	/*
 	 * for the case without Guava
 	 */
