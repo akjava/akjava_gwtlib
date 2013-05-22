@@ -52,6 +52,27 @@ public class HTMLUtils {
 	   public static String createHiddenInput(String name,String value){
 		   return "<input type='hidden' name='"+name+"' value='"+value+"'/>";
 	   }
+	   
+	   public static String createSelectInput(String name,Map<String,String> valueAndLabel,List<String> selection,boolean multiple){
+		   String ret="<select name=\""+name+"\"";
+		   if(multiple){
+			   ret+=" multiple=\"multiple\"";
+		   }
+		   ret+=">\n";
+		   
+		   for(String value:valueAndLabel.keySet()){
+			   String option="<option";
+			   if(selection!=null && selection.contains(value)){
+				   option+=" selected=\"selected\">";
+			   }else{
+				   option+=">";
+			   }
+			   option+=valueAndLabel.get(value);
+			   ret+=option+"\n";
+		   }
+		   ret+="</select>";
+		   return ret;
+	   }
 	   public static List<String> getLinks(String html){
 		  List<String> links=new ArrayList<String>();
 		   List<String> alinks=TagUtil.getTagByName(html, "a");
