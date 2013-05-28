@@ -53,6 +53,22 @@ public class HTMLUtils {
 		   return "<input type='hidden' name='"+name+"' value='"+value+"'/>";
 	   }
 	   
+	   public static String createSelectOptions(Map<String,String> valueAndLabel,List<String> selection){
+		  String ret="";
+		   for(String value:valueAndLabel.keySet()){
+			   String option="<option";
+			   if(selection!=null && selection.contains(value)){
+				   option+=" selected=\"selected\">";
+			   }else{
+				   option+=">";
+			   }
+			   option+=valueAndLabel.get(value);
+			   ret+=option+"\n";
+		   }
+		  
+		   return ret;
+	   }
+	   
 	   public static String createSelectInput(String name,Map<String,String> valueAndLabel,List<String> selection,boolean multiple){
 		   String ret="<select name=\""+name+"\"";
 		   if(multiple){
