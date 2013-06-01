@@ -46,6 +46,8 @@ public class GWTHTMLUtils {
 		doc.getBody().appendChild(script);
 	}
 
+
+	
 	public static RootPanel getPanelIfExist(String name) {
 		if(RootPanel.get(name)!=null){
 			return RootPanel.get(name);

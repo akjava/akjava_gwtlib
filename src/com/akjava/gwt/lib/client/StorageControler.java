@@ -13,6 +13,15 @@ public class StorageControler implements IStorageControler {
 		storage = Storage.getLocalStorageIfSupported();
 		
 	}
+	
+	public StorageControler(boolean isLocalStorage){
+		if(isLocalStorage){
+		storage = Storage.getLocalStorageIfSupported();
+		}else{
+		storage=Storage.getSessionStorageIfSupported();
+		}
+		
+	}
 	/* (non-Javadoc)
 	 * @see com.akjava.gwt.lib.client.IStorageControler#isAvailable()
 	 */
