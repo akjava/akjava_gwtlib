@@ -99,4 +99,19 @@ public class ValuesUtils {
 			return text;
 		}
 	}
+	
+	public static String removeSuffix(String name,String suffix){
+		if(name==null || suffix==null || !name.endsWith(suffix)){
+			return name;
+		}else{
+			return name.substring(0,name.length()-suffix.length());
+		}
+	}
+	public static String removePrefix(String name,String prefix){
+		if(name==null || prefix==null || !name.startsWith(prefix)){
+			return name;
+		}else{
+			return name.substring(prefix.length());
+		}
+	}
 }
