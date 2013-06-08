@@ -131,4 +131,12 @@ public class ValuesUtils {
 			return name.substring(prefix.length());
 		}
 	}
+
+	//I'm familiar with perl's chomp
+	public static String chomp(String options) {
+		if(options==null || options.isEmpty()){
+			return options;
+		}
+		return options.substring(0,options.length()-1);
+	}
 }
