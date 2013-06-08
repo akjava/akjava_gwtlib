@@ -24,8 +24,17 @@
         	</classpath>
         </javac>
     	<copydir dest="tmp" src="src"></copydir>
+    	<delete file="built/akjavalibgwt.jar"></delete>
     	<jar destfile="built/akjavalibgwt.jar" basedir="tmp"/>
     	<delete dir="tmp"></delete>
+    	
+    	<delete file="built/akjavalibgwt-dep.jar"></delete>
+    	    	
+    	    	
+    	    	<jar destfile="built/akjavalibgwt-dep.jar">
+    	    	<zipgroupfileset dir="built" includes="akjavalibgwt.jar"/>
+    	    	  <zipgroupfileset dir="lib" includes="*.jar" /> 
+    	    	</jar>
     </target>
 
     <!-- - - - - - - - - - - - - - - - - - 
@@ -33,13 +42,9 @@
          - - - - - - - - - - - - - - - - - -->
     <target name="depends">
     	<delete dir="tmp"></delete>
-    	<mkdir dir="tmp"/>
-    	<mkdir dir="built"/>
+    	    	    	<mkdir dir="tmp"/>
+    	    	    	<mkdir dir="built"/>
     	
-    	<jar destfile="built/akjavalibgwt-dep.jar">
-    	<zipgroupfileset dir="built" includes="akjavalibgwt.jar"/>
-    	  <zipgroupfileset dir="lib" includes="*.jar" /> 
-    	</jar>
     </target>
 
 </project>
