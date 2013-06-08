@@ -1,5 +1,10 @@
 package com.akjava.lib.common.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.akjava.gwt.lib.client.ValueUtils;
+
 
 public class ValuesUtils {
 
@@ -86,6 +91,18 @@ public class ValuesUtils {
 		
 	}
 	
+	public static String[] toArrayLines(String text){
+		text=ValueUtils.toNLineSeparator(text);
+		return text.split("\n");//this is slow
+	}
+	public static List<String> toListLines(String text){
+		text=ValueUtils.toNLineSeparator(text);
+		List<String> values=new ArrayList<String>();
+		for(String v:text.split("\n")){
+			values.add(v);
+		}
+		return values;
+	}
 	/*
 	 * for the case without Guava
 	 */

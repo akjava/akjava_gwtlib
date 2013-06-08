@@ -2,11 +2,14 @@ package com.akjava.gwt.lib.client;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.ObjectArrays;
 import com.google.gwt.user.client.ui.RootPanel;
 
 public class ValueUtils {
@@ -24,7 +27,7 @@ public static boolean getBoolean(String bool,boolean defaultValue){
 	}
 	return ret;
 }
-
+//TODO move to common
 public static String toNLineSeparator(String text){
 	String ret=text.replace("\r\n", "\n");
 	ret= ret.replace("\r", "\n");
@@ -149,4 +152,16 @@ for(String line:lines){
 public static native String reverse(String value) /*-{
 return value.split('').reverse().join('');
 }-*/;  
+
+
+/**
+ * for gwt convert
+ * @param vs
+ * @return
+ */
+public static String[] iterableToArray(Iterable<String> vs){
+	Collection<String> collection =  Lists.newArrayList(vs);
+    String[] array = ObjectArrays.newArray(new String[0],collection.size());
+    return collection.toArray(array);
+}
 }
