@@ -1,10 +1,14 @@
 package com.akjava.lib.common.form;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.akjava.lib.common.functions.LabelAndValueDto;
 import com.akjava.lib.common.functions.SplitLineFunction;
 import com.google.common.base.Function;
+import com.google.common.base.Objects;
 
 
 public class FormDataDto {
@@ -13,6 +17,27 @@ public class FormDataDto {
 	
 	public static FormData csvToFormData(String singleLine){
 		return new CsvToFormDataFunction().apply(singleLine);
+	}
+	public static Map<String,String> formDataToMap(FormData data){
+		Map<String,String> hashMap=new LinkedHashMap<String, String>();
+		hashMap.put("name", data.getName());
+		hashMap.put("key", data.getKey());
+		hashMap.put("type", FormData.getTypeLabel(data.getType()));
+		hashMap.put("optionValues", LabelAndValueDto.labelAndValueToString(data.getOptionValues()));
+		hashMap.put("defaultValue", data.getDefaultValue());
+		hashMap.put("createAuto", ""+data.isCreateAuto());
+		//TODO add validators
+		hashMap.put("placeHolder", data.getPlaceHolder());
+		hashMap.put("comment", data.getComment());
+		/**
+		 * 	return Objects.toStringHelper(this).add("name", name).add("key",key).add("type", getTypeLabel(type)+"["+type+"]")
+			.add("optionValues",LabelAndValueDto.labelAndValueToString(optionValues))
+			.add("defaultValue", defaultValue).add("createAuto",""+createAuto)
+			//TODO add validators
+			.add("placeHolder", placeHolder).add("comment", comment)
+			.toString();
+		 */
+		return hashMap;
 	}
 	
 	public static class CsvToFormDataFunction implements Function<String, FormData>{
