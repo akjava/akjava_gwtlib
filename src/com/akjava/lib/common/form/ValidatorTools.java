@@ -28,6 +28,8 @@ public  static LinkedHashMap<String,Validator> validatorMap=null;
 		
 		validatorMap.put("less500", Validators.maxStringSize(500));
 		validatorMap.put("less1m", Validators.maxStringByteSize(1024*1024));
+		
+
 	}
 
 	/**
