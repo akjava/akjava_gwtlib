@@ -7,7 +7,7 @@ import com.akjava.lib.common.functions.LabelAndValueDto;
 import com.akjava.lib.common.tag.LabelAndValue;
 import com.google.common.base.Objects;
 
-public class FormData {
+public class FormFieldData {
 private String name;
 private String key;
 private int type;

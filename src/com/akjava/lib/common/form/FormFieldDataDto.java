@@ -11,18 +11,18 @@ import com.google.common.base.Function;
 import com.google.common.base.Objects;
 
 
-public class FormDataDto {
+public class FormFieldDataDto {
 	
 	//TODO convert list
 	
-	public static FormData csvToFormData(String singleLine){
+	public static FormFieldData csvToFormData(String singleLine){
 		return new CsvToFormDataFunction().apply(singleLine);
 	}
-	public static Map<String,String> formDataToMap(FormData data){
+	public static Map<String,String> formDataToMap(FormFieldData data){
 		Map<String,String> hashMap=new LinkedHashMap<String, String>();
 		hashMap.put("name", data.getName());
 		hashMap.put("key", data.getKey());
-		hashMap.put("type", FormData.getTypeLabel(data.getType()));
+		hashMap.put("type", FormFieldData.getTypeLabel(data.getType()));
 		hashMap.put("optionValues", LabelAndValueDto.labelAndValueToString(data.getOptionValues()));
 		hashMap.put("defaultValue", data.getDefaultValue());
 		hashMap.put("createAuto", ""+data.isCreateAuto());
@@ -40,7 +40,7 @@ public class FormDataDto {
 		return hashMap;
 	}
 	
-	public static class CsvToFormDataFunction implements Function<String, FormData>{
+	public static class CsvToFormDataFunction implements Function<String, FormFieldData>{
 		private boolean optionWithNumber=true;
 		public boolean isOptionWithNumber() {
 			return optionWithNumber;
@@ -49,8 +49,8 @@ public class FormDataDto {
 			this.optionWithNumber = optionWithNumber;
 		}
 		@Override
-		public FormData apply(String value) {
-			FormData data=new FormData();
+		public FormFieldData apply(String value) {
+			FormFieldData data=new FormFieldData();
 			List<String> csvs=new SplitLineFunction(true, true).apply(value);
 			
 			if(csvs.size()>0){
