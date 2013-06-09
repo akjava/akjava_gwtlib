@@ -1,4 +1,4 @@
-package com.akjava.gwt.common.functions;
+package com.akjava.lib.common.functions;
 
 import java.util.HashMap;
 import java.util.List;

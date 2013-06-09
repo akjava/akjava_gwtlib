@@ -34,6 +34,27 @@ public void setValue(String value) {
 	this.value = value;
 }
 
+public String getPrintValue(){
+	if(label==null){
+		return value;
+	}else{
+		return label;
+	}
+}
+
+public String toString(){
+	String out="";
+	if(label!=null){
+		out=label+":"+value;
+	}else{
+		out=value;
+	}
+	if(selected){
+		out+=":"+true;
+	}
+	return out;
+}
+
 public String toOption(){
 	String option="<option ";
 	String outValue=value;
