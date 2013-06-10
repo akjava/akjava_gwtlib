@@ -280,4 +280,32 @@ public class ValidatorTest extends TestCase{
 		assertEquals(true,validator.validate(value));
 	}
 	
+	
+	public void testAsciiChar1() throws ValidatorNotFoundException{
+		String value="abc";
+		Validator validator=ValidatorTools.getValidator("asciiChar");
+		
+		assertEquals(true,validator.validate(value));
+	}
+	
+	public void testAsciiChar2() throws ValidatorNotFoundException{
+		String value="12a";
+		Validator validator=ValidatorTools.getValidator("asciiChar");
+		
+		assertEquals(false,validator.validate(value));
+	}
+	
+	public void testStartAsciiChar1() throws ValidatorNotFoundException{
+		String value="abc12";
+		Validator validator=ValidatorTools.getValidator("startasciiChar");
+		
+		assertEquals(true,validator.validate(value));
+	}
+	
+	public void testStartAsciiChar2() throws ValidatorNotFoundException{
+		String value="12a";
+		Validator validator=ValidatorTools.getValidator("startasciiChar");
+		
+		assertEquals(false,validator.validate(value));
+	}
 }

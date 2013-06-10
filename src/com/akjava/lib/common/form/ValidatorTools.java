@@ -15,6 +15,8 @@ public  static BiMap<String,Validator> validatorMap=null;
 		validatorMap.put(StaticValidators.VALIDATOR_HANKAKU_KANA.toLowerCase(), StaticValidators.hankakuKana());
 		validatorMap.put(StaticValidators.VALIDATOR_HIRAGANA.toLowerCase(), StaticValidators.hiragana());
 		
+		validatorMap.put(StaticValidators.VALIDATOR_ASCII_CHAR.toLowerCase(), StaticValidators.asciiCharOnly());
+		validatorMap.put(StaticValidators.VALIDATOR_START_ASCII_CHAR.toLowerCase(), StaticValidators.startAsciiChar());
 		
 		
 		//TODO should support name contain args like msize(12),bet(6:12)

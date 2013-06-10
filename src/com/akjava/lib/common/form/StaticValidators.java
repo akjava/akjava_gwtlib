@@ -9,6 +9,9 @@ public static final String VALIDATOR_NOT_EMPTY="NotEmpty";
 public static final String VALIDATOR_ASCII_NUMBER="AsciiNumber";
 public static final String VALIDATOR_ASCII_NUMBER_AND_CHAR="AsciiNumberAndChar";
 
+public static final String VALIDATOR_ASCII_CHAR="AsciiChar";
+public static final String VALIDATOR_START_ASCII_CHAR="StartAsciiChar";
+
 public static final String VALIDATOR_DATE_TYPE="DateType";
 
 public static final String VALIDATOR_HANKAKU_KANA="HankakuKana";
@@ -52,6 +55,50 @@ public static NotEmptyValidator notEmptyValidator(){
 				return true;
 			}
 		  }
+	  
+	  
+	  public static StartAsciiChar startAsciiChar(){
+		  return StartAsciiChar.INSTANCE;
+	  }
+	  
+	  public enum StartAsciiChar implements Validator {
+		    INSTANCE;
+			@Override
+			public String getName() {
+				return VALIDATOR_START_ASCII_CHAR;
+			}
+			@Override
+			public boolean validate(String value) {
+				if(!Character.isLetter(value.charAt(0)) || value.charAt(0)>128){
+					return false;
+				}
+				return true;
+			}
+		  }
+	  
+	  
+	  
+	  public static AsciiCharOnly asciiCharOnly(){
+		  return AsciiCharOnly.INSTANCE;
+	  }
+	  
+	  public enum AsciiCharOnly implements Validator {
+		    INSTANCE;
+			@Override
+			public String getName() {
+				return VALIDATOR_ASCII_CHAR;
+			}
+			@Override
+			public boolean validate(String value) {
+				for(int i=0;i<value.length();i++){
+					if(!Character.isLetter(value.charAt(i)) || value.charAt(i)>128){
+						return false;
+					}
+				}
+				return true;
+			}
+		  }
+	  
 	  public static AsciiNumberAndCharOnly asciiNumberAndCharOnly(){
 		  return AsciiNumberAndCharOnly.INSTANCE;
 	  }
