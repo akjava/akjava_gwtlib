@@ -4,171 +4,172 @@ import junit.framework.TestCase;
 
 import com.akjava.lib.common.form.Validator;
 import com.akjava.lib.common.form.ValidatorTools;
+import com.akjava.lib.common.form.ValidatorTools.ValidatorNotFoundException;
 
 public class ValidatorTest extends TestCase{
 
-	public void testNotEmpty(){
+	public void testNotEmpty() throws ValidatorNotFoundException{
 		String value=null;
 		Validator validator=ValidatorTools.getValidator("notEmpty");
 		
 		assertEquals(false,validator.validate(value));
 	}
 	
-	public void testNotEmpty2(){
+	public void testNotEmpty2() throws ValidatorNotFoundException{
 		String value="";
 		Validator validator=ValidatorTools.getValidator("notEmpty");
 		
 		assertEquals(false,validator.validate(value));
 	}
 	
-	public void testNotEmpty3(){
+	public void testNotEmpty3() throws ValidatorNotFoundException{
 		String value="value";
 		Validator validator=ValidatorTools.getValidator("notEmpty");
 		
 		assertEquals(true,validator.validate(value));
 	}
 	
-	public void testAsciiNumber1(){
+	public void testAsciiNumber1() throws ValidatorNotFoundException{
 		String value="0";
 		Validator validator=ValidatorTools.getValidator("asciiNumber");
 		
 		assertEquals(true,validator.validate(value));
 	}
 	
-	public void testAsciiNumber2(){
+	public void testAsciiNumber2() throws ValidatorNotFoundException{
 		String value="99";
 		Validator validator=ValidatorTools.getValidator("asciiNumber");
 		
 		assertEquals(true,validator.validate(value));
 	}
 	//minus not support yet
-	public void testAsciiNumber3(){
+	public void testAsciiNumber3() throws ValidatorNotFoundException{
 		String value="-100";
 		Validator validator=ValidatorTools.getValidator("asciiNumber");
 		
 		assertEquals(false,validator.validate(value));
 	}
 	
-	public void testAsciiNumber4(){
+	public void testAsciiNumber4() throws ValidatorNotFoundException{
 		String value="a";
 		Validator validator=ValidatorTools.getValidator("asciiNumber");
 		
 		assertEquals(false,validator.validate(value));
 	}
 	
-	public void testAsciiNumber5(){
+	public void testAsciiNumber5() throws ValidatorNotFoundException{
 		String value="１０";
 		Validator validator=ValidatorTools.getValidator("asciiNumber");
 		
 		assertEquals(false,validator.validate(value));
 	}
 	
-	public void testAsciiNumberAndChar1(){
+	public void testAsciiNumberAndChar1() throws ValidatorNotFoundException{
 		String value="a";
 		Validator validator=ValidatorTools.getValidator("AsciiNumberAndChar");
 		
 		assertEquals(true,validator.validate(value));
 	}
 	
-	public void testAsciiNumberAndChar2(){
+	public void testAsciiNumberAndChar2() throws ValidatorNotFoundException{
 		String value="0";
 		Validator validator=ValidatorTools.getValidator("AsciiNumberAndChar");
 		
 		assertEquals(true,validator.validate(value));
 	}
 	
-	public void testAsciiNumberAndChar3(){
+	public void testAsciiNumberAndChar3() throws ValidatorNotFoundException{
 		String value="000aaa";
 		Validator validator=ValidatorTools.getValidator("AsciiNumberAndChar");
 		
 		assertEquals(true,validator.validate(value));
 	}
 	
-	public void testAsciiNumberAndChar4(){
+	public void testAsciiNumberAndChar4() throws ValidatorNotFoundException{
 		String value="-000aaa";
 		Validator validator=ValidatorTools.getValidator("AsciiNumberAndChar");
 		
 		assertEquals(false,validator.validate(value));
 	}
 	
-	public void testAsciiNumberAndChar5(){
+	public void testAsciiNumberAndChar5() throws ValidatorNotFoundException{
 		String value="１０";
 		Validator validator=ValidatorTools.getValidator("AsciiNumberAndChar");
 		
 		assertEquals(false,validator.validate(value));
 	}
 	
-	public void testAsciiNumberAndChar6(){
+	public void testAsciiNumberAndChar6() throws ValidatorNotFoundException{
 		String value="_";
 		Validator validator=ValidatorTools.getValidator("AsciiNumberAndChar");
 		
 		assertEquals(false,validator.validate(value));
 	}
 	
-	public void testHankakuKana1(){
+	public void testHankakuKana1() throws ValidatorNotFoundException{
 		String value="abc";
 		Validator validator=ValidatorTools.getValidator("HankakuKana");
 		
 		assertEquals(false,validator.validate(value));
 	}
 	
-	public void testHankakuKana2(){
+	public void testHankakuKana2() throws ValidatorNotFoundException{
 		String value="カナ";
 		Validator validator=ValidatorTools.getValidator("HankakuKana");
 		
 		assertEquals(false,validator.validate(value));
 	}
 	
-	public void testHankakuKana3(){
+	public void testHankakuKana3() throws ValidatorNotFoundException{
 		String value="ｶﾅ";
 		Validator validator=ValidatorTools.getValidator("HankakuKana");
 		
 		assertEquals(true,validator.validate(value));
 	}
 	
-	public void testHiragana1(){
+	public void testHiragana1() throws ValidatorNotFoundException{
 		String value="abc";
 		Validator validator=ValidatorTools.getValidator("Hiragana");
 		
 		assertEquals(false,validator.validate(value));
 	}
 	
-	public void testHiragana2(){
+	public void testHiragana2() throws ValidatorNotFoundException{
 		String value="アイウエオ";
 		Validator validator=ValidatorTools.getValidator("Hiragana");
 		
 		assertEquals(false,validator.validate(value));
 	}
 	
-	public void testHiragana3(){
+	public void testHiragana3() throws ValidatorNotFoundException{
 		String value="あいうえお";
 		Validator validator=ValidatorTools.getValidator("Hiragana");
 		
 		assertEquals(true,validator.validate(value));
 	}
 	
-	public void testBetween1(){
+	public void testBetween1() throws ValidatorNotFoundException{
 		String value="12345";
 		Validator validator=ValidatorTools.getValidator("between");
 		
 		assertEquals(false,validator.validate(value));
 	}
 	
-	public void testBetween4(){
+	public void testBetween4() throws ValidatorNotFoundException{
 		String value="";
 		Validator validator=ValidatorTools.getValidator("between");
 		
 		assertEquals(false,validator.validate(value));
 	}
 	
-	public void testBetween2(){
+	public void testBetween2() throws ValidatorNotFoundException{
 		String value="12345678";
 		Validator validator=ValidatorTools.getValidator("between");
 		
 		assertEquals(true,validator.validate(value));
 	}
 	
-	public void testBetween3(){
+	public void testBetween3() throws ValidatorNotFoundException{
 		String value="1234567890123";
 		Validator validator=ValidatorTools.getValidator("between");
 		
@@ -176,28 +177,28 @@ public class ValidatorTest extends TestCase{
 	}
 	
 	
-	public void testMaxStringSize1(){
+	public void testMaxStringSize1() throws ValidatorNotFoundException{
 		String value="12345";
 		Validator validator=ValidatorTools.getValidator("less8");
 		
 		assertEquals(true,validator.validate(value));
 	}
 	
-	public void testMaxStringSize2(){
+	public void testMaxStringSize2() throws ValidatorNotFoundException{
 		String value="";
 		Validator validator=ValidatorTools.getValidator("less8");
 		
 		assertEquals(true,validator.validate(value));
 	}
 	
-	public void testMaxStringSize3(){
+	public void testMaxStringSize3() throws ValidatorNotFoundException{
 		String value=null;
 		Validator validator=ValidatorTools.getValidator("less8");
 		
 		assertEquals(true,validator.validate(value));
 	}
 	
-	public void testMaxStringSize4(){
+	public void testMaxStringSize4() throws ValidatorNotFoundException{
 		String value="12345678";
 		Validator validator=ValidatorTools.getValidator("less8");
 		
@@ -205,14 +206,14 @@ public class ValidatorTest extends TestCase{
 	}
 	
 	
-	public void testMaxStringSize5(){
+	public void testMaxStringSize5() throws ValidatorNotFoundException{
 		String value="123456789";
 		Validator validator=ValidatorTools.getValidator("less8");
 		
 		assertEquals(false,validator.validate(value));
 	}
 	
-	public void testMaxStringSize6(){
+	public void testMaxStringSize6() throws ValidatorNotFoundException{
 		String value="１２３４５６７８";
 		Validator validator=ValidatorTools.getValidator("less8");
 		
@@ -220,7 +221,7 @@ public class ValidatorTest extends TestCase{
 	}
 	
 	
-	public void testMaxStringSize7(){
+	public void testMaxStringSize7() throws ValidatorNotFoundException{
 		String value="１２";
 		Validator validator=ValidatorTools.getValidator("less8");
 		
@@ -228,28 +229,28 @@ public class ValidatorTest extends TestCase{
 	}
 	
 	
-	public void testMaxStringByte1(){
+	public void testMaxStringByte1() throws ValidatorNotFoundException{
 		String value="12345";
 		Validator validator=ValidatorTools.getValidator("less8b");
 		
 		assertEquals(true,validator.validate(value));
 	}
 	
-	public void testMaxStringByte2(){
+	public void testMaxStringByte2() throws ValidatorNotFoundException{
 		String value="";
 		Validator validator=ValidatorTools.getValidator("less8b");
 		
 		assertEquals(true,validator.validate(value));
 	}
 	
-	public void testMaxStringByte3(){
+	public void testMaxStringByte3() throws ValidatorNotFoundException{
 		String value=null;
 		Validator validator=ValidatorTools.getValidator("less8b");
 		
 		assertEquals(true,validator.validate(value));
 	}
 	
-	public void testMaxStringByte4(){
+	public void testMaxStringByte4() throws ValidatorNotFoundException{
 		String value="12345678";
 		Validator validator=ValidatorTools.getValidator("less8b");
 		
@@ -257,14 +258,14 @@ public class ValidatorTest extends TestCase{
 	}
 	
 	
-	public void testMaxStringByte5(){
+	public void testMaxStringByte5() throws ValidatorNotFoundException{
 		String value="123456789";
 		Validator validator=ValidatorTools.getValidator("less8b");
 		
 		assertEquals(false,validator.validate(value));
 	}
 	
-	public void testMaxStringByte6(){
+	public void testMaxStringByte6() throws ValidatorNotFoundException{
 		String value="１２３４５６７８";
 		Validator validator=ValidatorTools.getValidator("less8b");
 		
@@ -272,7 +273,7 @@ public class ValidatorTest extends TestCase{
 	}
 	
 	
-	public void testMaxStringByte7(){
+	public void testMaxStringByte7() throws ValidatorNotFoundException{
 		String value="１２";
 		Validator validator=ValidatorTools.getValidator("less8b");
 		

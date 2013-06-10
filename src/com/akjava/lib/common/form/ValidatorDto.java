@@ -2,6 +2,7 @@ package com.akjava.lib.common.form;
 
 import java.util.List;
 
+import com.akjava.lib.common.form.ValidatorTools.ValidatorNotFoundException;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
@@ -31,7 +32,13 @@ private static ValidatorToNameFunction validatorToNameFunction=new ValidatorToNa
 	public static class NameToValidatorFunction implements Function<String,Validator>{
 		@Override
 		public Validator apply(String value) {
-			return ValidatorTools.getValidator(value);
+			try {
+				return ValidatorTools.getValidator(value);
+			} catch (ValidatorNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return null;
+			}
 		}
 		
 	}

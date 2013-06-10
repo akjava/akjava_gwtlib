@@ -1,9 +1,5 @@
 package com.akjava.lib.common.form;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
@@ -37,18 +33,35 @@ public  static BiMap<String,Validator> validatorMap=null;
 
 	}
 
+	public static class ValidatorNotFoundException extends Exception{
+
+		public ValidatorNotFoundException(String string) {
+			super(string);
+		}
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+	
+	}
+	
 	/**
 	 * use lower case inside
 	 * @param key
 	 * @return
 	 */
-	public static Validator getValidator(String key){
+	public static Validator getValidator(String key)throws ValidatorNotFoundException {
 		if(validatorMap==null){
 			init();
 		}
 		if(key==null){
-			return null;
+			throw new ValidatorNotFoundException("null validator key");
 		}
-		return validatorMap.get(key.toLowerCase());
+		Validator v= validatorMap.get(key.toLowerCase());
+		if(v==null){
+			throw new ValidatorNotFoundException("null validator for "+key);
+		}
+		return v;
 	}
 }
