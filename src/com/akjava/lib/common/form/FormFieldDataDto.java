@@ -26,7 +26,7 @@ public class FormFieldDataDto {
 		hashMap.put("optionValues", LabelAndValueDto.labelAndValueToString(data.getOptionValues()));
 		hashMap.put("defaultValue", data.getDefaultValue());
 		hashMap.put("createAuto", ""+data.isCreateAuto());
-		//TODO add validators
+		hashMap.put("validators", ValidatorDto.validatorListToNamesLine(data.getValidators()));
 		hashMap.put("placeHolder", data.getPlaceHolder());
 		hashMap.put("comment", data.getComment());
 		/**

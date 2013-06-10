@@ -3,9 +3,8 @@ package com.akjava.lib.common.form;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.akjava.lib.common.functions.LabelAndValueDto;
 import com.akjava.lib.common.tag.LabelAndValue;
-import com.google.common.base.Objects;
+import com.google.common.base.Joiner;
 
 public class FormFieldData {
 private String name;
@@ -133,11 +132,6 @@ public static int getTypeByLabel(String v){
 }
 
 public String toString(){
-	return Objects.toStringHelper(this).add("name", name).add("key",key).add("type", getTypeLabel(type)+"["+type+"]")
-			.add("optionValues",LabelAndValueDto.labelAndValueToString(optionValues))
-			.add("defaultValue", defaultValue).add("createAuto",""+createAuto)
-			//TODO add validators
-			.add("placeHolder", placeHolder).add("comment", comment)
-			.toString();
+	return Joiner.on(";").withKeyValueSeparator("=").useForNull("null").join(FormFieldDataDto.formDataToMap(this));
 }
 }

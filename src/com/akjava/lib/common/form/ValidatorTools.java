@@ -4,19 +4,24 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+
 public class ValidatorTools {
 	private ValidatorTools(){}
-public  static LinkedHashMap<String,Validator> validatorMap=null;
+public  static BiMap<String,Validator> validatorMap=null;
 
 	private static void init(){
-		validatorMap=new LinkedHashMap<String, Validator>();
+		validatorMap=HashBiMap.create();
 		validatorMap.put(StaticValidators.VALIDATOR_NOT_EMPTY.toLowerCase(), StaticValidators.notEmptyValidator());
 		validatorMap.put(StaticValidators.VALIDATOR_ASCII_NUMBER.toLowerCase(), StaticValidators.asciiNumberOnly());
 		validatorMap.put(StaticValidators.VALIDATOR_ASCII_NUMBER_AND_CHAR.toLowerCase(), StaticValidators.asciiNumberAndCharOnly());
 		validatorMap.put(StaticValidators.VALIDATOR_HANKAKU_KANA.toLowerCase(), StaticValidators.hankakuKana());
 		validatorMap.put(StaticValidators.VALIDATOR_HIRAGANA.toLowerCase(), StaticValidators.hiragana());
 		
-		//TODO better name
+		
+		
+		//TODO should support name contain args like msize(12),bet(6:12)
 		validatorMap.put("between", Validators.betweenStringSize(6, 12));
 		
 		validatorMap.put("less8", Validators.maxStringSize(8));
