@@ -12,6 +12,8 @@ public  static BiMap<String,Validator> validatorMap=null;
 		validatorMap.put(StaticValidators.VALIDATOR_NOT_EMPTY.toLowerCase(), StaticValidators.notEmptyValidator());
 		validatorMap.put(StaticValidators.VALIDATOR_ASCII_NUMBER.toLowerCase(), StaticValidators.asciiNumberOnly());
 		validatorMap.put(StaticValidators.VALIDATOR_ASCII_NUMBER_AND_CHAR.toLowerCase(), StaticValidators.asciiNumberAndCharOnly());
+		validatorMap.put(StaticValidators.VALIDATOR_ASCII_NUMBER_AND_CHAR_AND_UNDERBAR.toLowerCase(), StaticValidators.asciiNumberAndCharAndUnderbarOnly());
+		
 		validatorMap.put(StaticValidators.VALIDATOR_HANKAKU_KANA.toLowerCase(), StaticValidators.hankakuKana());
 		validatorMap.put(StaticValidators.VALIDATOR_HIRAGANA.toLowerCase(), StaticValidators.hiragana());
 		

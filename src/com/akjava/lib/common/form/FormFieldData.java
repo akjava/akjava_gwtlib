@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.akjava.lib.common.tag.LabelAndValue;
 import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 
 public class FormFieldData {
 private String name;
@@ -109,6 +110,7 @@ public static String getTypeLabel(int value){
 		return "text_short";
 	}
 }
+public static List<String> TYPES=Lists.newArrayList("text_short","text_long","id","check","select_single","select_multi","create_date","create_user");
 public static int getTypeByLabel(String v){
 	int type=0;
 	if(v.equals("text_short")){

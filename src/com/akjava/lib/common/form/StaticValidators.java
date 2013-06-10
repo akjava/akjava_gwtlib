@@ -8,6 +8,7 @@ public class StaticValidators {
 public static final String VALIDATOR_NOT_EMPTY="NotEmpty";
 public static final String VALIDATOR_ASCII_NUMBER="AsciiNumber";
 public static final String VALIDATOR_ASCII_NUMBER_AND_CHAR="AsciiNumberAndChar";
+public static final String VALIDATOR_ASCII_NUMBER_AND_CHAR_AND_UNDERBAR="AsciiNumberAndCharAndUnderBar";
 
 public static final String VALIDATOR_ASCII_CHAR="AsciiChar";
 public static final String VALIDATOR_START_ASCII_CHAR="StartAsciiChar";
@@ -114,6 +115,29 @@ public static NotEmptyValidator notEmptyValidator(){
 					
 					if(!Character.isLetterOrDigit(value.charAt(i)) || value.charAt(i)>128){
 						return false;
+					}
+				}
+				return true;
+			}
+		  }
+	  
+	  public static AsciiNumberAndCharAndUnderbarOnly asciiNumberAndCharAndUnderbarOnly(){
+		  return AsciiNumberAndCharAndUnderbarOnly.INSTANCE;
+	  }
+	  public enum AsciiNumberAndCharAndUnderbarOnly implements Validator {
+		    INSTANCE;
+			@Override
+			public String getName() {
+				return VALIDATOR_ASCII_NUMBER_AND_CHAR_AND_UNDERBAR;
+			}
+			@Override
+			public boolean validate(String value) {
+				for(int i=0;i<value.length();i++){
+					char ch=value.charAt(i);
+					if(!Character.isLetterOrDigit(ch) || ch>128){
+						if(ch!='_'){
+						return false;
+						}
 					}
 				}
 				return true;

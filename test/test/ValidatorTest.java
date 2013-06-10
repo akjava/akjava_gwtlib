@@ -308,4 +308,25 @@ public class ValidatorTest extends TestCase{
 		
 		assertEquals(false,validator.validate(value));
 	}
+	
+	public void testAsciiUnderbar1() throws ValidatorNotFoundException{
+		String value="12a";
+		Validator validator=ValidatorTools.getValidator("AsciiNumberAndCharAndUnderBar");
+		
+		assertEquals(true,validator.validate(value));
+	}
+	
+	public void testAsciiUnderbar2() throws ValidatorNotFoundException{
+		String value="_12";
+		Validator validator=ValidatorTools.getValidator("AsciiNumberAndCharAndUnderBar");
+		
+		assertEquals(true,validator.validate(value));
+	}
+	
+	public void testAsciiUnderbar3() throws ValidatorNotFoundException{
+		String value="a-b";
+		Validator validator=ValidatorTools.getValidator("AsciiNumberAndCharAndUnderBar");
+		
+		assertEquals(false,validator.validate(value));
+	}
 }

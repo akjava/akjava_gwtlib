@@ -1,6 +1,8 @@
 package com.akjava.lib.common.form;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Validators {
@@ -99,4 +101,49 @@ public class Validators {
 		}
 		
 	 }
+	 
+		public static AvaiableValueOnly avaiableValueOnly(List<String> values,boolean caseSensitive){
+			  return new AvaiableValueOnly(values,caseSensitive);
+		  }
+		
+		
+	 private static class AvaiableValueOnly implements Validator{
+		private List<String> values;
+		private List<String> lowercases;
+		private boolean caseSensitive;
+		private AvaiableValueOnly(List<String> values,boolean caseSensitive){
+			this.values=values;
+			this.caseSensitive=caseSensitive;
+			if(!caseSensitive){
+				lowercases=new ArrayList<String>();
+				for(String v:values){
+					if(v!=null){
+						lowercases.add(v.toLowerCase());
+					}else{
+						lowercases.add(null);
+					}
+				}
+			}
+		}
+		@Override
+		public boolean validate(String value) {
+			if(value==null){
+				return values.contains(null);
+			}else{
+				if(caseSensitive){
+					return values.contains(value);
+				}else{
+					return lowercases.contains(value.toLowerCase());
+				}
+			}
+			
+		}
+
+		@Override
+		public String getName() {
+			// TODO Auto-generated method stub
+			return VALIDATOR_MAX_STRING_SIZE;
+		}
+		
+	 } 
 }
