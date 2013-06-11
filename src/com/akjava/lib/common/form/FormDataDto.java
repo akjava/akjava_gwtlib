@@ -13,6 +13,7 @@ import com.google.common.collect.Lists;
 
 public class FormDataDto {
 	public final static Joiner tabJoiner=Joiner.on("\t");	
+	public final static Joiner commaJoiner=Joiner.on(",");	
 private FormDataDto(){}
 
 public static FormDataToMapFunction getFormDataToMapFunction(){

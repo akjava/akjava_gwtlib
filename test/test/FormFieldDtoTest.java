@@ -211,4 +211,21 @@ public class FormFieldDtoTest extends TestCase{
 				
 				assertEquals(collect, FormFieldDataDto.formFieldToCsv(field));
 			}
+			
+			//how check work
+			public void testSimpleConvert6(){
+				String collect="name\t" +
+						"key\t" +
+						"check\t" +
+						"YES:YES,NO:NO\t" +
+						"default\t" +
+						"yes\t" +
+						"notempty,asciichar\t"+
+						"placeholder\t" +
+						"comment";
+				
+				FormFieldData field=FormFieldDataDto.csvToFormField(collect);
+				
+				assertEquals(collect, FormFieldDataDto.formFieldToCsv(field));
+			}
 }

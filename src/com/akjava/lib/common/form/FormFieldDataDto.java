@@ -7,6 +7,7 @@ import java.util.Map;
 import com.akjava.lib.common.form.FormDataDto.FormDataToCsvFunction;
 import com.akjava.lib.common.functions.LabelAndValueDto;
 import com.akjava.lib.common.functions.SplitLineFunction;
+import com.akjava.lib.common.tag.LabelAndValue;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 
@@ -39,6 +40,43 @@ public class FormFieldDataDto {
 		return hashMap;
 	}
 	
+	
+
+	public static class  OptionLabelToValueFunction implements Function<String,String >{
+		private List<LabelAndValue> optionValues;
+		public OptionLabelToValueFunction(List<LabelAndValue> optionValues){
+			this.optionValues=optionValues;
+		}
+		@Override
+		public String apply(String label) {
+			
+			for(LabelAndValue lv:optionValues){
+				if(lv.getPrintValue().equals(label)){
+					return lv.getValue();
+				}
+			}
+			return null;
+		}
+	}
+	
+	public class  OptionValueToLabelFunction implements Function<String,String >{
+		private List<LabelAndValue> optionValues;
+		public OptionValueToLabelFunction(List<LabelAndValue> optionValues){
+			this.optionValues=optionValues;
+		}
+		@Override
+		public String apply(String value) {
+			
+			for(LabelAndValue lv:optionValues){
+				if(lv.getValue().equals(value)){
+					return lv.getPrintValue();
+				}
+			}
+			return null;
+		}
+	}
+	
+	
 	public static FormFieldToCsvFunction getFormFieldToCsvFunction(){
 		return FormFieldToCsvFunction.INSTANCE;
 	}
@@ -51,7 +89,6 @@ public class FormFieldDataDto {
 			Map<String,String> map=formDataToMap(data);
 			return Joiner.on("\t").useForNull("").join(map.values());
 		}
-		
 	}
 	 static class CsvToFormFieldFunction implements Function<String, FormFieldData>{
 		private boolean optionWithNumber=true;
@@ -75,7 +112,7 @@ public class FormFieldDataDto {
 				data.setKey(csvs.get(1));//String
 			}
 			
-			if(csvs.size()>2){
+			if(csvs.size()>2){//TODO not use number
 				int type=0;
 				String v=csvs.get(2).toLowerCase();
 				if(v.equals("text_short")){
@@ -86,7 +123,7 @@ public class FormFieldDataDto {
 					type=2;
 				}else if(v.equals("check")){
 					type=3;
-				}else if(v.equals("select_single")){
+				}else if(v.equals("select")){
 					type=4;
 				}else if(v.equals("select_multi")){
 					type=5;
@@ -101,7 +138,7 @@ public class FormFieldDataDto {
 			if(csvs.size()>3){
 				String optionText=csvs.get(3);
 				if(!optionText.isEmpty()){
-					if(optionWithNumber){
+					if(optionWithNumber && data.getType()!=FormFieldData.TYPE_CHECK){
 						data.setOptionValues(LabelAndValueDto.lineToLabelAndValuesWithNumber(optionText));
 					}else{
 						data.setOptionValues(LabelAndValueDto.lineToLabelAndValues(optionText));

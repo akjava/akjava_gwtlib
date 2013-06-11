@@ -95,7 +95,7 @@ public static String getTypeLabel(int value){
 	return "check";
 	
 	case 4:
-	return "select_single";
+	return "select";
 
 	case 5:
 	return "select_multi";
@@ -110,7 +110,7 @@ public static String getTypeLabel(int value){
 		return "text";
 	}
 }
-public static List<String> TYPES=Lists.newArrayList("text","text_long","id","check","select_single","select_multi","create_date","create_user");
+public static List<String> TYPES=Lists.newArrayList("text","text_long","id","check","select","select_multi","create_date","create_user");
 public static int getTypeByLabel(String v){
 	int type=0;
 	if(v.equals("text")){
@@ -121,7 +121,7 @@ public static int getTypeByLabel(String v){
 		type=2;
 	}else if(v.equals("check")){
 		type=3;
-	}else if(v.equals("select_single")){
+	}else if(v.equals("select")){
 		type=4;
 	}else if(v.equals("select_multi")){
 		type=5;

@@ -39,4 +39,106 @@ public class FormDataDtoTest extends TestCase{
 	}
 
 	
+	
+	public void testCheckLabelText1(){
+		String form="name\t" +
+				"ClassName\t" +
+				"description";
+		
+		String field1="name\t" +
+				"key\t" +
+				"check\t" +
+				"YES,NO\t" +
+				"default\t" +
+				"yes\t" +
+				"notempty,asciichar\t"+
+				"placeholder\t" +
+				"comment";
+		
+		List<FormData> datas=FormDataDto.linesToFormData(ValuesUtils.toListLines(form+"\n"+field1));
+		FormData data=datas.get(0);
+		
+		assertEquals(data.getLabelText("key", "YES"), "YES");
+	}
+	public void testCheckLabelText2(){
+		String form="name\t" +
+				"ClassName\t" +
+				"description";
+		
+		String field1="name\t" +
+				"key\t" +
+				"check\t" +
+				"YES,NO\t" +
+				"default\t" +
+				"yes\t" +
+				"notempty,asciichar\t"+
+				"placeholder\t" +
+				"comment";
+		
+		List<FormData> datas=FormDataDto.linesToFormData(ValuesUtils.toListLines(form+"\n"+field1));
+		FormData data=datas.get(0);
+		
+		assertEquals(data.getLabelText("key", "on"), "YES");
+	}
+	public void testCheckLabelText3(){
+		String form="name\t" +
+				"ClassName\t" +
+				"description";
+		
+		String field1="name\t" +
+				"key\t" +
+				"check\t" +
+				"YES,NO\t" +
+				"default\t" +
+				"yes\t" +
+				"notempty,asciichar\t"+
+				"placeholder\t" +
+				"comment";
+		
+		List<FormData> datas=FormDataDto.linesToFormData(ValuesUtils.toListLines(form+"\n"+field1));
+		FormData data=datas.get(0);
+		
+		assertEquals(data.getLabelText("key", ""), "NO");
+	}
+	
+	public void testCheckLabelText4(){
+		String form="name\t" +
+				"ClassName\t" +
+				"description";
+		
+		String field1="name\t" +
+				"key\t" +
+				"check\t" +
+				"YES\t" +
+				"default\t" +
+				"yes\t" +
+				"notempty,asciichar\t"+
+				"placeholder\t" +
+				"comment";
+		
+		List<FormData> datas=FormDataDto.linesToFormData(ValuesUtils.toListLines(form+"\n"+field1));
+		FormData data=datas.get(0);
+		
+		assertEquals(data.getLabelText("key", ""), "");
+	}
+	public void testCheckLabelText5(){
+		String form="name\t" +
+				"ClassName\t" +
+				"description";
+		
+		String field1="name\t" +
+				"key\t" +
+				"check\t" +
+				"\t" +
+				"default\t" +
+				"yes\t" +
+				"notempty,asciichar\t"+
+				"placeholder\t" +
+				"comment";
+		
+		List<FormData> datas=FormDataDto.linesToFormData(ValuesUtils.toListLines(form+"\n"+field1));
+		FormData data=datas.get(0);
+		
+		assertEquals(data.getLabelText("key", ""), "");
+	}
 }
