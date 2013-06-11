@@ -2,6 +2,7 @@ package com.akjava.lib.common.form;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -25,6 +26,13 @@ public class Validators {
 	 
 	 private static class MaxStringByteSize implements Validator{
 			private int max;
+			public int getMax() {
+				return max;
+			}
+			public String getEncode() {
+				return encode;
+			}
+
 			private String encode="UTF-8";
 			private MaxStringByteSize(int max){
 				this.max=max;
@@ -51,11 +59,26 @@ public class Validators {
 				return VALIDATOR_MAX_STRING_SIZE;
 			}
 			
+			@Override
+			public boolean equals(Object object){
+				if(!(object instanceof MaxStringByteSize)){
+					return false;
+				}
+				MaxStringByteSize instance=(MaxStringByteSize)object;
+				return instance.getMax()==getMax() && instance.getEncode().equals(instance.getEncode());
+			}
+			
 		 }
 	 
 	 private static class BetweenStringSize implements Validator{
 		private int max;
 		private int min;
+		public int getMax() {
+			return max;
+		}
+		public int getMin() {
+			return min;
+		}
 		private BetweenStringSize(int min,int max){
 			this.min=min;
 			this.max=max;
@@ -77,10 +100,22 @@ public class Validators {
 			return VALIDATOR_BETWEEN_STRING_SIZE;
 		}
 		
+		@Override
+		public boolean equals(Object object){
+			if(!(object instanceof BetweenStringSize)){
+				return false;
+			}
+			BetweenStringSize instance=(BetweenStringSize)object;
+			return instance.getMax()==getMax() && instance.getMin()==getMin();
+		}
+		
 	 }
 	 
 	 private static class MaxStringSize implements Validator{
 		private int max;
+		public int getMax() {
+			return max;
+		}
 		private MaxStringSize(int max){
 			this.max=max;
 		}
@@ -100,18 +135,26 @@ public class Validators {
 			return VALIDATOR_MAX_STRING_SIZE;
 		}
 		
+		@Override
+		public boolean equals(Object object){
+			if(!(object instanceof MaxStringSize)){
+				return false;
+			}
+			MaxStringSize instance=(MaxStringSize)object;
+			return instance.getMax()==getMax();
+		}
 	 }
 	 
-		public static AvaiableValueOnly avaiableValueOnly(List<String> values,boolean caseSensitive){
+		public static AvaiableValueOnly avaiableValueOnly(Collection<String> values,boolean caseSensitive){
 			  return new AvaiableValueOnly(values,caseSensitive);
 		  }
 		
 		
 	 private static class AvaiableValueOnly implements Validator{
-		private List<String> values;
-		private List<String> lowercases;
+		private Collection<String> values;
+		private Collection<String> lowercases;
 		private boolean caseSensitive;
-		private AvaiableValueOnly(List<String> values,boolean caseSensitive){
+		private AvaiableValueOnly(Collection<String> values,boolean caseSensitive){
 			this.values=values;
 			this.caseSensitive=caseSensitive;
 			if(!caseSensitive){

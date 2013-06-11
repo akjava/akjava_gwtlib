@@ -65,5 +65,20 @@ public class LabelAndValueTest extends TestCase{
 		assertEquals("hello3",vs[1]);
 	}
 	
+	public void testParse7(){
+		String value="test1:0,test2:1";
+		List<LabelAndValue> lvs=LabelAndValueDto.lineToLabelAndValuesWithNumber(value);
+		
+		assertEquals(value,LabelAndValueDto.labelAndValueToString(lvs));
+	}
+	
+	public void testParse8(){
+		String value="test1,test2";
+		List<LabelAndValue> lvs=LabelAndValueDto.lineToLabelAndValuesWithNumber(value);
+		String collect="test1:0,test2:1";
+		assertEquals(collect,LabelAndValueDto.labelAndValueToString(lvs));
+	}
+	
+	
 	
 }

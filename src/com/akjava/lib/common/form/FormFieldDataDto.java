@@ -1,6 +1,5 @@
 package com.akjava.lib.common.form;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,16 +7,22 @@ import java.util.Map;
 import com.akjava.lib.common.functions.LabelAndValueDto;
 import com.akjava.lib.common.functions.SplitLineFunction;
 import com.google.common.base.Function;
-import com.google.common.base.Objects;
+import com.google.common.base.Joiner;
 
 
 public class FormFieldDataDto {
-	
+	private static final FormFieldToCsvFunction formFieldToCsvFunction=new FormFieldToCsvFunction();
+	private static final CsvToFormFieldFunction csvToFormFieldFunction=new CsvToFormFieldFunction();
 	//TODO convert list
 	
-	public static FormFieldData csvToFormData(String singleLine){
-		return new CsvToFormDataFunction().apply(singleLine);
+	public static FormFieldData csvToFormField(String singleLine){
+		return csvToFormFieldFunction.apply(singleLine);
 	}
+	
+	public static  String formFieldToCsv(FormFieldData value){
+		return formFieldToCsvFunction.apply(value);
+	}
+	
 	public static Map<String,String> formDataToMap(FormFieldData data){
 		Map<String,String> hashMap=new LinkedHashMap<String, String>();
 		hashMap.put("name", data.getName());
@@ -25,22 +30,23 @@ public class FormFieldDataDto {
 		hashMap.put("type", FormFieldData.getTypeLabel(data.getType()));
 		hashMap.put("optionValues", LabelAndValueDto.labelAndValueToString(data.getOptionValues()));
 		hashMap.put("defaultValue", data.getDefaultValue());
-		hashMap.put("createAuto", ""+data.isCreateAuto());
+		hashMap.put("createAuto", data.isCreateAuto()?"yes":"");
 		hashMap.put("validators", ValidatorDto.validatorListToNamesLine(data.getValidators()));
 		hashMap.put("placeHolder", data.getPlaceHolder());
 		hashMap.put("comment", data.getComment());
-		/**
-		 * 	return Objects.toStringHelper(this).add("name", name).add("key",key).add("type", getTypeLabel(type)+"["+type+"]")
-			.add("optionValues",LabelAndValueDto.labelAndValueToString(optionValues))
-			.add("defaultValue", defaultValue).add("createAuto",""+createAuto)
-			//TODO add validators
-			.add("placeHolder", placeHolder).add("comment", comment)
-			.toString();
-		 */
 		return hashMap;
 	}
 	
-	public static class CsvToFormDataFunction implements Function<String, FormFieldData>{
+	public static class FormFieldToCsvFunction implements Function<FormFieldData,String >{
+
+		@Override
+		public String apply(FormFieldData data) {
+			Map<String,String> map=formDataToMap(data);
+			return Joiner.on("\t").useForNull("").join(map.values());
+		}
+		
+	}
+	public static class CsvToFormFieldFunction implements Function<String, FormFieldData>{
 		private boolean optionWithNumber=true;
 		public boolean isOptionWithNumber() {
 			return optionWithNumber;
@@ -51,7 +57,7 @@ public class FormFieldDataDto {
 		@Override
 		public FormFieldData apply(String value) {
 			FormFieldData data=new FormFieldData();
-			List<String> csvs=new SplitLineFunction(true, true).apply(value);
+			List<String> csvs=new SplitLineFunction(true, false).apply(value);
 			
 			if(csvs.size()>0){
 				data.setName(csvs.get(0));//String
@@ -85,11 +91,14 @@ public class FormFieldDataDto {
 			
 			if(csvs.size()>3){
 				String optionText=csvs.get(3);
-				if(optionWithNumber){
-					data.setOptionValues(LabelAndValueDto.lineToLabelAndValuesWithNumber(optionText));
-				}else{
-					data.setOptionValues(LabelAndValueDto.lineToLabelAndValues(optionText));
+				if(!optionText.isEmpty()){
+					if(optionWithNumber){
+						data.setOptionValues(LabelAndValueDto.lineToLabelAndValuesWithNumber(optionText));
+					}else{
+						data.setOptionValues(LabelAndValueDto.lineToLabelAndValues(optionText));
+					}
 				}
+				
 				
 			}
 			
@@ -98,14 +107,20 @@ public class FormFieldDataDto {
 			}
 			
 			if(csvs.size()>5){
-				String isAuto=csvs.get(5);
-				if(isAuto.equals("true")){
+				String isAuto=csvs.get(5).toLowerCase();
+				if(isAuto.equals("true") || isAuto.equals("yes")){
 					data.setCreateAuto(true);
 				}
 			}
 			
 			//TODO parse validator
-			
+			if(csvs.size()>6){
+				String validatorText=csvs.get(6);
+				if(!validatorText.isEmpty()){
+					data.setValidators(ValidatorDto.namesLineToValidatorList(validatorText));
+				}
+				
+			}
 			//
 			
 			if(csvs.size()>7){

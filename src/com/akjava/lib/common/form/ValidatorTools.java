@@ -4,9 +4,15 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
 public class ValidatorTools {
-	private ValidatorTools(){}
-public  static BiMap<String,Validator> validatorMap=null;
 
+	private ValidatorTools(){}
+private  static BiMap<String,Validator> validatorMap=null;
+public static BiMap<String,Validator> getValidatorMap(){
+	if(validatorMap==null){
+		init();
+	}
+	return validatorMap;
+}
 	private static void init(){
 		validatorMap=HashBiMap.create();
 		validatorMap.put(StaticValidators.VALIDATOR_NOT_EMPTY.toLowerCase(), StaticValidators.notEmptyValidator());
@@ -50,6 +56,14 @@ public  static BiMap<String,Validator> validatorMap=null;
 	
 	}
 	
+	public static String getValidatorLabel(Validator validator) {
+		String label= validatorMap.inverse().get(validator);
+		if(label==null){
+			return validator.getName();
+		}else{
+			return label;
+		}
+	}
 	/**
 	 * use lower case inside
 	 * @param key

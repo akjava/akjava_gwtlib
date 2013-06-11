@@ -107,13 +107,13 @@ public static String getTypeLabel(int value){
 	return "create_user";
 
 	default:
-		return "text_short";
+		return "text";
 	}
 }
-public static List<String> TYPES=Lists.newArrayList("text_short","text_long","id","check","select_single","select_multi","create_date","create_user");
+public static List<String> TYPES=Lists.newArrayList("text","text_long","id","check","select_single","select_multi","create_date","create_user");
 public static int getTypeByLabel(String v){
 	int type=0;
-	if(v.equals("text_short")){
+	if(v.equals("text")){
 		type=0;
 	}else if(v.equals("text_long")){
 		type=1;
