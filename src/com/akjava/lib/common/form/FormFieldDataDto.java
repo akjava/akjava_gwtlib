@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.akjava.lib.common.form.FormDataDto.FormDataToCsvFunction;
 import com.akjava.lib.common.functions.LabelAndValueDto;
 import com.akjava.lib.common.functions.SplitLineFunction;
 import com.google.common.base.Function;
@@ -11,17 +12,18 @@ import com.google.common.base.Joiner;
 
 
 public class FormFieldDataDto {
-	private static final FormFieldToCsvFunction formFieldToCsvFunction=new FormFieldToCsvFunction();
-	private static final CsvToFormFieldFunction csvToFormFieldFunction=new CsvToFormFieldFunction();
+	private static final CsvToFormFieldFunction csvToFormFieldFunctionOptionWithNumber=new CsvToFormFieldFunction(true);
+	private static final CsvToFormFieldFunction csvToFormFieldFunction=new CsvToFormFieldFunction(false);
 	//TODO convert list
 	
-	public static FormFieldData csvToFormField(String singleLine){
-		return csvToFormFieldFunction.apply(singleLine);
+	public  static CsvToFormFieldFunction getCsvToFormFieldFunction(boolean withNumber){
+		if(withNumber){
+			return csvToFormFieldFunctionOptionWithNumber;
+		}else{
+			return csvToFormFieldFunction;
+		}
 	}
-	
-	public static  String formFieldToCsv(FormFieldData value){
-		return formFieldToCsvFunction.apply(value);
-	}
+
 	
 	public static Map<String,String> formDataToMap(FormFieldData data){
 		Map<String,String> hashMap=new LinkedHashMap<String, String>();
@@ -37,23 +39,30 @@ public class FormFieldDataDto {
 		return hashMap;
 	}
 	
-	public static class FormFieldToCsvFunction implements Function<FormFieldData,String >{
-
+	public static FormFieldToCsvFunction getFormFieldToCsvFunction(){
+		return FormFieldToCsvFunction.INSTANCE;
+	}
+	
+	public enum  FormFieldToCsvFunction implements Function<FormFieldData,String >{
+		INSTANCE;
 		@Override
 		public String apply(FormFieldData data) {
+			
 			Map<String,String> map=formDataToMap(data);
 			return Joiner.on("\t").useForNull("").join(map.values());
 		}
 		
 	}
-	public static class CsvToFormFieldFunction implements Function<String, FormFieldData>{
+	 static class CsvToFormFieldFunction implements Function<String, FormFieldData>{
 		private boolean optionWithNumber=true;
-		public boolean isOptionWithNumber() {
-			return optionWithNumber;
+		public CsvToFormFieldFunction(boolean optionWithNumber){
+			this.optionWithNumber=optionWithNumber;
 		}
+		
+		/*
 		public void setOptionWithNumber(boolean optionWithNumber) {
 			this.optionWithNumber = optionWithNumber;
-		}
+		}*/
 		@Override
 		public FormFieldData apply(String value) {
 			FormFieldData data=new FormFieldData();
@@ -134,5 +143,15 @@ public class FormFieldDataDto {
 			return data;
 		}
 		
+	}
+	public static String formFieldToCsv(FormFieldData field) {
+		// TODO Auto-generated method stub
+		return getFormFieldToCsvFunction().apply(field);
+	}
+
+
+	public static FormFieldData csvToFormField(String collect) {
+		// TODO Auto-generated method stub
+		return getCsvToFormFieldFunction(true).apply(collect);
 	}
 }
