@@ -47,13 +47,28 @@ public class GWTHTMLUtils {
 	}
 
 
-	
+	/**
+	 * 
+	 * @param panel name
+	 * @return
+	 * return element which id is equals name if exist,otherwise return default root panel
+	 * RootPanel htmlRoot=GWTHTMLUtils.getPanelIfExist("gwtapp");
+	 */
 	public static RootPanel getPanelIfExist(String name) {
 		if(RootPanel.get(name)!=null){
 			return RootPanel.get(name);
 		}else{
 			return RootPanel.get();
 		}
+	}
+	/**
+	 * used when only add modules if target id exists.
+	 * @param name
+	 * @return whether panel exist or not
+	 *
+	 */
+	public static boolean isExistPanel(String name){
+	return RootPanel.get(name)!=null;	
 	}
 	
 	/*
