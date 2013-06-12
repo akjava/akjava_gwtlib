@@ -59,7 +59,7 @@ public class FormFieldDataDto {
 		}
 	}
 	
-	public class  OptionValueToLabelFunction implements Function<String,String >{
+	public static class  OptionValueToLabelFunction implements Function<String,String >{
 		private List<LabelAndValue> optionValues;
 		public OptionValueToLabelFunction(List<LabelAndValue> optionValues){
 			this.optionValues=optionValues;

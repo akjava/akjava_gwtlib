@@ -3,6 +3,7 @@ package com.akjava.lib.common.form;
 import java.util.List;
 
 import com.akjava.lib.common.form.FormFieldDataDto.OptionLabelToValueFunction;
+import com.akjava.lib.common.form.FormFieldDataDto.OptionValueToLabelFunction;
 import com.google.common.collect.Lists;
 
 public class FormData {
@@ -47,14 +48,15 @@ public String getLabelText(String key,String value){
 	for(FormFieldData fdata:getFormFieldDatas()){
 		if(fdata.getKey().equals(key)){
 			if(fdata.getType()== FormFieldData.TYPE_SELECT_SINGLE ||fdata.getType()== FormFieldData.TYPE_SELECT_MULTI ){
-				OptionLabelToValueFunction function=new OptionLabelToValueFunction(fdata.getOptionValues());
+				OptionValueToLabelFunction function=new OptionValueToLabelFunction(fdata.getOptionValues());
 				
 				List<String> values=Lists.newArrayList(value.split(","));
+				
 				return FormDataDto.commaJoiner.join(Lists.transform(values, function));
 				
 			}else if(fdata.getType()==FormFieldData.TYPE_CHECK){
 				if(fdata.getOptionValues()==null){
-					return value;//value must be checked
+					return value;//value must be "on"
 				}else{
 					String checkedPrintValue=null;
 					String uncheckedPrintValue=null;
@@ -100,10 +102,22 @@ public String getLabelText(String key,String value){
 	}	
 	return null;
 }
-//TODO
-/*//to store value
+
+
+//only for select or select_multi (check has no label)
+
 public String getValueByLabel(String key,String label){
-	//for multiple values
+	for(FormFieldData fdata:getFormFieldDatas()){
+		if(fdata.getKey().equals(key)){
+			if(fdata.getType()== FormFieldData.TYPE_SELECT_SINGLE ||fdata.getType()== FormFieldData.TYPE_SELECT_MULTI ){
+				OptionLabelToValueFunction function=new OptionLabelToValueFunction(fdata.getOptionValues());
+				List<String> values=Lists.newArrayList(label.split(","));
+				
+				return FormDataDto.commaJoiner.join(Lists.transform(values, function));
+			}
+		}
+	}
+	return label;
 }
-*/
+
 }

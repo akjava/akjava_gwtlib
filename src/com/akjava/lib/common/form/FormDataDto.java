@@ -12,8 +12,8 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 public class FormDataDto {
-	public final static Joiner tabJoiner=Joiner.on("\t");	
-	public final static Joiner commaJoiner=Joiner.on(",");	
+	public final static Joiner tabJoiner=Joiner.on("\t").useForNull("NULL");	
+	public final static Joiner commaJoiner=Joiner.on(",").useForNull("NULL");	
 private FormDataDto(){}
 
 public static FormDataToMapFunction getFormDataToMapFunction(){
