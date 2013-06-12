@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.akjava.lib.common.form.FormFieldDataDto.OptionLabelToValueFunction;
 import com.akjava.lib.common.form.FormFieldDataDto.OptionValueToLabelFunction;
+import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
 public class FormData {
@@ -42,6 +43,22 @@ public boolean isChecked(String key,String value){
 	return false;
 }
 
+
+
+@Override
+public String toString() {
+	
+	String fields="";
+	if(getFormFieldDatas()!=null){
+		for(FormFieldData fdata:getFormFieldDatas()){
+			fields+="<"+fdata.toString()+">\n";
+		}
+	}
+	
+	String out=Objects.toStringHelper(this).add("name", name).add("className", className).add("description", description)
+			.add("fields", "\n"+fields+"\n").toString();
+	return out;
+}
 //for select & checkbox but it is too complex
 public String getLabelText(String key,String value){
 
