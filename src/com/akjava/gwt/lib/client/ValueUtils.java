@@ -3,6 +3,7 @@ package com.akjava.gwt.lib.client;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -12,9 +13,20 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.ObjectArrays;
 import com.google.gwt.user.client.ui.RootPanel;
 
+/**
+ * @deprecated
+ * @author aki
+ *
+ */
 public class ValueUtils {
 	private ValueUtils(){}
 	
+	/**
+	 * use Values Utils.toDouble
+	 * @param bool
+	 * @param defaultValue
+	 * @return
+	 */
 public static boolean getBoolean(String bool,boolean defaultValue){
 	if(bool==null || bool.equals("")){
 		return defaultValue;
@@ -27,13 +39,19 @@ public static boolean getBoolean(String bool,boolean defaultValue){
 	}
 	return ret;
 }
-//TODO move to common
+/**
+ * @deprecated
+ * use CSVUtils
+ */
 public static String toNLineSeparator(String text){
 	String ret=text.replace("\r\n", "\n");
 	ret= ret.replace("\r", "\n");
 	return ret;
 }
-
+/**
+ * @deprecated
+ * use CSVUtils
+ */
 public static String[] splitLines(String text){
     text=toNLineSeparator(text);
     String[] lines=text.split("\n");
@@ -85,6 +103,9 @@ public static String joinOn(Iterable<String> values,String separator){
 public static String[][] csvToArray(String line){
 	return csvToArray(line,',');
 }
+
+
+
 public static String removeEmptyLine(String line){
 	line=ValueUtils.toNLineSeparator(line);
 	String[] lines=line.split("\n");
@@ -102,6 +123,14 @@ public static String removeEmptyLine(String line){
 	return ret;
 }
 
+/**
+ * use GWTHTMLUtils
+ * @deprecated
+ * 
+ * @param id
+ * @param defaultValue
+ * @return
+ */
 public static String getFormValueById(String id,String defaultValue){
 	String ret=defaultValue;
 	RootPanel panel=RootPanel.get(id);
@@ -132,15 +161,18 @@ public static String[] untabbed(String line){
 }
 
 public static Map<String,String> loadCsvAsMap(String text){
+	return loadCsvAsMap(text,",");
+}
+public static Map<String,String> loadCsvAsMap(String text,String separator){
 	Map<String,String> map=new LinkedHashMap<String,String>();
 	String[] lines=splitLines(text);
 for(String line:lines){
 	if(line.isEmpty()){
 		continue;
 	}
-	int sp=line.indexOf(",");
+	int sp=line.indexOf(separator);
 	if(sp!=-1){
-		map.put(line.substring(0,sp),line.substring(sp+1));
+		map.put(line.substring(0,sp),line.substring(sp+separator.length()));
 	}else{
 		map.put(line, "");
 	}
@@ -155,13 +187,14 @@ return value.split('').reverse().join('');
 
 
 /**
+ * Use ArrayUtils
  * for gwt convert
  * @param vs
  * @return
  */
 public static String[] iterableToArray(Iterable<String> vs){
 	Collection<String> collection =  Lists.newArrayList(vs);
-    String[] array = ObjectArrays.newArray(new String[0],collection.size());
+    String[] array = new String[collection.size()];
     return collection.toArray(array);
 }
 }

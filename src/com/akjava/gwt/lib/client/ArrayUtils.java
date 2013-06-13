@@ -1,8 +1,18 @@
 package com.akjava.gwt.lib.client;
 
+import java.util.Collection;
+
+import com.google.common.collect.Lists;
+
 
 public class ArrayUtils {
 
+	public static String[] iterableToArray(Iterable<String> vs){
+		Collection<String> collection =  Lists.newArrayList(vs);
+	    String[] array = new String[collection.size()];
+	    return collection.toArray(array);
+	}
+	
 	public static int[][] createIntYXArray(int x,int y,int defaultValue){
 	int[][] ret=new int[y][x];
 	if(defaultValue!=0){
