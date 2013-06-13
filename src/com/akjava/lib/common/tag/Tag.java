@@ -1,11 +1,14 @@
 package com.akjava.lib.common.tag;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Tag {
 private String name;
 private boolean singleTag;
+private List<Tag> childrens=new ArrayList<Tag>();
 public String getName() {
 	return name;
 }
@@ -45,6 +48,10 @@ public Tag(String name){
 	this.name=name;
 }
 
+public void addChild(Tag tag){
+	childrens.add(tag);
+}
+
 public void setAttribute(String name){
 	setAttribute(name,name);
 }
@@ -79,6 +86,12 @@ public String toString(){
 		if(text!=null){
 			buffer.append(text);
 		}
+		
+		for(Tag tag:childrens){
+			buffer.append("\n"+tag.toString());
+		}
+		
+		
 		buffer.append("</"+name+">");
 	}
 	

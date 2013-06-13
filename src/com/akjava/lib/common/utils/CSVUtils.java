@@ -68,7 +68,7 @@ public static String[][] csvToArray(String line){
 	return csvTextToArray(line,',');
 }
 
-public static Map<String,String> csvTextToMap(String text,String separator){
+public static Map<String,String> csvTextToMap(char separator,String text){
 	Map<String,String> map=new LinkedHashMap<String,String>();
 	String[] lines=splitLines(text);
 for(String line:lines){
@@ -77,7 +77,7 @@ for(String line:lines){
 	}
 	int sp=line.indexOf(separator);
 	if(sp!=-1){
-		map.put(line.substring(0,sp),line.substring(sp+separator.length()));
+		map.put(line.substring(0,sp),line.substring(sp+1));
 	}else{
 		map.put(line, "");
 	}
