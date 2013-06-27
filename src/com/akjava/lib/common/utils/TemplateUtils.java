@@ -17,7 +17,12 @@ public class TemplateUtils {
 		}
 		return result;
 	}
-	
+	/**
+	 * dont insert null
+	 * @param template
+	 * @param map
+	 * @return
+	 */
 	public static String createAdvancedText(String template,Map<String,String> map){
 		String result=template;
 		for(String key:map.keySet()){

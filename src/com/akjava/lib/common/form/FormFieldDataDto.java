@@ -76,6 +76,29 @@ public class FormFieldDataDto {
 		}
 	}
 	
+	public FormFieldToNameFunction getFormFieldToNameFunction(){
+		return FormFieldToNameFunction.INSTANCE;
+	}
+	public enum  FormFieldToNameFunction implements Function<FormFieldData,String >{
+		INSTANCE;
+		@Override
+		public String apply(FormFieldData data) {
+			// TODO Auto-generated method stub
+			return data.getName();
+		}
+	}
+	
+	public FormFieldToKeyFunction getFormFieldToKeyFunction(){
+		return FormFieldToKeyFunction.INSTANCE;
+	}
+	public enum  FormFieldToKeyFunction implements Function<FormFieldData,String >{
+		INSTANCE;
+		@Override
+		public String apply(FormFieldData data) {
+			// TODO Auto-generated method stub
+			return data.getKey();
+		}
+	}
 	
 	public static FormFieldToCsvFunction getFormFieldToCsvFunction(){
 		return FormFieldToCsvFunction.INSTANCE;

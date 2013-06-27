@@ -16,6 +16,8 @@ public class FormDataDto {
 	public final static Joiner commaJoiner=Joiner.on(",").useForNull("NULL");	
 private FormDataDto(){}
 
+
+
 public static FormDataToMapFunction getFormDataToMapFunction(){
 	return FormDataToMapFunction.INSTANCE;
 }
@@ -30,6 +32,8 @@ public enum FormDataToMapFunction implements Function<FormData,Map<String,String
 		return map;
 	}
 }
+
+
 public static FormDataToCsvFunction getFormDataToCsvFunction(){
 	return FormDataToCsvFunction.INSTANCE;
 }
