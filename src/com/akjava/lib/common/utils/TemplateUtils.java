@@ -13,7 +13,11 @@ public class TemplateUtils {
 	public static String createText(String template,Map<String,String> map){
 		String result=template;
 		for(String key:map.keySet()){
+			if(map.get(key)!=null){
 			result=result.replace("${"+key+"}", map.get(key));
+			}else{
+				System.out.println("null value:"+key);
+			}
 		}
 		return result;
 	}
@@ -26,9 +30,13 @@ public class TemplateUtils {
 	public static String createAdvancedText(String template,Map<String,String> map){
 		String result=template;
 		for(String key:map.keySet()){
+			if(map.get(key)!=null){
 			result=result.replace("${"+key+"}", map.get(key));
 			result=result.replace("${u+"+key+"}", ValuesUtils.toUpperCamel(map.get(key)));
 			result=result.replace("${l+"+key+"}", ValuesUtils.toLowerCamel(map.get(key)));
+			}else{
+				System.out.println("null value:"+key);
+			}
 		}
 		return result;
 	}

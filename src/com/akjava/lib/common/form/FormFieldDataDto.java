@@ -76,7 +76,7 @@ public class FormFieldDataDto {
 		}
 	}
 	
-	public FormFieldToNameFunction getFormFieldToNameFunction(){
+	public static FormFieldToNameFunction getFormFieldToNameFunction(){
 		return FormFieldToNameFunction.INSTANCE;
 	}
 	public enum  FormFieldToNameFunction implements Function<FormFieldData,String >{
@@ -88,7 +88,7 @@ public class FormFieldDataDto {
 		}
 	}
 	
-	public FormFieldToKeyFunction getFormFieldToKeyFunction(){
+	public static FormFieldToKeyFunction getFormFieldToKeyFunction(){
 		return FormFieldToKeyFunction.INSTANCE;
 	}
 	public enum  FormFieldToKeyFunction implements Function<FormFieldData,String >{

@@ -17,7 +17,7 @@ public class HtmlFunctions {
 		}
 	}
 	
-	public StringToTHFunction getStringToTHFunction(){
+	public static StringToTHFunction getStringToTHFunction(){
 		return StringToTHFunction.INSTANCE;
 	}
 	public enum  StringToTHFunction implements Function<String,String >{
@@ -28,7 +28,7 @@ public class HtmlFunctions {
 		}
 	}
 	
-	public StringToTDFunction getStringToTDFunction(){
+	public static StringToTDFunction getStringToTDFunction(){
 		return StringToTDFunction.INSTANCE;
 	}
 	public enum  StringToTDFunction implements Function<String,String >{
