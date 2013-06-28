@@ -91,6 +91,21 @@ public class ValuesUtils {
 		
 	}
 	
+	public static String upperCamelToUnderbar(String text){
+		if(text==null || text.length()==0){
+			return text;
+		}
+		String result=""+text.charAt(0);
+		for(int i=1;i<text.length();i++){
+			if(Character.isUpperCase(text.charAt(i))){
+				result+="_"+text.charAt(i);
+			}else{
+				result+=text.charAt(i);
+			}
+		}
+		return result.toLowerCase();
+	}
+	
 	public static String[] toArrayLines(String text){
 		text=ValueUtils.toNLineSeparator(text);
 		return text.split("\n");//this is slow
