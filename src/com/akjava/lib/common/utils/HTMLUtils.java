@@ -162,4 +162,17 @@ public class HTMLUtils {
 		   
 		   return "rgba("+r+","+g+","+b+","+start+")";
 	   }
+	   
+		public static String getLastDir(String url){
+			int anchor=url.indexOf("#");
+			if(anchor!=-1){
+				url=url.substring(0,anchor);
+			}
+			int query=url.indexOf("?");
+			if(query!=-1){
+				url=url.substring(0,query);
+			}
+			String paths[]=url.split("/");
+			return paths[paths.length-1];
+		}
 }
