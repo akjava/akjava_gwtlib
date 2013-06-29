@@ -13,6 +13,13 @@ public class HTMLUtils {
 	 public static String[] sanitizeSrc={"&","<",">","\"","'"};
 	 public static String[] sanitizeDesc={"&amp;","&lt;","&gt;","&quot;","&#39;"};
 	
+	 public static String sanitizeQuot(String html){
+		 if(html==null || html.isEmpty()){
+			 return html;
+		 }
+		 return html.replace("\"", "&quot;");
+	 }
+	 
 	 
 	  public static String sanitize(String html) {
 	      if(html==null || html.isEmpty()){
