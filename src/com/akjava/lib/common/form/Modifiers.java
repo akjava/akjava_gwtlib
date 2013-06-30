@@ -4,9 +4,9 @@ import com.akjava.lib.common.utils.CSVUtils;
 import com.akjava.lib.common.utils.HTMLUtils;
 
 public class Modifiers {
-	public static final String MODIFIER_SANITIZE="sanitize";
-	public static final String MODIFIER_TABTOSPACE="tabtospace";
-	public static final String MODIFIER_LINETOBR="linetobr";
+	public static final String MODIFIER_SANITIZE="Sanitize";
+	public static final String MODIFIER_TABTOSPACE="TabToSpace";
+	public static final String MODIFIER_LINETOBR="LineToBr";
 	public static SanitizeModifier getSanitizeModier(){
 		  return SanitizeModifier.INSTANCE;
 	  }

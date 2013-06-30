@@ -35,6 +35,7 @@ public class FormFieldDataDto {
 		hashMap.put("defaultValue", data.getDefaultValue());
 		hashMap.put("createAuto", data.isCreateAuto()?"yes":"");
 		hashMap.put("validators", ValidatorDto.validatorListToNamesLine(data.getValidators()));
+		hashMap.put("modifiers", ModifierDto.modifierListToNamesLine(data.getModifiers()));
 		hashMap.put("placeHolder", data.getPlaceHolder());
 		hashMap.put("comment", data.getComment());
 		return hashMap;
@@ -191,13 +192,19 @@ public class FormFieldDataDto {
 				
 			}
 			//
-			
 			if(csvs.size()>7){
-				data.setPlaceHolder(csvs.get(7));
+				String modifierText=csvs.get(7);
+				if(!modifierText.isEmpty()){
+					data.setModifiers(ModifierDto.namesLineToModifierList(modifierText));
+				}
 			}
 			
 			if(csvs.size()>8){
-				data.setComment(csvs.get(8));
+				data.setPlaceHolder(csvs.get(8));
+			}
+			
+			if(csvs.size()>9){
+				data.setComment(csvs.get(9));
 			}
 			
 			return data;

@@ -29,6 +29,13 @@ private boolean createAuto;
 private List<LabelAndValue> optionValues=new ArrayList<LabelAndValue>();
 
 private List<Validator> validators=new ArrayList<Validator>();
+private List<Modifier> modifiers=new ArrayList<Modifier>();
+public List<Modifier> getModifiers() {
+	return modifiers;
+}
+public void setModifiers(List<Modifier> modifiers) {
+	this.modifiers = modifiers;
+}
 private String placeHolder;
 private String comment;
 public String getName() {
@@ -57,6 +64,8 @@ public List<LabelAndValue> getOptionValues() {
 public void setOptionValues(List<LabelAndValue> optionValues) {
 	this.optionValues = optionValues;
 }
+
+
 public List<Validator> getValidators() {
 	return validators;
 }
