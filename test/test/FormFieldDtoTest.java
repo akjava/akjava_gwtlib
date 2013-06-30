@@ -7,15 +7,16 @@ import junit.framework.TestCase;
 
 import com.akjava.lib.common.form.FormFieldData;
 import com.akjava.lib.common.form.FormFieldDataDto;
+import com.akjava.lib.common.form.Modifier;
+import com.akjava.lib.common.form.Modifiers;
 import com.akjava.lib.common.form.StaticValidators;
 import com.akjava.lib.common.form.Validator;
 import com.akjava.lib.common.tag.LabelAndValue;
-import com.google.common.collect.Lists;
 
 public class FormFieldDtoTest extends TestCase{
 
 	public void testSimpleConvertCsv1(){
-		String collect="name\t\ttext\t\t\t\t\t\t";
+		String collect="name\t\ttext\t\t\t\t\t\t\t";
 		FormFieldData field=new FormFieldData();
 		field.setName("name");
 		
@@ -32,6 +33,7 @@ public class FormFieldDtoTest extends TestCase{
 				"\t" +
 				"default\t" +
 				"yes\t" +
+				"\t"+
 				"\t"+
 				"placeholder\t" +
 				"comment";
@@ -54,6 +56,7 @@ public class FormFieldDtoTest extends TestCase{
 				"default\t" +
 				"yes\t" +
 				"notempty\t"+
+				"\t"+
 				"placeholder\t" +
 				"comment";
 		FormFieldData field=new FormFieldData();
@@ -80,6 +83,7 @@ public class FormFieldDtoTest extends TestCase{
 				"test1,test2\t" +
 				"default\t" +
 				"yes\t" +
+				"\t"+
 				"\t"+
 				"placeholder\t" +
 				"comment";
@@ -108,6 +112,7 @@ public class FormFieldDtoTest extends TestCase{
 					"default\t" +
 					"yes\t" +
 					"notempty,asciichar\t"+
+					"\t"+
 					"placeholder\t" +
 					"comment";
 			FormFieldData field=new FormFieldData();
@@ -133,7 +138,7 @@ public class FormFieldDtoTest extends TestCase{
 		}
 		
 		public void testSimpleConvert1(){
-			String collect="name\t\ttext\t\t\t\t\t\t";
+			String collect="name\t\ttext\t\t\t\t\t\t\t";
 			
 			FormFieldData field=FormFieldDataDto.csvToFormField(collect);
 			
@@ -152,6 +157,7 @@ public class FormFieldDtoTest extends TestCase{
 					"default\t" +
 					"yes\t" +
 					"\t"+
+					"\t"+
 					"placeholder\t" +
 					"comment";
 			FormFieldData field=FormFieldDataDto.csvToFormField(collect);
@@ -167,6 +173,7 @@ public class FormFieldDtoTest extends TestCase{
 					"default\t" +
 					"yes\t" +
 					"notempty\t"+
+					"linetobr\t"+
 					"placeholder\t" +
 					"comment";
 			FormFieldData field=FormFieldDataDto.csvToFormField(collect);
@@ -175,6 +182,11 @@ public class FormFieldDtoTest extends TestCase{
 			validators.add(StaticValidators.notEmptyValidator());
 			
 			field.setValidators(validators);
+			
+			List<Modifier> modifiers=new ArrayList<Modifier>();
+			modifiers.add(Modifiers.getLineToBreModifier());
+			
+			field.setModifiers(modifiers);
 			
 			assertEquals(collect, FormFieldDataDto.formFieldToCsv(field));
 		}
@@ -187,6 +199,7 @@ public class FormFieldDtoTest extends TestCase{
 					"test1:0,test2:1\t" +
 					"default\t" +
 					"yes\t" +
+					"\t"+
 					"\t"+
 					"placeholder\t" +
 					"comment";
@@ -204,6 +217,7 @@ public class FormFieldDtoTest extends TestCase{
 						"default\t" +
 						"yes\t" +
 						"notempty,asciichar\t"+
+						"linetobr,sanitize\t"+
 						"placeholder\t" +
 						"comment";
 				
@@ -221,6 +235,7 @@ public class FormFieldDtoTest extends TestCase{
 						"default\t" +
 						"yes\t" +
 						"notempty,asciichar\t"+
+						"linetobr,sanitize\t"+
 						"placeholder\t" +
 						"comment";
 				

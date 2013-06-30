@@ -25,7 +25,7 @@ public class FormDataDtoTest extends TestCase{
 		String csv="name\t" +
 				"ClassName\t" +
 				"description";
-		String option="hello\tworld\ttext\t\t\t\t\t\t";
+		String option="hello\tworld\ttext\t\t\t\t\t\t\t";
 		csv+="\n"+option;
 		
 		List<FormData> datas=FormDataDto.linesToFormData(ValuesUtils.toListLines(csv));

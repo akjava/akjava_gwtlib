@@ -66,7 +66,7 @@ public String toOption(){
 		outValue=outValue.replace("\"", "&quot;");
 	}
 	if(label!=null){
-		option+="\""+outValue+"\"";
+		option+="value=\""+outValue+"\"";
 		option+=selectValue+">";
 		option+=label;
 	}else{
