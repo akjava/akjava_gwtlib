@@ -130,6 +130,18 @@ public static Validator getValidator(String line) throws ValidatorNotFoundExcept
 	
 	throw new ValidatorNotFoundException("not found:"+line);
 }
+
+public static boolean hasLimitValidator(List<Validator> validators){
+	
+	for(Validator validator:validators){
+		String name=validator.getName().toLowerCase();
+		if(name.equals("max")||name.equals("maxb")|| name.equals("between")){
+			return true;
+		}
+	}
+	
+	return false;
+}
 /*
 	private static void init(){
 		bimap=HashBiMap.create();
