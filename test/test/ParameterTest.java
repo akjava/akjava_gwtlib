@@ -1,4 +1,7 @@
-package com.akjava.lib.common.param;
+package test;
+
+import com.akjava.lib.common.param.Parameter;
+import com.akjava.lib.common.param.ParameterUtils;
 
 import junit.framework.TestCase;
 
