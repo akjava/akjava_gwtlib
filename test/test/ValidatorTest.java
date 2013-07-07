@@ -150,28 +150,28 @@ public class ValidatorTest extends TestCase{
 	
 	public void testBetween1() throws ValidatorNotFoundException{
 		String value="12345";
-		Validator validator=ValidatorTools.getValidator("between");
+		Validator validator=ValidatorTools.getValidator("between(6:8)");
 		
 		assertEquals(false,validator.validate(value));
 	}
 	
 	public void testBetween4() throws ValidatorNotFoundException{
 		String value="";
-		Validator validator=ValidatorTools.getValidator("between");
+		Validator validator=ValidatorTools.getValidator("between(6:8)");
 		
 		assertEquals(false,validator.validate(value));
 	}
 	
 	public void testBetween2() throws ValidatorNotFoundException{
 		String value="12345678";
-		Validator validator=ValidatorTools.getValidator("between");
+		Validator validator=ValidatorTools.getValidator("between(6:8)");
 		
 		assertEquals(true,validator.validate(value));
 	}
 	
 	public void testBetween3() throws ValidatorNotFoundException{
 		String value="1234567890123";
-		Validator validator=ValidatorTools.getValidator("between");
+		Validator validator=ValidatorTools.getValidator("between(6:8)");
 		
 		assertEquals(false,validator.validate(value));
 	}
@@ -179,28 +179,28 @@ public class ValidatorTest extends TestCase{
 	
 	public void testMaxStringSize1() throws ValidatorNotFoundException{
 		String value="12345";
-		Validator validator=ValidatorTools.getValidator("less8");
+		Validator validator=ValidatorTools.getValidator("max(8)");
 		
 		assertEquals(true,validator.validate(value));
 	}
 	
 	public void testMaxStringSize2() throws ValidatorNotFoundException{
 		String value="";
-		Validator validator=ValidatorTools.getValidator("less8");
+		Validator validator=ValidatorTools.getValidator("max(8)");
 		
 		assertEquals(true,validator.validate(value));
 	}
 	
 	public void testMaxStringSize3() throws ValidatorNotFoundException{
 		String value=null;
-		Validator validator=ValidatorTools.getValidator("less8");
+		Validator validator=ValidatorTools.getValidator("max(8)");
 		
 		assertEquals(true,validator.validate(value));
 	}
 	
 	public void testMaxStringSize4() throws ValidatorNotFoundException{
 		String value="12345678";
-		Validator validator=ValidatorTools.getValidator("less8");
+		Validator validator=ValidatorTools.getValidator("max(8)");
 		
 		assertEquals(true,validator.validate(value));
 	}
@@ -208,14 +208,14 @@ public class ValidatorTest extends TestCase{
 	
 	public void testMaxStringSize5() throws ValidatorNotFoundException{
 		String value="123456789";
-		Validator validator=ValidatorTools.getValidator("less8");
+		Validator validator=ValidatorTools.getValidator("max(8)");
 		
 		assertEquals(false,validator.validate(value));
 	}
 	
 	public void testMaxStringSize6() throws ValidatorNotFoundException{
 		String value="１２３４５６７８";
-		Validator validator=ValidatorTools.getValidator("less8");
+		Validator validator=ValidatorTools.getValidator("max(8)");
 		
 		assertEquals(true,validator.validate(value));
 	}
@@ -223,7 +223,7 @@ public class ValidatorTest extends TestCase{
 	
 	public void testMaxStringSize7() throws ValidatorNotFoundException{
 		String value="１２";
-		Validator validator=ValidatorTools.getValidator("less8");
+		Validator validator=ValidatorTools.getValidator("max(8)");
 		
 		assertEquals(true,validator.validate(value));
 	}
@@ -231,28 +231,28 @@ public class ValidatorTest extends TestCase{
 	
 	public void testMaxStringByte1() throws ValidatorNotFoundException{
 		String value="12345";
-		Validator validator=ValidatorTools.getValidator("less8b");
+		Validator validator=ValidatorTools.getValidator("maxb(8)");
 		
 		assertEquals(true,validator.validate(value));
 	}
 	
 	public void testMaxStringByte2() throws ValidatorNotFoundException{
 		String value="";
-		Validator validator=ValidatorTools.getValidator("less8b");
+		Validator validator=ValidatorTools.getValidator("maxb(8)");
 		
 		assertEquals(true,validator.validate(value));
 	}
 	
 	public void testMaxStringByte3() throws ValidatorNotFoundException{
 		String value=null;
-		Validator validator=ValidatorTools.getValidator("less8b");
+		Validator validator=ValidatorTools.getValidator("maxb(8)");
 		
 		assertEquals(true,validator.validate(value));
 	}
 	
 	public void testMaxStringByte4() throws ValidatorNotFoundException{
 		String value="12345678";
-		Validator validator=ValidatorTools.getValidator("less8b");
+		Validator validator=ValidatorTools.getValidator("maxb(8)");
 		
 		assertEquals(true,validator.validate(value));
 	}
@@ -260,14 +260,14 @@ public class ValidatorTest extends TestCase{
 	
 	public void testMaxStringByte5() throws ValidatorNotFoundException{
 		String value="123456789";
-		Validator validator=ValidatorTools.getValidator("less8b");
+		Validator validator=ValidatorTools.getValidator("maxb(8)");
 		
 		assertEquals(false,validator.validate(value));
 	}
 	
 	public void testMaxStringByte6() throws ValidatorNotFoundException{
 		String value="１２３４５６７８";
-		Validator validator=ValidatorTools.getValidator("less8b");
+		Validator validator=ValidatorTools.getValidator("maxb(8)");
 		
 		assertEquals(false,validator.validate(value));
 	}
@@ -275,7 +275,7 @@ public class ValidatorTest extends TestCase{
 	
 	public void testMaxStringByte7() throws ValidatorNotFoundException{
 		String value="１２";
-		Validator validator=ValidatorTools.getValidator("less8b");
+		Validator validator=ValidatorTools.getValidator("maxb(8)");
 		
 		assertEquals(true,validator.validate(value));
 	}

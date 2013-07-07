@@ -51,9 +51,6 @@ public static Validator getValidator(String line) throws ValidatorNotFoundExcept
 	else if(name.equals(StaticValidators.VALIDATOR_HIRAGANA.toLowerCase())){
 		return StaticValidators.hiragana();
 	}
-	else if(name.equals(StaticValidators.VALIDATOR_HIRAGANA.toLowerCase())){
-		return StaticValidators.hiragana();
-	}
 	else if(name.equals(StaticValidators.VALIDATOR_ASCII_CHAR.toLowerCase())){
 		return StaticValidators.asciiCharOnly();
 	}
@@ -106,7 +103,14 @@ public static Validator getValidator(String line) throws ValidatorNotFoundExcept
 		}else{
 			boolean bool;
 			try{
-				bool=Boolean.parseBoolean(param.get(0));
+				String v=param.get(0).toLowerCase();
+				if(v.equals("true")){
+					bool=true;
+				}else if(v.equals("false")){
+					bool=false;
+				}else{
+					throw new Exception();
+				}
 			}catch (Exception e) {
 				throw new ValidatorNotFoundException(name+" invalid boolean attribute:"+line);
 			}

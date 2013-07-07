@@ -238,7 +238,7 @@ public static NotEmptyValidator notEmptyValidator(){
 			    INSTANCE;
 				@Override
 				public String getName() {
-					return VALIDATOR_HANKAKU_KANA;
+					return VALIDATOR_HIRAGANA;
 				}
 				@Override
 				public boolean validate(String value) {

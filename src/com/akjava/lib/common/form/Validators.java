@@ -35,7 +35,7 @@ public class Validators {
 
 			private String encode="UTF-8";
 			private MaxStringByteSize(int max){
-				super(VALIDATOR_MAX_STRING_SIZE);
+				super(VALIDATOR_MAX_STRING_BYTE_SIZE);
 				this.max=max;
 				add(""+max);
 			}

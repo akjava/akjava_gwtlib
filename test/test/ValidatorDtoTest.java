@@ -52,7 +52,7 @@ public class ValidatorDtoTest extends TestCase{
 	}
 	//not regist 
 	public void testValidatorToName4(){
-		String collect="notempty,MaxStringSize";
+		String collect="notempty,max(10)";
 		try{
 		List<Validator> validators=Lists.newArrayList(ValidatorTools.getValidator("notempty"),Validators.maxStringSize(10));
 		String result=ValidatorDto.validatorListToNamesLine(validators);

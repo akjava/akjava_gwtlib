@@ -46,7 +46,7 @@ private static ValidatorToNameFunction validatorToNameFunction=new ValidatorToNa
 	public static class ValidatorToNameFunction implements Function<Validator,String>{
 		@Override
 		public String apply(Validator value) {
-			return value.toString();
+			return value.toString().toLowerCase();
 		}
 		
 	}
