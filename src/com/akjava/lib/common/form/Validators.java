@@ -7,10 +7,10 @@ import java.util.List;
 
 
 public class Validators {
-	public static final String VALIDATOR_MAX_STRING_SIZE="MaxStringSize";
-	public static final String VALIDATOR_BETWEEN_STRING_SIZE="BetweenStringSize";
-	public static final String VALIDATOR_MAX_STRING_BYTE_SIZE="MaxStringByteSize";
-	
+	public static final String VALIDATOR_MAX_STRING_SIZE="max";
+	public static final String VALIDATOR_BETWEEN_STRING_SIZE="between";
+	public static final String VALIDATOR_MAX_STRING_BYTE_SIZE="maxb";
+	public static final String VALIDATOR_AVAIABLE_VALUE_ONLY="avaiable";
 	
 	public static MaxStringSize maxStringSize(int max){
 		  return new MaxStringSize(max);
@@ -24,7 +24,7 @@ public class Validators {
 		  return new BetweenStringSize(min,max);
 	  }
 	 
-	 private static class MaxStringByteSize implements Validator{
+	 private static class MaxStringByteSize extends AbstractValidator{
 			private int max;
 			public int getMax() {
 				return max;
@@ -35,7 +35,9 @@ public class Validators {
 
 			private String encode="UTF-8";
 			private MaxStringByteSize(int max){
+				super(VALIDATOR_MAX_STRING_SIZE);
 				this.max=max;
+				add(""+max);
 			}
 			@Override
 			public boolean validate(String value) {
@@ -53,11 +55,7 @@ public class Validators {
 				return false;
 			}
 
-			@Override
-			public String getName() {
-				// TODO Auto-generated method stub
-				return VALIDATOR_MAX_STRING_SIZE;
-			}
+
 			
 			@Override
 			public boolean equals(Object object){
@@ -70,7 +68,7 @@ public class Validators {
 			
 		 }
 	 
-	 private static class BetweenStringSize implements Validator{
+	 private static class BetweenStringSize extends AbstractValidator{
 		private int max;
 		private int min;
 		public int getMax() {
@@ -80,9 +78,11 @@ public class Validators {
 			return min;
 		}
 		private BetweenStringSize(int min,int max){
+			super(VALIDATOR_BETWEEN_STRING_SIZE);
 			this.min=min;
 			this.max=max;
-			
+			add(""+min);
+			add(""+max);
 		}
 		@Override
 		public boolean validate(String value) {
@@ -92,12 +92,6 @@ public class Validators {
 			
 				return value.length()>=min && value.length()<=max;
 			
-		}
-
-		@Override
-		public String getName() {
-			// TODO Auto-generated method stub
-			return VALIDATOR_BETWEEN_STRING_SIZE;
 		}
 		
 		@Override
@@ -111,13 +105,15 @@ public class Validators {
 		
 	 }
 	 
-	 private static class MaxStringSize implements Validator{
+	 private static class MaxStringSize extends AbstractValidator{
 		private int max;
 		public int getMax() {
 			return max;
 		}
 		private MaxStringSize(int max){
+			super(VALIDATOR_MAX_STRING_SIZE);
 			this.max=max;
+			add(""+max);
 		}
 		@Override
 		public boolean validate(String value) {
@@ -150,11 +146,17 @@ public class Validators {
 		  }
 		
 		
-	 private static class AvaiableValueOnly implements Validator{
+	 private static class AvaiableValueOnly extends AbstractValidator{
 		private Collection<String> values;
 		private Collection<String> lowercases;
 		private boolean caseSensitive;
 		private AvaiableValueOnly(Collection<String> values,boolean caseSensitive){
+			super(VALIDATOR_AVAIABLE_VALUE_ONLY);
+			add(""+caseSensitive);
+			for(String v:values){
+				add(v);
+			}
+			
 			this.values=values;
 			this.caseSensitive=caseSensitive;
 			if(!caseSensitive){
@@ -180,12 +182,6 @@ public class Validators {
 				}
 			}
 			
-		}
-
-		@Override
-		public String getName() {
-			// TODO Auto-generated method stub
-			return VALIDATOR_MAX_STRING_SIZE;
 		}
 		
 	 } 

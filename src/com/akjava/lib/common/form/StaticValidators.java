@@ -19,6 +19,10 @@ public static final String VALIDATOR_HANKAKU_KANA="HankakuKana";
 public static final String VALIDATOR_HIRAGANA="Hiragana";
 //public static final String VALIDATOR_ASCII_NUMBER_AND_CHAR_HANKAKU_KANA="AsciiNumberAndCharAndHankakuKana";
 
+
+
+
+
 public static NotEmptyValidator notEmptyValidator(){
 		  return NotEmptyValidator.INSTANCE;
 	  }
@@ -32,6 +36,11 @@ public static NotEmptyValidator notEmptyValidator(){
 			@Override
 			public boolean validate(String value) {
 				return value!=null && !value.isEmpty();
+			}
+			
+			@Override
+			public String toString() {
+				return getName();
 			}
 		  }
 	  
@@ -55,6 +64,10 @@ public static NotEmptyValidator notEmptyValidator(){
 				}
 				return true;
 			}
+			@Override
+			public String toString() {
+				return getName();
+			}
 		  }
 	  
 	  
@@ -74,6 +87,10 @@ public static NotEmptyValidator notEmptyValidator(){
 					return false;
 				}
 				return true;
+			}
+			@Override
+			public String toString() {
+				return getName();
 			}
 		  }
 	  
@@ -98,6 +115,10 @@ public static NotEmptyValidator notEmptyValidator(){
 				}
 				return true;
 			}
+			@Override
+			public String toString() {
+				return getName();
+			}
 		  }
 	  
 	  public static AsciiNumberAndCharOnly asciiNumberAndCharOnly(){
@@ -118,6 +139,10 @@ public static NotEmptyValidator notEmptyValidator(){
 					}
 				}
 				return true;
+			}
+			@Override
+			public String toString() {
+				return getName();
 			}
 		  }
 	  
@@ -141,6 +166,10 @@ public static NotEmptyValidator notEmptyValidator(){
 					}
 				}
 				return true;
+			}
+			@Override
+			public String toString() {
+				return getName();
 			}
 		  }
 	  
@@ -170,6 +199,10 @@ public static NotEmptyValidator notEmptyValidator(){
 					}
 					return true;
 				}
+				@Override
+				public String toString() {
+					return getName();
+				}
 			  }
 		  
 		  public static HankakuKana hankakuKana(){
@@ -191,6 +224,10 @@ public static NotEmptyValidator notEmptyValidator(){
 					}
 					return true;
 				}
+				@Override
+				public String toString() {
+					return getName();
+				}
 			  }
 		  
 		  public static Hiragana hiragana(){
@@ -211,6 +248,10 @@ public static NotEmptyValidator notEmptyValidator(){
 							} 
 					}
 					return true;
+				}
+				@Override
+				public String toString() {
+					return getName();
 				}
 			  }
 		  
