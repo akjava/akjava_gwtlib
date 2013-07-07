@@ -25,7 +25,7 @@ public class FormFieldValidate {
 		
 		errorValidators.put("createAuto", Validators.avaiableValueOnly(Lists.newArrayList("yes","","no"), false));
 		
-		errorValidators.put("validators", Validators.avaiableValueOnly(ValidatorTools.getValidatorMap().keySet(), false));
+		//errorValidators.put("validators", Validators.avaiableValueOnly(ValidatorTools.getValidatorMap().keySet(), false));
 	}
 	
 	public HashMultimap<String,String> doCheckError(FormFieldData data){

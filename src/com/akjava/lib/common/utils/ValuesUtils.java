@@ -91,6 +91,31 @@ public class ValuesUtils {
 		
 	}
 	
+	public static int parseByte(String byteString) throws Exception{
+		String b=byteString.toLowerCase();
+		if(b.endsWith("k")){
+			b=b.substring(0,b.length()-1);
+			int number=Integer.parseInt(b);
+			return number*1024;
+		}else if(b.endsWith("m")){
+			b=b.substring(0,b.length()-1);
+			int number=Integer.parseInt(b);
+			return number*1024*1024;
+		}else{
+			int number=Integer.parseInt(b);
+			return number;
+		}
+	}
+	
+	public static boolean isDigitString(String value){
+		for(int i=0;i<value.length();i++){
+			if(!Character.isDigit(value.charAt(i)) || value.charAt(i)>128){
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	public static String upperCamelToUnderbar(String text){
 		if(text==null || text.length()==0){
 			return text;

@@ -46,13 +46,7 @@ private static ValidatorToNameFunction validatorToNameFunction=new ValidatorToNa
 	public static class ValidatorToNameFunction implements Function<Validator,String>{
 		@Override
 		public String apply(Validator value) {
-			
-			String name=ValidatorTools.getValidatorMap().inverse().get(value);
-			if(name==null){
-				//not registed
-				name=value.getName();
-			}
-			return name;
+			return value.toString();
 		}
 		
 	}
