@@ -1,13 +1,16 @@
 package com.akjava.lib.common.form;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.akjava.lib.common.form.FormDataDto.FormDataToCsvFunction;
 import com.akjava.lib.common.functions.LabelAndValueDto;
 import com.akjava.lib.common.functions.SplitLineFunction;
 import com.akjava.lib.common.tag.LabelAndValue;
+import com.akjava.lib.common.tag.Tag;
+import com.akjava.lib.common.tag.TagBuilder;
+import com.akjava.lib.common.utils.TagUtil;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 
@@ -88,6 +91,119 @@ public class FormFieldDataDto {
 			return data.getName();
 		}
 	}
+	
+	
+	
+	
+	public static FormFieldToHiddenTagFunction getFormFieldToHiddenTagFunction(){
+		return FormFieldToHiddenTagFunction.INSTANCE;
+	}
+	public enum  FormFieldToHiddenTagFunction implements Function<FormFieldData,Tag>{
+		INSTANCE;
+		@Override
+		public Tag apply(FormFieldData data) {
+			Tag tag=null;
+			tag=TagBuilder.createHidden(data.getKey(), null);
+			return tag;
+		}
+	}
+	
+	public static FormFieldToInputTagFunction getFormFieldToInputTagFunction(){
+		return FormFieldToInputTagFunction.INSTANCE;
+	}
+	public enum  FormFieldToInputTagFunction implements Function<FormFieldData,Tag>{
+		INSTANCE;
+		@Override
+		public Tag apply(FormFieldData data) {
+			Tag tag=null;
+			if(data.getType()==FormFieldData.TYPE_TEXT_LONG){
+				tag=TagBuilder.createTextArea(data.getKey(), null);
+			}else if(data.getType()==FormFieldData.TYPE_ID){//usually ignore it
+				tag=TagBuilder.createText(data.getKey(), null);
+			}else if(data.getType()==FormFieldData.TYPE_CHECK){
+				tag=TagBuilder.createCheckbox(data.getKey(), null,false);
+			}else if(data.getType()==FormFieldData.TYPE_SELECT_SINGLE){
+				tag=TagBuilder.createSelect(data.getKey(), data.getOptionValues(), false);
+			}else if(data.getType()==FormFieldData.TYPE_SELECT_MULTI){
+				tag=TagBuilder.createSelect(data.getKey(), data.getOptionValues(), true);
+			}else if(data.getType()==FormFieldData.TYPE_CREATE_DATE){//usually ignore it
+				tag=TagBuilder.createText(data.getKey(), null);
+			}else if(data.getType()==FormFieldData.TYPE_CREATE_USER){//usually ignore it
+				tag=TagBuilder.createText(data.getKey(), null);
+			}else{
+				//default text
+				tag=TagBuilder.createText(data.getKey(), null);
+			}
+			return tag;
+		}
+	}
+	
+	public static class  FormFieldToInputEditTagFunction implements Function<FormFieldData,Tag>{
+		private Map<String,String> valueMap;
+		public FormFieldToInputEditTagFunction(Map<String,String> valueMap){
+			this.valueMap=valueMap;
+		}
+		@Override
+		public Tag apply(FormFieldData data) {
+			Tag tag=null;
+			if(data.getType()==FormFieldData.TYPE_TEXT_LONG){
+				tag=TagBuilder.createTextArea(data.getKey(), valueMap.get(data.getKey()));
+			}else if(data.getType()==FormFieldData.TYPE_ID){//usually ignore it
+				tag=TagBuilder.createText(data.getKey(), valueMap.get(data.getKey()));
+			}else if(data.getType()==FormFieldData.TYPE_CHECK){
+				String value=valueMap.get(data.getKey());
+				boolean checked=false;
+				if(value!=null && value.equals("on")){
+					checked=true;
+				}
+				tag=TagBuilder.createCheckbox(data.getKey(), null,checked);
+			}else if(data.getType()==FormFieldData.TYPE_SELECT_SINGLE){
+				String value=valueMap.get(data.getKey());
+				
+				List<LabelAndValue> lvalues=new ArrayList<LabelAndValue>();
+				for(LabelAndValue lv:data.getOptionValues()){
+					LabelAndValue cloned=lv.clone();
+					if(cloned.getValue().equals(value)){
+						cloned.setSelected(true);
+					}else{
+						cloned.setSelected(false);
+					}
+					lvalues.add(cloned);
+				}
+				tag=TagBuilder.createSelect(data.getKey(), lvalues, false);
+			}else if(data.getType()==FormFieldData.TYPE_SELECT_MULTI){
+				String value=valueMap.get(data.getKey());
+				List<String> valueList=new ArrayList<String>();
+				if(value!=null){
+					String[] values=value.split(":");
+					for(String v:values){
+					valueList.add(v);
+					}
+				}
+				
+				List<LabelAndValue> lvalues=new ArrayList<LabelAndValue>();
+				for(LabelAndValue lv:data.getOptionValues()){
+					LabelAndValue cloned=lv.clone();
+					if(valueList.contains(cloned.getValue())){
+						cloned.setSelected(true);
+					}else{
+						cloned.setSelected(false);
+					}
+					lvalues.add(cloned);
+				}
+				tag=TagBuilder.createSelect(data.getKey(), lvalues, true);
+			}else if(data.getType()==FormFieldData.TYPE_CREATE_DATE){//usually ignore it
+				tag=TagBuilder.createText(data.getKey(), valueMap.get(data.getKey()));
+			}else if(data.getType()==FormFieldData.TYPE_CREATE_USER){//usually ignore it
+				tag=TagBuilder.createText(data.getKey(), valueMap.get(data.getKey()));
+			}else{
+				//default text
+				tag=TagBuilder.createText(data.getKey(), valueMap.get(data.getKey()));
+			}
+			return tag;
+		}
+	}
+	
 	
 	public static FormFieldToKeyFunction getFormFieldToKeyFunction(){
 		return FormFieldToKeyFunction.INSTANCE;

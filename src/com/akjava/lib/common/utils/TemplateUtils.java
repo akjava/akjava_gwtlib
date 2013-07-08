@@ -16,7 +16,7 @@ public class TemplateUtils {
 			if(map.get(key)!=null){
 			result=result.replace("${"+key+"}", map.get(key));
 			}else{
-				System.out.println("null value:"+key);
+				System.out.println("TemplateUtils.createText()#null value:"+key);
 			}
 		}
 		return result;
@@ -35,7 +35,7 @@ public class TemplateUtils {
 			result=result.replace("${u+"+key+"}", ValuesUtils.toUpperCamel(map.get(key)));
 			result=result.replace("${l+"+key+"}", ValuesUtils.toLowerCamel(map.get(key)));
 			}else{
-				System.out.println("null value:"+key);
+				System.out.println("TemplateUtils.createText()#null value:"+key);
 			}
 		}
 		return result;

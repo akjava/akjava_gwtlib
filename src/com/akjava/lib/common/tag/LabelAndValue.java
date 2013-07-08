@@ -56,7 +56,7 @@ public String toString(){
 }
 
 public String toOption(){
-	String option="<option ";
+	String option="<option";
 	String outValue=value;
 	String selectValue="";
 	if(selected){
@@ -66,13 +66,18 @@ public String toOption(){
 		outValue=outValue.replace("\"", "&quot;");
 	}
 	if(label!=null){
-		option+="value=\""+outValue+"\"";
+		option+=" value=\""+outValue+"\"";
 		option+=selectValue+">";
 		option+=label;
 	}else{
 		option+=selectValue+">"+value;
 	}
 	return option;
+}
+
+//for edit
+public LabelAndValue clone(){
+	return new LabelAndValue(label,value,selected);
 }
 
 }

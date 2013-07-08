@@ -55,7 +55,7 @@ public class HTMLUtils {
 		   
 		   return false;
 	   }
-	   
+	   //duplicated on Tag
 	   public static String createHiddenInput(String name,String value){
 		   return "<input type='hidden' name='"+name+"' value='"+value+"'/>";
 	   }
