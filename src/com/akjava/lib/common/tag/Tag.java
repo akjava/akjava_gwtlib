@@ -9,6 +9,10 @@ public class Tag {
 private String name;
 private boolean singleTag;
 private List<Tag> childrens=new ArrayList<Tag>();
+public List<Tag> getChildrens() {
+	return childrens;
+}
+
 public String getName() {
 	return name;
 }

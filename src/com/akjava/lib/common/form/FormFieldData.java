@@ -93,33 +93,42 @@ public static final int TYPE_SELECT_MULTI=5;
 public static final int TYPE_CREATE_DATE=6;
 public static final int TYPE_CREATE_USER=7;
 
+public static final int TYPE_MODIFIED_DATE=8;
+public static final int TYPE_MODIFIED_USER=9;
+
 public static String getTypeLabel(int value){
 	switch(value){	
-	case 1:
+	case TYPE_TEXT_LONG:
 	return "text_long";
 
-	case 2:
+	case TYPE_ID:
 	return "id";
-	case 3:
+	case TYPE_CHECK:
 	return "check";
 	
-	case 4:
+	case TYPE_SELECT_SINGLE:
 	return "select";
 
-	case 5:
+	case TYPE_SELECT_MULTI:
 	return "select_multi";
 
-	case 6:
+	case TYPE_CREATE_DATE:
 	return "create_date";
 
-	case 7:
+	case TYPE_CREATE_USER:
 	return "create_user";
+	
+	case TYPE_MODIFIED_DATE:
+		return "modified_date";
+		
+	case TYPE_MODIFIED_USER:
+		return "modified_user";
 
 	default:
 		return "text";
 	}
 }
-public static List<String> TYPES=Lists.newArrayList("text","text_long","id","check","select","select_multi","create_date","create_user");
+public static List<String> TYPES=Lists.newArrayList("text","text_long","id","check","select","select_multi","create_date","create_user","modified_date","modified_user");
 public static int getTypeByLabel(String v){
 	int type=0;
 	if(v.equals("text")){
@@ -137,6 +146,10 @@ public static int getTypeByLabel(String v){
 	}else if(v.equals("create_date")){
 		type=6;
 	}else if(v.equals("create_user")){
+		type=7;
+	}else if(v.equals("modified_date")){
+		type=7;
+	}else if(v.equals("modified_user")){
 		type=7;
 	}
 	return type;

@@ -107,6 +107,38 @@ public class FormFieldDataDto {
 			return tag;
 		}
 	}
+	/*
+	public static FormFieldToEditTagFunction getFormFieldToEditTagFunction(){
+		return FormFieldToEditTagFunction.INSTANCE;
+	}
+	
+	public enum  FormFieldToEditTagFunction implements Function<FormFieldData,Tag>{
+		INSTANCE;
+		@Override
+		public Tag apply(FormFieldData data) {
+			Tag tag=null;
+			if(data.getType()==FormFieldData.TYPE_TEXT_LONG){
+				tag=TagBuilder.createTextArea(data.getKey(), null);
+			}else if(data.getType()==FormFieldData.TYPE_ID){//usually ignore it
+				tag=TagBuilder.createText(data.getKey(), null);
+			}else if(data.getType()==FormFieldData.TYPE_CHECK){
+				tag=TagBuilder.createCheckbox(data.getKey(), null,false);
+			}else if(data.getType()==FormFieldData.TYPE_SELECT_SINGLE){
+				tag=TagBuilder.createSelect(data.getKey(), data.getOptionValues(), false);
+			}else if(data.getType()==FormFieldData.TYPE_SELECT_MULTI){
+				tag=TagBuilder.createSelect(data.getKey(), data.getOptionValues(), true);
+			}else if(data.getType()==FormFieldData.TYPE_CREATE_DATE){//usually ignore it
+				tag=TagBuilder.createText(data.getKey(), null);
+			}else if(data.getType()==FormFieldData.TYPE_CREATE_USER){//usually ignore it
+				tag=TagBuilder.createText(data.getKey(), null);
+			}else{
+				//default text
+				tag=TagBuilder.createText(data.getKey(), null);
+			}
+			return tag;
+		}
+	}
+	*/
 	
 	public static FormFieldToInputTagFunction getFormFieldToInputTagFunction(){
 		return FormFieldToInputTagFunction.INSTANCE;
@@ -133,6 +165,81 @@ public class FormFieldDataDto {
 			}else{
 				//default text
 				tag=TagBuilder.createText(data.getKey(), null);
+			}
+			return tag;
+		}
+	}
+	
+
+	public static class  FormFieldToHiddenTagWithValueFunction implements Function<FormFieldData,Tag>{
+		private Map<String,String> valueMap;
+		public FormFieldToHiddenTagWithValueFunction(Map<String,String> valueMap){
+			this.valueMap=valueMap;
+		}
+		@Override
+		public Tag apply(FormFieldData data) {
+			Tag tag=null;
+			tag=TagBuilder.createHidden(data.getKey(), valueMap.get(data.getKey()));
+			return tag;
+		}
+	}
+	public static FormFieldToInputTemplateTagFunction getFormFieldToInputTemplateTagFunction(){
+		return FormFieldToInputTemplateTagFunction.INSTANCE;
+	}
+	public static enum  FormFieldToInputTemplateTagFunction implements Function<FormFieldData,Tag>{
+		INSTANCE;
+		@Override
+		public Tag apply(FormFieldData data) {
+			Tag tag=null;
+			if(data.getType()==FormFieldData.TYPE_TEXT_LONG){
+				tag=TagBuilder.createTextArea(data.getKey(), "${value_"+data.getKey()+"}");
+			}else if(data.getType()==FormFieldData.TYPE_ID){//usually ignore it
+				tag=TagBuilder.createText(data.getKey(), "${value_"+data.getKey()+"}");
+			}else if(data.getType()==FormFieldData.TYPE_CHECK){
+				
+				tag=TagBuilder.createCheckbox(data.getKey(), null,false);
+				tag.setAttribute("checked","${checked_"+data.getKey()+"}");
+			}else if(data.getType()==FormFieldData.TYPE_SELECT_SINGLE){
+				tag=TagBuilder.createSelect(data.getKey(), null, false);
+				int index=0;
+				for(LabelAndValue lv:data.getOptionValues()){
+					Tag option=new Tag("option");
+					String value=lv.getValue();
+					String label=lv.getLabel();
+					if(label!=null){
+						option.setText(label);
+						option.setAttribute("value", value);
+					}else{
+						option.setText(value);
+					}
+					option.setAttribute("selected", "${selected_"+data.getKey()+index+"}");
+					index++;
+					tag.addChild(option);
+				}
+			}else if(data.getType()==FormFieldData.TYPE_SELECT_MULTI){
+				tag=TagBuilder.createSelect(data.getKey(), null, true);
+				int index=0;
+				for(LabelAndValue lv:data.getOptionValues()){
+					Tag option=new Tag("option");
+					String value=lv.getValue();
+					String label=lv.getLabel();
+					if(label!=null){
+						option.setText(label);
+						option.setAttribute("value", value);
+					}else{
+						option.setText(value);
+					}
+					option.setAttribute("selected", "${selected_"+data.getKey()+index+"}");
+					index++;
+					tag.addChild(option);
+				}
+			}else if(data.getType()==FormFieldData.TYPE_CREATE_DATE){//usually ignore it
+				tag=TagBuilder.createText(data.getKey(), "${value_"+data.getKey()+"}");
+			}else if(data.getType()==FormFieldData.TYPE_CREATE_USER){//usually ignore it
+				tag=TagBuilder.createText(data.getKey(), "${value_"+data.getKey()+"}");
+			}else{
+				//default text
+				tag=TagBuilder.createText(data.getKey(), "${value_"+data.getKey()+"}");
 			}
 			return tag;
 		}

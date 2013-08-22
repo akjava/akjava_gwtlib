@@ -117,11 +117,13 @@ private TagBuilder(){}
 		}
 		
 		String options="";
+		if(lvalues!=null){
 		for(LabelAndValue lvalue:lvalues){
 			options+=lvalue.toOption()+"\n";
 		}
 		options=ValuesUtils.chomp(options);
 		tag.setText(options);
+		}
 		
 		return tag;
 	}
