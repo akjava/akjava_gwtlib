@@ -33,7 +33,7 @@ public class FormFieldDataDto {
 		Map<String,String> hashMap=new LinkedHashMap<String, String>();
 		hashMap.put("name", data.getName());
 		hashMap.put("key", data.getKey());
-		hashMap.put("type", FormFieldData.getTypeLabel(data.getType()));
+		hashMap.put("type", FormFieldData.getTypeByNumber(data.getType()));
 		hashMap.put("optionValues", LabelAndValueDto.labelAndValueToString(data.getOptionValues()));
 		hashMap.put("defaultValue", data.getDefaultValue());
 		hashMap.put("createAuto", data.isCreateAuto()?"yes":"");
@@ -362,23 +362,7 @@ public class FormFieldDataDto {
 			if(csvs.size()>2){//TODO not use number
 				int type=0;
 				String v=csvs.get(2).toLowerCase();
-				if(v.equals("text_short")){
-					type=0;
-				}else if(v.equals("text_long")){
-					type=1;
-				}else if(v.equals("id")){
-					type=2;
-				}else if(v.equals("check")){
-					type=3;
-				}else if(v.equals("select")){
-					type=4;
-				}else if(v.equals("select_multi")){
-					type=5;
-				}else if(v.equals("create_date")){
-					type=6;
-				}else if(v.equals("create_user")){
-					type=7;
-				}
+				type=FormFieldData.getTypeByLabel(v);
 				data.setType(type);
 			}
 			
