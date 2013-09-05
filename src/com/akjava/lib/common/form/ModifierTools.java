@@ -17,7 +17,7 @@ public static BiMap<String,Modifier> getModifierMap(){
 		modifierMap=HashBiMap.create();
 		modifierMap.put(Modifiers.MODIFIER_SANITIZE.toLowerCase(), Modifiers.getSanitizeModier());
 		modifierMap.put(Modifiers.MODIFIER_TABTOSPACE.toLowerCase(), Modifiers.getTabToSpaceModier());
-		modifierMap.put(Modifiers.MODIFIER_LINETOBR.toLowerCase(), Modifiers.getLineToBreModifier());
+		modifierMap.put(Modifiers.MODIFIER_LINETOBR.toLowerCase(), Modifiers.getLineToBrModifier());
 		
 
 	}

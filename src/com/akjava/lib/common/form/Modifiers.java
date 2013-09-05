@@ -49,7 +49,7 @@ public class Modifiers {
 				
 			  }
 		  
-			public static LineToBreModifier getLineToBreModifier(){
+			public static LineToBreModifier getLineToBrModifier(){
 				  return LineToBreModifier.INSTANCE;
 			  }
 			  
