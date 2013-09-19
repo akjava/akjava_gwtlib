@@ -184,7 +184,7 @@ public class FormFieldDtoTest extends TestCase{
 			field.setValidators(validators);
 			
 			List<Modifier> modifiers=new ArrayList<Modifier>();
-			modifiers.add(Modifiers.getLineToBreModifier());
+			modifiers.add(Modifiers.getLineToBrModifier());
 			
 			field.setModifiers(modifiers);
 			
