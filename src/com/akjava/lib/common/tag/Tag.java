@@ -8,6 +8,7 @@ import java.util.Map;
 public class Tag {
 private String name;
 private boolean singleTag;
+private String specialEnd=null;//for selected
 private List<Tag> childrens=new ArrayList<Tag>();
 public List<Tag> getChildrens() {
 	return childrens;
@@ -83,6 +84,10 @@ public String toString(){
 		 buffer.append(" "+attr+"=\""+value+"\"");
 	}
 	
+	if(specialEnd!=null){
+		buffer.append(" "+specialEnd);
+	}
+	
 	if(singleTag){
 		buffer.append("/>");
 	}else{
@@ -100,6 +105,14 @@ public String toString(){
 	}
 	
 	return buffer.toString();
+}
+
+public String getSpecialEnd() {
+	return specialEnd;
+}
+
+public void setSpecialEnd(String specialEnd) {
+	this.specialEnd = specialEnd;
 }
 
 

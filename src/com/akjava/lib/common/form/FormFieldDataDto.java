@@ -212,7 +212,7 @@ public class FormFieldDataDto {
 					}else{
 						option.setText(value);
 					}
-					option.setAttribute("selected", "${selected_"+data.getKey()+index+"}");
+					option.setSpecialEnd("${selected_"+data.getKey()+index+"}");
 					index++;
 					tag.addChild(option);
 				}
