@@ -15,6 +15,7 @@ public class PageMenuHtmlMaker {
 	private String descriptionDivClass="menu_description";
 	//TODO something message
 	private String description="$start件目から$end件目を表示しています";
+	private String empty="該当データはありません";
 	private String baseUrl="";
 	public PageMenuHtmlMaker(String baseUrl,String basicQuery){
 		this.baseUrl=baseUrl;
@@ -36,7 +37,11 @@ public class PageMenuHtmlMaker {
 		}
 		
 		String des=description.replace("$start", ""+start);
+		long countItem=info.getCountItem();
 		des=des.replace("$end", ""+Math.min(end,info.getCountItem()));
+		if(countItem==0){
+			des=empty;
+			}
 		Tag desc=new Tag("div");
 		desc.setText(des);
 		desc.setAttribute("class", descriptionDivClass);
