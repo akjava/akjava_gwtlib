@@ -10,7 +10,9 @@ import com.akjava.lib.common.functions.SplitLineFunction;
 import com.akjava.lib.common.tag.LabelAndValue;
 import com.akjava.lib.common.tag.Tag;
 import com.akjava.lib.common.tag.TagBuilder;
+import com.akjava.lib.common.utils.HTMLUtils;
 import com.akjava.lib.common.utils.TagUtil;
+import com.akjava.lib.common.utils.ValuesUtils;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 
@@ -149,22 +151,43 @@ public class FormFieldDataDto {
 		public Tag apply(FormFieldData data) {
 			Tag tag=null;
 			if(data.getType()==FormFieldData.TYPE_TEXT_LONG){
-				tag=TagBuilder.createTextArea(data.getKey(), null);
+				String defaultValue=null;
+				if(data.getDefaultValue()!=null && !data.getDefaultValue().isEmpty()){
+					defaultValue=HTMLUtils.sanitize(data.getDefaultValue());
+				}
+				
+				tag=TagBuilder.createTextArea(data.getKey(), defaultValue);
 			}else if(data.getType()==FormFieldData.TYPE_ID){//usually ignore it
 				tag=TagBuilder.createText(data.getKey(), null);
 			}else if(data.getType()==FormFieldData.TYPE_CHECK){
-				tag=TagBuilder.createCheckbox(data.getKey(), null,false);
+				String defaultValue=null;
+				boolean selection=false;
+				if(data.getDefaultValue()!=null && !data.getDefaultValue().isEmpty()){
+					defaultValue=data.getDefaultValue();
+					if(data.getOptionValues().size()>0){
+						if(data.getOptionValues().get(0).getPrintValue().equals(defaultValue)){
+							selection=true;
+						}
+					}
+				}
+				tag=TagBuilder.createCheckbox(data.getKey(), null,selection);
 			}else if(data.getType()==FormFieldData.TYPE_SELECT_SINGLE){
+				//defautl value already selected
 				tag=TagBuilder.createSelect(data.getKey(), data.getOptionValues(), false);
 			}else if(data.getType()==FormFieldData.TYPE_SELECT_MULTI){
+				//defautl value already selected
 				tag=TagBuilder.createSelect(data.getKey(), data.getOptionValues(), true);
 			}else if(data.getType()==FormFieldData.TYPE_CREATE_DATE){//usually ignore it
+				
 				tag=TagBuilder.createText(data.getKey(), null);
 			}else if(data.getType()==FormFieldData.TYPE_CREATE_USER){//usually ignore it
 				tag=TagBuilder.createText(data.getKey(), null);
 			}else{
-				//TODO default text
-				tag=TagBuilder.createText(data.getKey(), null);
+				String defaultValue=null;
+				if(data.getDefaultValue()!=null && !data.getDefaultValue().isEmpty()){
+					defaultValue=HTMLUtils.sanitize(data.getDefaultValue());
+				}
+				tag=TagBuilder.createText(data.getKey(), defaultValue);
 			}
 			return tag;
 		}
