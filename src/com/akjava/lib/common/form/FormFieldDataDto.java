@@ -198,7 +198,7 @@ public class FormFieldDataDto {
 			}else if(data.getType()==FormFieldData.TYPE_CHECK){
 				
 				tag=TagBuilder.createCheckbox(data.getKey(), null,false);
-				tag.setAttribute("checked","${checked_"+data.getKey()+"}");
+				tag.setSpecialEnd("${checked_"+data.getKey()+"}");
 			}else if(data.getType()==FormFieldData.TYPE_SELECT_SINGLE){
 				tag=TagBuilder.createSelect(data.getKey(), null, false);
 				int index=0;
@@ -229,7 +229,7 @@ public class FormFieldDataDto {
 					}else{
 						option.setText(value);
 					}
-					option.setAttribute("selected", "${selected_"+data.getKey()+index+"}");
+					option.setSpecialEnd("${selected_"+data.getKey()+index+"}");
 					index++;
 					tag.addChild(option);
 				}
