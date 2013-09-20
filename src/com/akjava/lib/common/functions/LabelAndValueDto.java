@@ -16,7 +16,7 @@ private static final Joiner COMMA_JOINER=Joiner.on(",");
 	public static List<LabelAndValue> lineToLabelAndValues(String line){
 		String[] csv=line.split(",");
 		List<String> values=Lists.newArrayList(csv);
-		return Lists.transform(values, new TextToLabelAndValueFunction());
+		return Lists.newArrayList(Lists.transform(values, new TextToLabelAndValueFunction()));
 	}
 	
 	public static List<LabelAndValue> lineToLabelAndValuesWithNumber(String line){
@@ -31,7 +31,7 @@ private static final Joiner COMMA_JOINER=Joiner.on(",");
 			}
 		}
 		
-		return Lists.transform(values, new TextToLabelAndValueFunction());
+		return Lists.newArrayList(Lists.transform(values, new TextToLabelAndValueFunction()));
 	}
 	
 	public static String labelAndValueToString(List<LabelAndValue> values){

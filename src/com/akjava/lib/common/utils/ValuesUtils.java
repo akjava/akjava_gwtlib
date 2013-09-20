@@ -132,11 +132,11 @@ public class ValuesUtils {
 	}
 	
 	public static String[] toArrayLines(String text){
-		text=ValueUtils.toNLineSeparator(text);
+		text=CSVUtils.toNLineSeparator(text);
 		return text.split("\n");//this is slow
 	}
 	public static List<String> toListLines(String text){
-		text=ValueUtils.toNLineSeparator(text);
+		text=CSVUtils.toNLineSeparator(text);
 		List<String> values=new ArrayList<String>();
 		for(String v:text.split("\n")){
 			values.add(v);

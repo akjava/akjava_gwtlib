@@ -163,7 +163,7 @@ public class FormFieldDataDto {
 			}else if(data.getType()==FormFieldData.TYPE_CREATE_USER){//usually ignore it
 				tag=TagBuilder.createText(data.getKey(), null);
 			}else{
-				//default text
+				//TODO default text
 				tag=TagBuilder.createText(data.getKey(), null);
 			}
 			return tag;
@@ -381,6 +381,23 @@ public class FormFieldDataDto {
 			
 			if(csvs.size()>4){
 				data.setDefaultValue(csvs.get(4));
+				
+				if(data.getDefaultValue()!=null && !data.getDefaultValue().isEmpty()){//empty not support
+					String[] vs=data.getDefaultValue().split(",");//
+					List<String> selections=new ArrayList<String>();
+					for(String v:vs){
+						selections.add(v);
+					}
+					
+					//watch out lists.transform list cant edit
+					for(int i=0;i<data.getOptionValues().size();i++){
+						LabelAndValue lv=data.getOptionValues().get(i);
+						if(selections.contains(lv.getPrintValue())){
+							lv.setSelected(true);
+						}
+						
+					}
+				}
 			}
 			
 			if(csvs.size()>5){
