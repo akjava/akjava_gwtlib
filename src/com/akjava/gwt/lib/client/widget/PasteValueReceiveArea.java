@@ -33,7 +33,7 @@ public class PasteValueReceiveArea extends TextArea{
 		    switch (event.getTypeInt()) {
 		        case Event.ONPASTE: {
 		        	LogUtils.log(event);
-		        	GWT.log("paste");
+		        	
 		        	ValueChangeEvent.fire(this, getPastedText(event));
 		            break;
 		        }
