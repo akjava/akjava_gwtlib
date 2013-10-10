@@ -10,6 +10,15 @@ private String name;
 private boolean singleTag;
 private String specialEnd=null;//for selected
 private List<Tag> childrens=new ArrayList<Tag>();
+private Tag parent;
+public Tag getParent() {
+	return parent;
+}
+
+public void setParent(Tag parent) {
+	this.parent = parent;
+}
+
 public List<Tag> getChildrens() {
 	return childrens;
 }
@@ -55,6 +64,7 @@ public Tag(String name){
 
 public void addChild(Tag tag){
 	childrens.add(tag);
+	tag.setParent(this);
 }
 
 public void setAttribute(String name){
@@ -72,7 +82,7 @@ public void setClass(String clasz){
 	setAttribute("class", clasz);
 }
 
-public String toString(){
+public String getStartTagText(){
 	StringBuffer buffer=new StringBuffer();
 	buffer.append("<"+name);
 	
@@ -92,6 +102,24 @@ public String toString(){
 		buffer.append("/>");
 	}else{
 		buffer.append(">");
+	}
+	return buffer.toString();
+}
+
+public String getEndTagText(){
+	if(isSingleTag()){
+		return "";
+	}
+	return "</"+name+">";
+}
+
+public String toString(){
+	
+	if(singleTag){
+		return getStartTagText();
+	}else{
+		StringBuffer buffer=new StringBuffer();
+		buffer.append(getStartTagText());
 		if(text!=null){
 			buffer.append(text);
 		}
@@ -101,10 +129,11 @@ public String toString(){
 		}
 		
 		
-		buffer.append("</"+name+">");
+		buffer.append(getEndTagText());
+		return buffer.toString();
 	}
 	
-	return buffer.toString();
+	
 }
 
 public String getSpecialEnd() {
