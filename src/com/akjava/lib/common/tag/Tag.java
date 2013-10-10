@@ -47,12 +47,12 @@ public void setText(String text) {
 	this.text = text;
 }
 
-public Map<String, String> getAttbibutes() {
+public Map<String, String> getAttributes() {
 	return attbibutes;
 }
 
-public void setAttbibutes(Map<String, String> attbibutes) {
-	this.attbibutes = attbibutes;
+public void setAttributes(Map<String, String> attributes) {
+	this.attbibutes = attributes;
 }
 
 private String text;
