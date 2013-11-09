@@ -1,5 +1,10 @@
 package com.akjava.lib.common.tag;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.common.collect.Lists;
+
 public class LabelAndValue {
 public LabelAndValue(String value){
 	this(null,value,false);
@@ -53,6 +58,27 @@ public String toString(){
 		out+=":"+true;
 	}
 	return out;
+}
+
+public static void selectValues(List<LabelAndValue> lvalues,String value,String splitValue){
+	if(value==null){
+		return;
+	}
+	List<String> multipleValue=null;
+	if(splitValue==null){
+		multipleValue=new ArrayList<String>();
+		multipleValue.add(value);
+	}else{
+		multipleValue= Lists.newArrayList(value.split(splitValue));
+	}
+
+	for (LabelAndValue lv : lvalues) {
+		for (String v : multipleValue) {
+			if (lv.getValue().equals(v)) {
+				lv.setSelected(true);
+			}
+		}
+	}
 }
 
 public String toOption(){
