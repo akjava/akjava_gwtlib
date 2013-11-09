@@ -48,15 +48,18 @@ public void setText(String text) {
 }
 
 public Map<String, String> getAttributes() {
-	return attbibutes;
+	return attributes;
+}
+public String getAttribute(String key){
+	return attributes.get(key);
 }
 
 public void setAttributes(Map<String, String> attributes) {
-	this.attbibutes = attributes;
+	this.attributes = attributes;
 }
 
 private String text;
-private Map<String,String> attbibutes=new LinkedHashMap<String, String>();
+private Map<String,String> attributes=new LinkedHashMap<String, String>();
 
 public Tag(String name){
 	this.name=name;
@@ -67,11 +70,16 @@ public void addChild(Tag tag){
 	tag.setParent(this);
 }
 
+public Tag attr(String name,String value){
+	setAttribute(name, value);
+	return this;
+}
+
 public void setAttribute(String name){
 	setAttribute(name,name);
 }
 public void setAttribute(String name,String value){
-	attbibutes.put(name, value);
+	attributes.put(name, value);
 }
 
 public void setId(String id){
@@ -86,8 +94,8 @@ public String getStartTagText(){
 	StringBuffer buffer=new StringBuffer();
 	buffer.append("<"+name);
 	
-	for(String attr:attbibutes.keySet()){
-		String value=attbibutes.get(attr);
+	for(String attr:attributes.keySet()){
+		String value=attributes.get(attr);
 		if(value.indexOf('"')!=-1){
 			 value=value.replace("\"", "&quot;");
 		}
