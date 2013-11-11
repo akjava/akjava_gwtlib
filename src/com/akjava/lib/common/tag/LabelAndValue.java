@@ -47,6 +47,7 @@ public String getPrintValue(){
 	}
 }
 
+
 public String toString(){
 	String out="";
 	if(label!=null){
@@ -55,6 +56,13 @@ public String toString(){
 		out=value;
 	}
 	if(selected){
+		if(out.indexOf(":")==-1){
+			out+=":"+out;
+			/**
+			 * avoid problem.
+			 * when label==null & selected,maybe 'true' would be parsed as value.
+			 */
+		}
 		out+=":"+true;
 	}
 	return out;
