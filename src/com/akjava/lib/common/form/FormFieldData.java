@@ -58,6 +58,15 @@ public boolean isCreateAuto() {
 public void setCreateAuto(boolean createAuto) {
 	this.createAuto = createAuto;
 }
+
+private String optionText;
+
+public String getOptionText() {
+	return optionText;
+}
+public void setOptionText(String optionText) {
+	this.optionText = optionText;
+}
 public List<LabelAndValue> getOptionValues() {
 	return optionValues;
 }

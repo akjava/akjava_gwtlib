@@ -392,6 +392,7 @@ public class FormFieldDataDto {
 			if(csvs.size()>3){
 				String optionText=csvs.get(3);
 				if(!optionText.isEmpty()){
+					data.setOptionText(optionText);
 					if(optionWithNumber && data.getType()!=FormFieldData.TYPE_CHECK){
 						data.setOptionValues(LabelAndValueDto.lineToLabelAndValuesWithNumber(optionText));
 					}else{
