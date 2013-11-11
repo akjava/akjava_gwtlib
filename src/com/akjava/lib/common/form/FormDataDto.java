@@ -128,6 +128,7 @@ public static List<FormData> linesToFormData(List<String> lines){
 			if(Character.isUpperCase(secondValue.charAt(0))){
 				//class case
 				lastData=getCsvLineToFormDataFunction().apply(line);//do parse again
+				formDatas.add(lastData);
 			}else{
 				
 				//field case
@@ -150,9 +151,11 @@ public static List<FormData> linesToFormData(List<String> lines){
 		}
 	}
 	
+	//for remain
+	/*
 	if(!formDatas.contains(lastData)){
 		formDatas.add(lastData);
-	}
+	}*/
 	
 	return formDatas;
 }
