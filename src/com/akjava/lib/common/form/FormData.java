@@ -11,6 +11,13 @@ public class FormData {
 private String name;
 private String className;
 private String description;
+private boolean adminOnly;
+public boolean isAdminOnly() {
+	return adminOnly;
+}
+public void setAdminOnly(boolean adminOnly) {
+	this.adminOnly = adminOnly;
+}
 public String getName() {
 	return name;
 }
