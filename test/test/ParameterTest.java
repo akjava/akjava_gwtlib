@@ -88,6 +88,20 @@ public class ParameterTest extends TestCase{
 		assertEquals("1,2", v);
 	}
 	
+	public void testRemain(){
+		String line="param(1,2)hello world";
+		Parameter p=ParameterUtils.parse(line);
+		String v=p.getRemain();
+		assertEquals("hello world", v);
+	}
+	
+	public void testRemain2(){
+		String line="param(1,2)";
+		Parameter p=ParameterUtils.parse(line);
+		String v=p.getRemain();
+		assertTrue(v==null);
+	}
+	
 	public void testToString1(){
 		String line="param";
 		Parameter p=ParameterUtils.parse(line);

@@ -14,6 +14,14 @@ public String getName() {
 public void setName(String name) {
 	this.name = name;
 }
+private String remain;
+
+public String getRemain() {
+	return remain;
+}
+public void setRemain(String remain) {
+	this.remain = remain;
+}
 public List<String> getAttributes() {
 	return attributes;
 }
