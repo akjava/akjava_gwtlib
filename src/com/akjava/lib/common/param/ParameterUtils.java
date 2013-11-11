@@ -22,7 +22,7 @@ public class ParameterUtils {
 			if(inside.isEmpty()){
 				return p;
 			}
-			String[] atts=inside.split(":");
+			String[] atts=inside.split(""+separator);
 			
 			
 			for(String at:atts){
