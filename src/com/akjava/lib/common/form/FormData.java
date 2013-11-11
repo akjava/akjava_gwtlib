@@ -62,7 +62,7 @@ public String toString() {
 		}
 	}
 	
-	String out=Objects.toStringHelper(this).add("name", name).add("className", className).add("description", description)
+	String out=Objects.toStringHelper(this).add("name", name).add("className", className).add("description", description).add("adminOnly", ""+isAdminOnly())
 			.add("fields", "\n"+fields+"\n").toString();
 	return out;
 }
