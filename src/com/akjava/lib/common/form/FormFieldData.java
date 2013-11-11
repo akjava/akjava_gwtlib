@@ -11,6 +11,13 @@ public class FormFieldData {
 private String name;
 private String key;
 private int type;
+private FormData parent;
+public FormData getParent() {
+	return parent;
+}
+public void setParent(FormData parent) {
+	this.parent = parent;
+}
 public int getType() {
 	return type;
 }

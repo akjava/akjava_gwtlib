@@ -132,8 +132,9 @@ public static List<FormData> linesToFormData(List<String> lines){
 				
 				//field case
 				FormFieldData fdata=FormFieldDataDto.getCsvToFormFieldFunction(true).apply(line);
-				
-			
+				lastData.addFormFieldData(fdata);
+				/*
+				fdata.setParent(lastData);
 				
 				List<FormFieldData> optionValues=lastData.getFormFieldDatas();
 				if(optionValues==null){
@@ -144,6 +145,7 @@ public static List<FormData> linesToFormData(List<String> lines){
 					
 				}
 				optionValues.add(fdata);
+				*/
 			}
 		}
 	}

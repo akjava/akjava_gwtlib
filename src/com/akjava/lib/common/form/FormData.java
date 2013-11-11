@@ -1,5 +1,6 @@
 package com.akjava.lib.common.form;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.akjava.lib.common.form.FormFieldDataDto.OptionLabelToValueFunction;
@@ -42,12 +43,20 @@ public List<FormFieldData> getFormFieldDatas() {
 	return formFieldDatas;
 }
 
+public void addFormFieldData(FormFieldData fdata){
+	if(formFieldDatas==null){
+		formFieldDatas=new ArrayList<FormFieldData>();			
+	}
+	formFieldDatas.add(fdata);
+	fdata.setParent(this);
+}
 
 
-
+/*
 public void setFormFieldDatas(List<FormFieldData> formFieldDatas) {
 	this.formFieldDatas = formFieldDatas;
 }
+*/
 
 public boolean isChecked(String key,String value){
 	//
