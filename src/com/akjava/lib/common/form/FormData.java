@@ -13,6 +13,38 @@ private String name;
 private String className;
 private String description;
 private boolean adminOnly;
+
+private int pageSize=10;
+private int adminPageSize=10;
+
+private String adminPageOrder;//if null used cdate if exists,otherwise use first one;usually it is id
+public int getPageSize() {
+	return pageSize;
+}
+public void setPageSize(int pageSize) {
+	this.pageSize = pageSize;
+}
+public int getAdminPageSize() {
+	return adminPageSize;
+}
+public void setAdminPageSize(int adminPageSize) {
+	this.adminPageSize = adminPageSize;
+}
+public String getAdminPageOrder() {
+	return adminPageOrder;
+}
+public void setAdminPageOrder(String adminPageOrder) {
+	this.adminPageOrder = adminPageOrder;
+}
+public String getPageOrder() {
+	return pageOrder;
+}
+public void setPageOrder(String pageOrder) {
+	this.pageOrder = pageOrder;
+}
+
+private String pageOrder;//if null used cdate if exists,otherwise use first one;usually it is id
+
 public boolean isAdminOnly() {
 	return adminOnly;
 }

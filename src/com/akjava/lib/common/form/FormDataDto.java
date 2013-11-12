@@ -5,6 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.akjava.lib.common.param.Parameter;
+import com.akjava.lib.common.param.ParameterUtils;
 import com.akjava.lib.common.utils.ValuesUtils;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
@@ -95,12 +97,35 @@ public enum CsvLineToFormDataFunction implements Function<String,FormData>{
 			data.setDescription(values[2]);
 		}
 		if(values.length>3){
-			//TODO parse more options
-			if(values[3].indexOf("adminonly")!=-1){
-			data.setAdminOnly(true);
-			}
+			parseOptions(data,values[3]);
 		}
 		return data;
+	}
+	private void parseOptions(FormData data,String line){
+
+		String params[]=line.split(",");
+		for(String p:params){
+			Parameter parameter=ParameterUtils.parse(p);
+			if(parameter.getName().equals("adminonly")){
+				data.setAdminOnly(true);
+			}else if(parameter.getName().equals("list")){
+				if(parameter.size()>0){
+					int pageSize=ValuesUtils.toInt(parameter.get(0), 10);
+					data.setPageSize(pageSize);
+				}
+				if(parameter.size()>1){
+					data.setPageOrder(parameter.get(1));
+				}
+			}else if(parameter.getName().equals("adminlist")){
+				if(parameter.size()>0){
+					int pageSize=ValuesUtils.toInt(parameter.get(0), 10);
+					data.setAdminPageSize(pageSize);
+				}
+				if(parameter.size()>1){
+					data.setAdminPageOrder(parameter.get(1));
+				}
+			}
+		}
 	}
 	
 }
