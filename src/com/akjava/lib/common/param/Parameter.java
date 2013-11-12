@@ -54,6 +54,9 @@ public String toString() {
 		}
 		result+=")";
 	}
+	if(remain!=null){
+		result+=remain;
+	}
 	return result;
 }
 public boolean hasAttribute(){

@@ -10,6 +10,11 @@ import com.google.common.base.Functions;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 
+/**
+ * TODO more test
+ * @author aki
+ *
+ */
 public class LabelAndValueDto {
 private LabelAndValueDto(){}
 private static final Joiner COMMA_JOINER=Joiner.on(",");
