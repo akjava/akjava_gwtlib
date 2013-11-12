@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.akjava.gwt.lib.client.LogUtils;
 import com.akjava.lib.common.param.Parameter;
 import com.akjava.lib.common.param.ParameterUtils;
 import com.akjava.lib.common.utils.ValuesUtils;
@@ -12,6 +13,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.google.gwt.core.client.GWT;
 
 public class FormDataDto {
 	public final static Joiner tabJoiner=Joiner.on("\t").useForNull("NULL");	
@@ -124,6 +126,8 @@ public enum CsvLineToFormDataFunction implements Function<String,FormData>{
 				if(parameter.size()>1){
 					data.setAdminPageOrder(parameter.get(1));
 				}
+			}else{
+				LogUtils.log("on FormdataDto.parseOptions();some unknown option:"+parameter.getName());
 			}
 		}
 	}
