@@ -35,6 +35,9 @@ public int size(){
 	return attributes.size();
 }
 public String get(int index){
+	if(index<0||index>=size()){
+		throw new RuntimeException("on Parameter.get:invalid array index ="+index);
+	}
 	return attributes.get(index);
 }
 private List<String> attributes=new LinkedList<String>();

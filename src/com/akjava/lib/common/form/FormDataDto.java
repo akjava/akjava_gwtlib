@@ -96,7 +96,7 @@ public enum CsvLineToFormDataFunction implements Function<String,FormData>{
 		}
 		if(values.length>3){
 			//TODO parse more options
-			if(values[3].indexOf("admin")!=-1){
+			if(values[3].indexOf("adminonly")!=-1){
 			data.setAdminOnly(true);
 			}
 		}
