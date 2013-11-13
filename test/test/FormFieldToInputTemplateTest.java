@@ -54,7 +54,7 @@ public class FormFieldToInputTemplateTest extends TestCase{
 		
 		Tag tag=FormFieldDataDto.getFormFieldToInputTemplateTagFunction().apply(data);
 		
-		assertEquals("<input type=\"checkbox\" name=\"check\" checked=\"${checked_check}\"/>", tag.toString());
+		assertEquals("<input type=\"checkbox\" name=\"check\" ${checked_check}/>", tag.toString());
 	}
 	
 	public void testSelect1(){
@@ -68,7 +68,7 @@ public class FormFieldToInputTemplateTest extends TestCase{
 		
 		Tag tag=FormFieldDataDto.getFormFieldToInputTemplateTagFunction().apply(data);
 		
-		assertEquals("<select name=\"single\">\n<option selected=\"${selected_single0}\">test1</option>\n<option selected=\"${selected_single1}\">test2</option></select>", tag.toString());
+		assertEquals("<select name=\"single\">\n<option ${selected_single0}>test1</option>\n<option ${selected_single1}>test2</option></select>", tag.toString());
 	}
 	
 	public void testSelect2(){
@@ -81,7 +81,7 @@ public class FormFieldToInputTemplateTest extends TestCase{
 		data.getOptionValues().add(new LabelAndValue("test2","1"));
 		
 		Tag tag=FormFieldDataDto.getFormFieldToInputTemplateTagFunction().apply(data);
-		assertEquals("<select name=\"single\">\n<option value=\"0\" selected=\"${selected_single0}\">test1</option>\n<option value=\"1\" selected=\"${selected_single1}\">test2</option></select>", tag.toString());
+		assertEquals("<select name=\"single\">\n<option value=\"0\" ${selected_single0}>test1</option>\n<option value=\"1\" ${selected_single1}>test2</option></select>", tag.toString());
 	}
 	public void testSelectMulti1(){
 		FormFieldData data=new FormFieldData();
@@ -94,7 +94,7 @@ public class FormFieldToInputTemplateTest extends TestCase{
 		
 		Tag tag=FormFieldDataDto.getFormFieldToInputTemplateTagFunction().apply(data);
 		
-		assertEquals("<select name=\"multi\" multiple=\"multiple\">\n<option selected=\"${selected_multi0}\">test1</option>\n<option selected=\"${selected_multi1}\">test2</option></select>", tag.toString());
+		assertEquals("<select name=\"multi\" multiple=\"multiple\">\n<option ${selected_multi0}>test1</option>\n<option ${selected_multi1}>test2</option></select>", tag.toString());
 	}
 	
 	public void testSelectMulti2(){
@@ -108,6 +108,6 @@ public class FormFieldToInputTemplateTest extends TestCase{
 		
 		Tag tag=FormFieldDataDto.getFormFieldToInputTemplateTagFunction().apply(data);
 		
-		assertEquals("<select name=\"multi\" multiple=\"multiple\">\n<option selected=\"${selected_multi0}\">test1</option>\n<option selected=\"${selected_multi1}\">test2</option></select>", tag.toString());
+		assertEquals("<select name=\"multi\" multiple=\"multiple\">\n<option ${selected_multi0}>test1</option>\n<option ${selected_multi1}>test2</option></select>", tag.toString());
 	}
 }
