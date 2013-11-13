@@ -112,6 +112,8 @@ public static final int TYPE_CREATE_USER=7;
 public static final int TYPE_MODIFIED_DATE=8;
 public static final int TYPE_MODIFIED_USER=9;
 
+public static final int TYPE_NUMBER=10;
+
 public static String getTypeByNumber(int value){
 	switch(value){	
 	case TYPE_TEXT_LONG:
@@ -139,12 +141,13 @@ public static String getTypeByNumber(int value){
 		
 	case TYPE_MODIFIED_USER:
 		return "modified_user";
-
+	case TYPE_NUMBER:
+		return "number";
 	default:
 		return "text";
 	}
 }
-public static final List<String> TYPES=Lists.newArrayList("text","text_long","id","check","select","select_multi","create_date","create_user","modified_date","modified_user");
+public static final List<String> TYPES=Lists.newArrayList("text","text_long","id","check","select","select_multi","create_date","create_user","modified_date","modified_user","number");
 public static int getTypeByLabel(String v){
 	int type=0;
 	if(v.equals("text")){
@@ -167,6 +170,8 @@ public static int getTypeByLabel(String v){
 		type=8;
 	}else if(v.equals("modified_user")){
 		type=9;
+	}else if(v.equals("modified_user")){
+		type=TYPE_NUMBER;
 	}
 	return type;
 }

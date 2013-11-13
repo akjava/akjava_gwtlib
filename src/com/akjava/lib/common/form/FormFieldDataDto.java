@@ -183,6 +183,7 @@ public class FormFieldDataDto {
 			}else if(data.getType()==FormFieldData.TYPE_CREATE_USER){//usually ignore it
 				tag=TagBuilder.createText(data.getKey(), null);
 			}else{
+				//TEXT or NUMBER
 				String defaultValue=null;
 				if(data.getDefaultValue()!=null && !data.getDefaultValue().isEmpty()){
 					defaultValue=HTMLUtils.sanitize(data.getDefaultValue());
@@ -261,6 +262,7 @@ public class FormFieldDataDto {
 			}else if(data.getType()==FormFieldData.TYPE_CREATE_USER){//usually ignore it
 				tag=TagBuilder.createText(data.getKey(), "${value_"+data.getKey()+"}");
 			}else{
+				//TEXT or NUMBER
 				//default text
 				tag=TagBuilder.createText(data.getKey(), "${value_"+data.getKey()+"}");
 			}
@@ -326,7 +328,7 @@ public class FormFieldDataDto {
 				tag=TagBuilder.createText(data.getKey(), valueMap.get(data.getKey()));
 			}else if(data.getType()==FormFieldData.TYPE_CREATE_USER){//usually ignore it
 				tag=TagBuilder.createText(data.getKey(), valueMap.get(data.getKey()));
-			}else{
+			}else{//TEXT_SHORT || NUMBER
 				//default text
 				tag=TagBuilder.createText(data.getKey(), valueMap.get(data.getKey()));
 			}
