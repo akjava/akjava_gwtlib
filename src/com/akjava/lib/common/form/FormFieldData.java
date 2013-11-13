@@ -147,29 +147,29 @@ public static String getTypeByNumber(int value){
 		return "text";
 	}
 }
-public static final List<String> TYPES=Lists.newArrayList("text","text_long","id","check","select","select_multi","create_date","create_user","modified_date","modified_user","number");
+public static final List<String> TYPES=Lists.newArrayList("text","text_short","text_long","id","check","select","select_single","select_multi","create_date","create_user","modified_date","modified_user","number");
 public static int getTypeByLabel(String v){
 	int type=0;
-	if(v.equals("text")){
-		type=0;
+	if(v.equals("text")||v.equals("text_short")){
+		type=TYPE_TEXT_SHORT;
 	}else if(v.equals("text_long")){
-		type=1;
+		type=TYPE_TEXT_LONG;
 	}else if(v.equals("id")){
-		type=2;
+		type=TYPE_ID;
 	}else if(v.equals("check")){
-		type=3;
-	}else if(v.equals("select")){
-		type=4;
+		type=TYPE_CHECK;
+	}else if(v.equals("select")||v.equals("select_single")){
+		type=TYPE_SELECT_SINGLE;
 	}else if(v.equals("select_multi")){
-		type=5;
+		type=TYPE_SELECT_MULTI;
 	}else if(v.equals("create_date")){
-		type=6;
+		type=TYPE_CREATE_DATE;
 	}else if(v.equals("create_user")){
-		type=7;
+		type=TYPE_CREATE_USER;
 	}else if(v.equals("modified_date")){
-		type=8;
+		type=TYPE_CREATE_DATE;
 	}else if(v.equals("modified_user")){
-		type=9;
+		type=TYPE_MODIFIED_USER;
 	}else if(v.equals("number")){
 		type=TYPE_NUMBER;
 	}
