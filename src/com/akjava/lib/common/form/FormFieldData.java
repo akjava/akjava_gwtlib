@@ -170,7 +170,7 @@ public static int getTypeByLabel(String v){
 		type=8;
 	}else if(v.equals("modified_user")){
 		type=9;
-	}else if(v.equals("modified_user")){
+	}else if(v.equals("number")){
 		type=TYPE_NUMBER;
 	}
 	return type;

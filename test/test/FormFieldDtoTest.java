@@ -23,7 +23,13 @@ public class FormFieldDtoTest extends TestCase{
 		assertEquals(collect, FormFieldDataDto.formFieldToCsv(field));
 	}
 	
-	
+	public void testNumber(){
+		String collect="name\t\tnumber\t\t\t\t\t\t\t";
+		
+		FormFieldData field=FormFieldDataDto.csvToFormField(collect);
+		
+		assertEquals(FormFieldData.TYPE_NUMBER,field.getType());
+	}
 	
 	//without validator and options
 	public void testSimpleConvertCsv2(){
