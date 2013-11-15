@@ -16,4 +16,14 @@ public class FormFieldDataPredicates {
 			return !data.isCreateAuto();
 		}
 	}
+	public static HaveLabelAndValue getHaveLabelAndValue(){
+		return HaveLabelAndValue.INSTANCE;
+	}
+	public enum HaveLabelAndValue implements Predicate<FormFieldData>{
+		INSTANCE;
+		@Override
+		public boolean apply(FormFieldData data) {
+			return data.getType()==FormFieldData.TYPE_CHECK||data.getType()==FormFieldData.TYPE_SELECT_SINGLE||data.getType()==FormFieldData.TYPE_SELECT_MULTI;
+		}
+	}
 }

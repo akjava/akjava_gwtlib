@@ -75,6 +75,11 @@ public Tag attr(String name,String value){
 	return this;
 }
 
+public Tag text(String text){
+	setText(text);
+	return this;
+}
+
 public void setAttribute(String name){
 	setAttribute(name,name);
 }
