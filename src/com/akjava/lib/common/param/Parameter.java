@@ -63,5 +63,12 @@ public boolean hasAttribute(){
 	return attributes!=null && attributes.size()>0;
 }
 
+private boolean closed;
+public boolean isClosed() {
+	return closed;
+}
+public void setClosed(boolean closed) {
+	this.closed = closed;
+}
 
 }
