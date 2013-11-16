@@ -3,6 +3,7 @@ package com.akjava.lib.common.form;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.akjava.lib.common.param.Parameter;
 import com.akjava.lib.common.tag.LabelAndValue;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
@@ -174,6 +175,11 @@ public static int getTypeByLabel(String v){
 		type=TYPE_NUMBER;
 	}
 	return type;
+}
+
+public boolean isRelativeField(){
+	Parameter parameter=FormDataDto.parseParameter(getOptionText());
+	return parameter!=null;
 }
 
 public String toString(){

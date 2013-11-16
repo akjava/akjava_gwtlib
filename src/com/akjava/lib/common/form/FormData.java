@@ -1,7 +1,9 @@
 package com.akjava.lib.common.form;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.akjava.lib.common.form.FormFieldDataDto.OptionLabelToValueFunction;
 import com.akjava.lib.common.form.FormFieldDataDto.OptionValueToLabelFunction;
@@ -9,6 +11,21 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
 public class FormData {
+private List<Relation> childrens=new ArrayList<Relation>();
+public List<Relation> getChildrens() {
+	return childrens;
+}
+public List<Relation> getParents() {
+	return parents;
+}
+public synchronized void addChildren(Relation relation){
+	childrens.add(relation);
+}
+public synchronized void addParent(Relation parent){
+	parents.add(parent);
+}
+
+private List<Relation> parents=new ArrayList<Relation>();
 private String name;
 private String className;
 private String description;
@@ -96,6 +113,15 @@ public boolean isChecked(String key,String value){
 }
 
 
+public FormFieldData getIdFieldData(){
+	for(FormFieldData fdata:getFormFieldDatas()){
+		if(fdata.getType()==FormFieldData.TYPE_ID){
+			return fdata;
+		}
+		//TODO support String ID
+	}
+	return null;
+}
 
 @Override
 public String toString() {

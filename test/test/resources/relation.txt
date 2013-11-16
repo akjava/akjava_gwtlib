@@ -1,0 +1,16 @@
+DATA	Data	test					
+ID	id	id			yes		
+MESSAGE	text	text				notEmpty	sanitize
+CDATE	cdate	create_date			yes		
+							
+OPTION	Option	optiondata	adminonly,adminlist(20:value asc)				
+ID	id	id			yes		
+NAME	name	text				notEmpty	sanitize
+VALUE	value	number				notEmpty	
+CDATE	cdate	create_date			yes		
+							
+RELATION	Relation		list(20),sublist(10:cdate asc)				
+ID	id	id			yes		
+refdata	data	number	@Data(text)			notEmpty	
+COMMENT	comment	text				notEmpty	
+CDATE	cdate	create_date			yes		

@@ -1,6 +1,7 @@
 package com.akjava.lib.common.form;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +14,6 @@ import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import com.google.gwt.core.client.GWT;
 
 public class FormDataDto {
 	public final static Joiner tabJoiner=Joiner.on("\t").useForNull("NULL");	
@@ -127,7 +127,7 @@ public enum CsvLineToFormDataFunction implements Function<String,FormData>{
 					data.setAdminPageOrder(parameter.get(1));
 				}
 			}else{
-				LogUtils.log("on FormdataDto.parseOptions();some unknown option:"+parameter.getName());
+				System.out.println("on FormdataDto.parseOptions();some unknown option:"+parameter.getName());
 			}
 		}
 	}
@@ -186,7 +186,48 @@ public static List<FormData> linesToFormData(List<String> lines){
 		formDatas.add(lastData);
 	}*/
 	
+	//parse relations
+	Map<String,FormData> map=new HashMap<String, FormData>();
+	for(FormData data:formDatas){
+		map.put(data.getClassName(), data);
+	}
+	for(FormData data:formDatas){
+		for(FormFieldData fdata:data.getFormFieldDatas()){
+			if(fdata.getType()==FormFieldData.TYPE_NUMBER){//in this time number only have relation
+				Parameter param=parseParameter(fdata.getOptionText());
+				if(param!=null){
+					FormData parent=map.get(param.getName());
+					if(parent==null){
+						System.out.println("invalid relationship:"+fdata.getOptionText());
+						continue;
+					}
+					
+					
+					parent.addChildren(new Relation(data,fdata.getKey()));
+					
+					System.out.println("add-parent:"+data.getClassName());
+					data.addParent(new Relation(parent,param.get(0)));//usually it is id
+				}
+			}
+		}
+	}
+	
 	return formDatas;
+}
+
+public static Parameter parseParameter(String startsAtMark){
+	if(startsAtMark==null){
+		return null;
+	}
+	if(!startsAtMark.startsWith("@")){
+		return null;
+	}
+	Parameter param=ParameterUtils.parse(startsAtMark.substring(1));
+	if(!ParameterUtils.isClosedAndHaveParameter(param)){
+		return null;
+	}
+	
+	return param;
 }
 
 public static List<FormData> linesToFormData(String text){
