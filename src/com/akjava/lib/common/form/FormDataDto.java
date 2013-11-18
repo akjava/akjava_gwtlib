@@ -213,7 +213,7 @@ public static List<FormData> linesToFormData(List<String> lines){
 					
 					parent.addChildren(new Relation(data,fdata.getKey()));
 					
-					System.out.println("add-parent:"+data.getClassName());
+					
 					data.addParent(new Relation(parent,param.get(0)));//usually it is id
 				}
 			}

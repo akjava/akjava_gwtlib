@@ -11,6 +11,12 @@ public class TemplateUtils {
 	 * @return
 	 */
 	public static String createText(String template,Map<String,String> map){
+		if(map==null){
+			throw new RuntimeException("null map");
+		}
+		if(template==null){
+			throw new RuntimeException("null template");
+		}
 		String result=template;
 		for(String key:map.keySet()){
 			if(map.get(key)!=null){
@@ -28,6 +34,12 @@ public class TemplateUtils {
 	 * @return
 	 */
 	public static String createAdvancedText(String template,Map<String,String> map){
+		if(map==null){
+			throw new RuntimeException("null map");
+		}
+		if(template==null){
+			throw new RuntimeException("null template");
+		}
 		String result=template;
 		for(String key:map.keySet()){
 			if(map.get(key)!=null){
