@@ -126,6 +126,14 @@ public enum CsvLineToFormDataFunction implements Function<String,FormData>{
 				if(parameter.size()>1){
 					data.setAdminPageOrder(parameter.get(1));
 				}
+			}else if(parameter.getName().equals("sublist")){
+				if(parameter.size()>0){
+					int pageSize=ValuesUtils.toInt(parameter.get(0), 10);
+					data.setSubPageSize(pageSize);
+				}
+				if(parameter.size()>1){
+					data.setSubPageOrder(parameter.get(1));
+				}
 			}else{
 				System.out.println("on FormdataDto.parseOptions();some unknown option:"+parameter.getName());
 			}

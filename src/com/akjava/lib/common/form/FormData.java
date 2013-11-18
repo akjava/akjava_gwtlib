@@ -33,6 +33,22 @@ private boolean adminOnly;
 
 private int pageSize=10;
 private int adminPageSize=10;
+private int subPageSize=5;
+
+private String subPageOrder;
+
+public int getSubPageSize() {
+	return subPageSize;
+}
+public void setSubPageSize(int subPageSize) {
+	this.subPageSize = subPageSize;
+}
+public String getSubPageOrder() {
+	return subPageOrder;
+}
+public void setSubPageOrder(String subPageOrder) {
+	this.subPageOrder = subPageOrder;
+}
 
 private String adminPageOrder;//if null used cdate if exists,otherwise use first one;usually it is id
 public int getPageSize() {
