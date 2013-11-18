@@ -128,6 +128,14 @@ public boolean isChecked(String key,String value){
 	return false;
 }
 
+public FormFieldData getFieldData(String key){
+	for(FormFieldData fdata:formFieldDatas){
+		if(fdata.getKey().equals(key)){
+			return fdata;
+		}
+	}
+	return null;
+}
 
 public FormFieldData getIdFieldData(){
 	for(FormFieldData fdata:getFormFieldDatas()){
