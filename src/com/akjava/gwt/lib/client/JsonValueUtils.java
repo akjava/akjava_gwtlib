@@ -3,6 +3,7 @@ package com.akjava.gwt.lib.client;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
@@ -100,4 +101,5 @@ public class JsonValueUtils {
 		}
 		return map;
 	}
+	
 }
