@@ -19,7 +19,7 @@
         <javac destdir="tmp" srcdir="src">
         	
         	
-        	<classpath path="lib/guava-14.0.1.jar;lib/guava-gwt-14.0.1.jar;lib/jsr305.jar;C:\eclipse\gwt-2.5.0\gwt-user.jar;C:\eclipse\gwt-2.5.0\gwt-dev.jar">
+        	<classpath path="lib/guava-15.0.jar;lib/guava-gwt-15.0.jar;lib/jsr305.jar;C:\eclipse\plugins\com.google.gwt.eclipse.sdkbundle_2.5.1\gwt-2.5.1\gwt-user.jar;C:\eclipse\plugins\com.google.gwt.eclipse.sdkbundle_2.5.1\gwt-2.5.1\gwt-dev.jar">
         		
         	</classpath>
         </javac>
