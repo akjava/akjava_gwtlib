@@ -3,12 +3,12 @@ this is used on my other projects.
 
 if you interested in inside library check this.
 
-Release
-akjavalibgwt_{YEAR:MONTH:DATE}.jar
+Release 12
+akjavalibgwt_131220.jar
 
 dep contains dependency jars in libs
 mostly newer guava contains.
 
 How to use add this line at your xml
 <inherits name='com.akjava.gwt.common.Common'/>
-add akjavalibgwt_{YEAR:MONTH:DATE}-dep.jar
+
