@@ -127,4 +127,24 @@ private TagBuilder(){}
 		
 		return tag;
 	}
+	
+	public static Tag createSelect(String name,List<LabelAndValue> lvalues,int size,boolean multiple){
+		Tag tag=new Tag("select");
+		tag.setAttribute("name", name);
+		tag.setAttribute("size",""+size);
+		if(multiple){
+			tag.setAttribute("multiple");
+		}
+		
+		String options="";
+		if(lvalues!=null){
+		for(LabelAndValue lvalue:lvalues){
+			options+=lvalue.toOption()+"\n";
+		}
+		options=ValuesUtils.chomp(options);
+		tag.setText(options);
+		}
+		
+		return tag;
+	}
 }
