@@ -17,8 +17,8 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/eclipse/gwt-2.4.0/validation-api-1.0.0.GA-sources.jar"/>
 	<classpathentry kind="lib" path="C:/eclipse/gwt-2.4.0/validation-api-1.0.0.GA.jar" sourcepath="C:/eclipse/gwt-2.4.0/validation-api-1.0.0.GA-sources.jar"/>
-	<classpathentry kind="lib" path="lib/guava-14.0.1.jar"/>
-	<classpathentry kind="lib" path="lib/guava-gwt-14.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/jsr305.jar"/>
+	<classpathentry kind="lib" path="lib/guava-15.0.jar"/>
+	<classpathentry kind="lib" path="lib/guava-gwt-15.0.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
