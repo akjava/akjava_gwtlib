@@ -12,3 +12,6 @@ mostly newer guava contains.
 How to use add this line at your xml
 <inherits name='com.akjava.gwt.common.Common'/>
 
+[Info]
+some my experimental project use dev branch,check it out.
+
