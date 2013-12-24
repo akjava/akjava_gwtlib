@@ -113,7 +113,10 @@ public static final int TYPE_CREATE_USER=7;
 public static final int TYPE_MODIFIED_DATE=8;
 public static final int TYPE_MODIFIED_USER=9;
 
-public static final int TYPE_NUMBER=10;
+public static final int TYPE_NUMBER=10;//long
+//TODO future support
+public static final int TYPE_INTEGER=11;
+public static final int TYPE_DECIMAL=12;
 
 public static String getTypeByNumber(int value){
 	switch(value){	
@@ -176,7 +179,9 @@ public static int getTypeByLabel(String v){
 	}
 	return type;
 }
-
+public static boolean isSelectionType(int type){
+	return type==TYPE_SELECT_MULTI||type==TYPE_SELECT_SINGLE;
+}
 public boolean isRelativeField(){
 	Parameter parameter=FormDataDto.parseParameter(getOptionText());
 	return parameter!=null;

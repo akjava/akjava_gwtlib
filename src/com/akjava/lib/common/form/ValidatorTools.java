@@ -56,6 +56,29 @@ public static Validator getValidator(String line) throws ValidatorNotFoundExcept
 	}
 	else if(name.equals(StaticValidators.VALIDATOR_START_ASCII_CHAR.toLowerCase())){
 		return StaticValidators.startAsciiChar();
+	}else if(name.equals(StaticValidators.VALIDATOR_DECIMAL_NUMBER.toLowerCase())){
+		return StaticValidators.decimalNumber();
+	}else if(name.equals(StaticValidators.VALIDATOR_INTEGER_NUMBER.toLowerCase())){
+		return StaticValidators.integerNumber();
+	}else if(name.equals(Validators.VALIDATOR_RANGE_NUMBER.toLowerCase())){
+		
+		Double min=null;
+		Double max=null;
+		if(param.size()>0){
+		try{
+		min=Double.parseDouble(param.get(0));
+		}catch (Exception e) {
+			//use null;
+		}
+		if(param.size()>1){
+		try{
+			min=Double.parseDouble(param.get(0));
+			}catch (Exception e) {
+				//use null;
+			}
+		}
+		}
+		return Validators.rangedNumber(min, max);
 	}
 	else if(name.equals(Validators.VALIDATOR_MAX_STRING_SIZE)){
 		if(param.size()!=1){
@@ -131,11 +154,37 @@ public static Validator getValidator(String line) throws ValidatorNotFoundExcept
 	throw new ValidatorNotFoundException("not found:"+line);
 }
 
+public static boolean contain(List<Validator> validators,String checkName){
+	if(checkName==null || checkName.isEmpty()){
+		return false;
+	}
+	checkName=checkName.toLowerCase();
+	for(Validator validator:validators){
+		String name=validator.getName().toLowerCase();
+		if(name.equals(checkName)){
+			return true;
+		}
+	}
+	
+	return false;
+}
+
 public static boolean hasLimitValidator(List<Validator> validators){
 	
 	for(Validator validator:validators){
 		String name=validator.getName().toLowerCase();
 		if(name.equals("max")||name.equals("maxb")|| name.equals("between")){
+			return true;
+		}
+	}
+	
+	return false;
+}
+public static boolean hasNumberValidator(List<Validator> validators){
+	
+	for(Validator validator:validators){
+		String name=validator.getName().toLowerCase();
+		if(name.equals("asciiNumber")||name.equals("integerNumber")|| name.equals("range")||name.equals("asciiNumber")){
 			return true;
 		}
 	}

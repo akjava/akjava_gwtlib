@@ -5,12 +5,21 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.google.common.base.Objects;
+
 
 public class Validators {
 	public static final String VALIDATOR_MAX_STRING_SIZE="max";
 	public static final String VALIDATOR_BETWEEN_STRING_SIZE="between";
 	public static final String VALIDATOR_MAX_STRING_BYTE_SIZE="maxb";
 	public static final String VALIDATOR_AVAIABLE_VALUE_ONLY="avaiable";
+	
+	public static final String VALIDATOR_RANGE_NUMBER="range";
+	
+	
+	public static RangedNumber rangedNumber(Double min,Double max){
+		  return new RangedNumber(min,max);
+	  }
 	
 	public static MaxStringSize maxStringSize(int max){
 		  return new MaxStringSize(max);
@@ -23,6 +32,79 @@ public class Validators {
 	public static BetweenStringSize betweenStringSize(int min,int max){
 		  return new BetweenStringSize(min,max);
 	  }
+	 
+	 private static class RangedNumber extends AbstractValidator{
+			public RangedNumber(Double min,Double max) {
+			super(VALIDATOR_RANGE_NUMBER);
+			this.min=min;
+			this.max=max;
+		}
+
+
+
+			private Double max;
+			public Double getMax() {
+				return max;
+			}
+
+
+
+			public void setMax(Double max) {
+				this.max = max;
+			}
+
+
+
+			public Double getMin() {
+				return min;
+			}
+
+
+
+			public void setMin(Double min) {
+				this.min = min;
+			}
+
+
+
+			private Double min;
+			
+			
+			@Override
+			public boolean validate(String value) {
+				try{
+					Double number=Double.parseDouble(value);
+					if(getMin()!=null){
+						if(number<getMin()){
+							return false;
+						}
+					}
+					
+					if(getMax()!=null){
+						if(number>getMax()){
+							return false;
+						}
+					}
+				}catch(Exception e){
+					return true;//this validator don't care empty or string
+				}
+				
+				return true;
+			}
+
+
+			
+			@Override
+			public boolean equals(Object object){
+				if(!(object instanceof RangedNumber)){
+					return false;
+				}
+				RangedNumber instance=(RangedNumber)object;
+				
+				return Objects.equal(this.getMax(), instance.getMax())&& Objects.equal(this.getMin(), instance.getMin());
+			}
+			
+		 }
 	 
 	 private static class MaxStringByteSize extends AbstractValidator{
 			private int max;

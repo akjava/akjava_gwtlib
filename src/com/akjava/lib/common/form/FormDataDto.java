@@ -134,6 +134,14 @@ public enum CsvLineToFormDataFunction implements Function<String,FormData>{
 				if(parameter.size()>1){
 					data.setSubPageOrder(parameter.get(1));
 				}
+			}else if(parameter.getName().equals("cookie")){
+				if(parameter.size()>0){
+					for(int i=0;i<parameter.size();i++){
+						data.getSupportCookies().add(parameter.get(i));
+					}
+				}else{
+					//TODO all support
+				}
 			}else{
 				System.out.println("on FormdataDto.parseOptions();some unknown option:"+parameter.getName());
 			}
@@ -201,7 +209,7 @@ public static List<FormData> linesToFormData(List<String> lines){
 	}
 	for(FormData data:formDatas){
 		for(FormFieldData fdata:data.getFormFieldDatas()){
-			if(fdata.getType()==FormFieldData.TYPE_NUMBER){//in this time number only have relation
+			if(fdata.getType()==FormFieldData.TYPE_NUMBER||fdata.getType()==FormFieldData.TYPE_SELECT_SINGLE){//in this time number only have relation
 				Parameter param=parseParameter(fdata.getOptionText());
 				if(param!=null){
 					FormData parent=map.get(param.getName());

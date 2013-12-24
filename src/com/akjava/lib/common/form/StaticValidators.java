@@ -10,6 +10,9 @@ public static final String VALIDATOR_ASCII_NUMBER="AsciiNumber";
 public static final String VALIDATOR_ASCII_NUMBER_AND_CHAR="AsciiNumberAndChar";
 public static final String VALIDATOR_ASCII_NUMBER_AND_CHAR_AND_UNDERBAR="AsciiNumberAndCharAndUnderBar";
 
+public static final String VALIDATOR_DECIMAL_NUMBER="DecimalNumber";
+public static final String VALIDATOR_INTEGER_NUMBER="IntegerNumber";
+
 public static final String VALIDATOR_ASCII_CHAR="AsciiChar";
 public static final String VALIDATOR_START_ASCII_CHAR="StartAsciiChar";
 
@@ -38,6 +41,69 @@ public static NotEmptyValidator notEmptyValidator(){
 				return value!=null && !value.isEmpty();
 			}
 			
+			@Override
+			public String toString() {
+				return getName();
+			}
+		  }
+	  
+	  //validate if start minus
+	  public static IntegerNumber integerNumber(){
+		  return IntegerNumber.INSTANCE;
+	  }
+	  
+	  public enum IntegerNumber implements Validator {
+		    INSTANCE;
+			@Override
+			public String getName() {
+				return VALIDATOR_INTEGER_NUMBER;
+			}
+			@Override
+			public boolean validate(String value) {
+				if(value.startsWith("-")){
+					return asciiNumberOnly().validate(value.substring(1));
+				}else{
+					return asciiNumberOnly().validate(value);
+				}
+			}
+			@Override
+			public String toString() {
+				return getName();
+			}
+		  }
+	  
+	  public static DecimalNumber decimalNumber(){
+		  return DecimalNumber.INSTANCE;
+	  }
+	  
+	  public enum DecimalNumber implements Validator {
+		    INSTANCE;
+			@Override
+			public String getName() {
+				return VALIDATOR_DECIMAL_NUMBER;
+			}
+			@Override
+			public boolean validate(String value) {
+				if(value.startsWith("-")){
+					value=value.substring(1);//don't care minus
+				}
+				
+				int pointIndex=value.indexOf(".");
+				if(pointIndex==-1){
+					return asciiNumberOnly().validate(value);
+				}else{
+					String first=value.substring(0,pointIndex);
+					String last=value.substring(pointIndex+1);
+					
+					System.out.println(first+","+last+"'");
+					//point only is invalid.ascii validator can't catch empty
+					if(first.isEmpty()&&last.isEmpty()){
+						return false;
+					}
+					return asciiNumberOnly().validate(first) && asciiNumberOnly().validate(last);
+				}
+				
+			}
 			@Override
 			public String toString() {
 				return getName();

@@ -79,7 +79,10 @@ public static void selectValues(List<LabelAndValue> lvalues,String value,String 
 	}else{
 		multipleValue= Lists.newArrayList(value.split(splitValue));
 	}
-
+	//unselect all
+	for (LabelAndValue lv : lvalues) {
+		lv.setSelected(false);
+	}
 	for (LabelAndValue lv : lvalues) {
 		for (String v : multipleValue) {
 			if (lv.getValue().equals(v)) {

@@ -25,6 +25,15 @@ public synchronized void addParent(Relation parent){
 	parents.add(parent);
 }
 
+private List<String> supportCookies=new ArrayList<String>();
+
+public List<String> getSupportCookies() {
+	return supportCookies;
+}
+public void setSupportCookies(List<String> supportCookies) {
+	this.supportCookies = supportCookies;
+}
+
 private List<Relation> parents=new ArrayList<Relation>();
 private String name;
 private String className;
@@ -142,7 +151,13 @@ public FormFieldData getIdFieldData(){
 		if(fdata.getType()==FormFieldData.TYPE_ID){
 			return fdata;
 		}
-		//TODO support String ID
+		
+		if(getFormFieldDatas().size()>0){
+			return getFormFieldDatas().get(0);
+		}else{
+			throw new RuntimeException("empty field datas");
+		}
+		//TODO test if set no id filed and first one is String ,can we use it as id
 	}
 	return null;
 }
