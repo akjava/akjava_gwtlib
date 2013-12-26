@@ -95,7 +95,7 @@ public static NotEmptyValidator notEmptyValidator(){
 					String first=value.substring(0,pointIndex);
 					String last=value.substring(pointIndex+1);
 					
-					System.out.println(first+","+last+"'");
+					
 					//point only is invalid.ascii validator can't catch empty
 					if(first.isEmpty()&&last.isEmpty()){
 						return false;

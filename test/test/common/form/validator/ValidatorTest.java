@@ -1,4 +1,4 @@
-package test;
+package test.common.form.validator;
 
 import junit.framework.TestCase;
 
@@ -326,6 +326,128 @@ public class ValidatorTest extends TestCase{
 	public void testAsciiUnderbar3() throws ValidatorNotFoundException{
 		String value="a-b";
 		Validator validator=ValidatorTools.getValidator("AsciiNumberAndCharAndUnderBar");
+		
+		assertEquals(false,validator.validate(value));
+	}
+	
+	
+	public void testRangedNumber1() throws ValidatorNotFoundException{
+		String value="0";
+		Validator validator=ValidatorTools.getValidator("range(0:1)");
+		
+		assertEquals(true,validator.validate(value));
+	}
+	public void testRangedNumber2() throws ValidatorNotFoundException{
+		String value="1";
+		Validator validator=ValidatorTools.getValidator("range(0:1)");
+		
+		assertEquals(true,validator.validate(value));
+	}
+	public void testRangedNumber3() throws ValidatorNotFoundException{
+		String value="-1";
+		Validator validator=ValidatorTools.getValidator("range(0:1)");
+		
+		assertEquals(false,validator.validate(value));
+	}
+	public void testRangedNumber4() throws ValidatorNotFoundException{
+		String value="2";
+		Validator validator=ValidatorTools.getValidator("range(0:1)");
+		
+		assertEquals(false,validator.validate(value));
+	}
+	
+
+	public void testRangedNumber5() throws ValidatorNotFoundException{
+		String value="0";
+		Validator validator=ValidatorTools.getValidator("range(-1.5:0)");
+		
+		assertEquals(true,validator.validate(value));
+	}
+	public void testRangedNumber6() throws ValidatorNotFoundException{
+		String value="1";
+		Validator validator=ValidatorTools.getValidator("range(-1.5:0)");
+		
+		assertEquals(false,validator.validate(value));
+	}
+	public void testRangedNumber7() throws ValidatorNotFoundException{
+		String value="-1.1";
+		Validator validator=ValidatorTools.getValidator("range(-1.5:0)");
+		
+		assertEquals(true,validator.validate(value));
+	}
+	public void testRangedNumber8() throws ValidatorNotFoundException{
+		String value="-1.6";
+		Validator validator=ValidatorTools.getValidator("range(-1.5:0)");
+		
+		assertEquals(false,validator.validate(value));
+	}
+	
+	public void testDecimal0() throws ValidatorNotFoundException{
+		String value="";
+		Validator validator=ValidatorTools.getValidator("decimalNumber");
+		
+		assertEquals(true,validator.validate(value));
+	}
+	
+	public void testDecimal1() throws ValidatorNotFoundException{
+		String value="0";
+		Validator validator=ValidatorTools.getValidator("decimalNumber");
+		
+		assertEquals(true,validator.validate(value));
+	}
+	
+	public void testDecimal2() throws ValidatorNotFoundException{
+		String value="-1";
+		Validator validator=ValidatorTools.getValidator("decimalNumber");
+		
+		assertEquals(true,validator.validate(value));
+	}
+	
+	public void testDecimal3() throws ValidatorNotFoundException{
+		String value="1.1";
+		Validator validator=ValidatorTools.getValidator("decimalNumber");
+		
+		assertEquals(true,validator.validate(value));
+	}
+	
+	public void testDecimal4() throws ValidatorNotFoundException{
+		String value="PI";
+		Validator validator=ValidatorTools.getValidator("decimalNumber");
+		
+		assertEquals(false,validator.validate(value));
+	}
+	
+	public void testInteger0() throws ValidatorNotFoundException{
+		String value="";
+		Validator validator=ValidatorTools.getValidator("integerNumber");
+		
+		assertEquals(true,validator.validate(value));
+	}
+	
+	public void testInteger1() throws ValidatorNotFoundException{
+		String value="0";
+		Validator validator=ValidatorTools.getValidator("integerNumber");
+		
+		assertEquals(true,validator.validate(value));
+	}
+	
+	public void testInteger2() throws ValidatorNotFoundException{
+		String value="-1";
+		Validator validator=ValidatorTools.getValidator("integerNumber");
+		
+		assertEquals(true,validator.validate(value));
+	}
+	
+	public void testInteger3() throws ValidatorNotFoundException{
+		String value="1.1";
+		Validator validator=ValidatorTools.getValidator("integerNumber");
+		
+		assertEquals(false,validator.validate(value));
+	}
+	
+	public void testInteger4() throws ValidatorNotFoundException{
+		String value="PI";
+		Validator validator=ValidatorTools.getValidator("integerNumber");
 		
 		assertEquals(false,validator.validate(value));
 	}

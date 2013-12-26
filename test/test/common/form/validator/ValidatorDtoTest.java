@@ -1,4 +1,4 @@
-package test;
+package test.common.form.validator;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ public class ValidatorDtoTest extends TestCase{
 		String collect="notempty";//convert lowercase
 		try{
 			List<Validator> validators=Lists.newArrayList(ValidatorTools.getValidator("xxx"));
-			System.out.println(validators);
+			//System.out.println(validators);
 			String result=ValidatorDto.validatorListToNamesLine(validators);
 			
 			assertEquals(collect, result);

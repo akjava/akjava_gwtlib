@@ -59,6 +59,7 @@ public static Validator getValidator(String line) throws ValidatorNotFoundExcept
 	}else if(name.equals(StaticValidators.VALIDATOR_DECIMAL_NUMBER.toLowerCase())){
 		return StaticValidators.decimalNumber();
 	}else if(name.equals(StaticValidators.VALIDATOR_INTEGER_NUMBER.toLowerCase())){
+		
 		return StaticValidators.integerNumber();
 	}else if(name.equals(Validators.VALIDATOR_RANGE_NUMBER.toLowerCase())){
 		
@@ -72,11 +73,14 @@ public static Validator getValidator(String line) throws ValidatorNotFoundExcept
 		}
 		if(param.size()>1){
 		try{
-			min=Double.parseDouble(param.get(0));
+			max=Double.parseDouble(param.get(1));
 			}catch (Exception e) {
 				//use null;
 			}
 		}
+		}
+		if(min==null && max==null){
+			throw new ValidatorNotFoundException(name+" need min or max value:"+line);
 		}
 		return Validators.rangedNumber(min, max);
 	}

@@ -1,4 +1,4 @@
-package test;
+package test.common.form.validator;
 
 import junit.framework.TestCase;
 
@@ -156,12 +156,54 @@ public class ValidatorConvertTest extends TestCase{
 		}	
 	}
 	
+	/**
+	 * number ranged support double so return double text
+	 */
+	public void testToValidator13(){
+		String text="range(0.0:3.0)";
+		Validator validator;
+		try {
+			validator = ValidatorTools.getValidator(text);
+			assertEquals(text, validator.toString());
+		} catch (ValidatorNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail();
+		}	
+	}
+	
+	public void testToValidator14(){
+		String text="DecimalNumber";
+		Validator validator;
+		try {
+			validator = ValidatorTools.getValidator(text);
+			assertEquals(text, validator.toString());
+		} catch (ValidatorNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail();
+		}	
+	}
+	
+	public void testToValidator15(){
+		String text="IntegerNumber";
+		Validator validator;
+		try {
+			validator = ValidatorTools.getValidator(text);
+			assertEquals(text, validator.toString());
+		} catch (ValidatorNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail();
+		}	
+	}
+	
 	public void testFail1(){
 		String text="max";
 		Validator validator;
 		try {
 			validator = ValidatorTools.getValidator(text);
-			fail();
+			fail(validator.toString());
 		} catch (ValidatorNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
@@ -173,7 +215,7 @@ public class ValidatorConvertTest extends TestCase{
 		Validator validator;
 		try {
 			validator = ValidatorTools.getValidator(text);
-			fail();
+			fail(validator.toString());
 		} catch (ValidatorNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
@@ -185,7 +227,7 @@ public class ValidatorConvertTest extends TestCase{
 		Validator validator;
 		try {
 			validator = ValidatorTools.getValidator(text);
-			fail();
+			fail(validator.toString());
 		} catch (ValidatorNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
@@ -196,7 +238,7 @@ public class ValidatorConvertTest extends TestCase{
 		Validator validator;
 		try {
 			validator = ValidatorTools.getValidator(text);
-			fail();
+			fail(validator.toString());
 		} catch (ValidatorNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
@@ -207,7 +249,7 @@ public class ValidatorConvertTest extends TestCase{
 		Validator validator;
 		try {
 			validator = ValidatorTools.getValidator(text);
-			fail();
+			fail(validator.toString());
 		} catch (ValidatorNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
@@ -218,7 +260,7 @@ public class ValidatorConvertTest extends TestCase{
 		Validator validator;
 		try {
 			validator = ValidatorTools.getValidator(text);
-			fail();
+			fail(validator.toString());
 		} catch (ValidatorNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
@@ -229,7 +271,7 @@ public class ValidatorConvertTest extends TestCase{
 		Validator validator;
 		try {
 			validator = ValidatorTools.getValidator(text);
-			fail();
+			fail(validator.toString());
 		} catch (ValidatorNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
@@ -240,7 +282,7 @@ public class ValidatorConvertTest extends TestCase{
 		Validator validator;
 		try {
 			validator = ValidatorTools.getValidator(text);
-			fail();
+			fail(validator.toString());
 		} catch (ValidatorNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
@@ -251,7 +293,7 @@ public class ValidatorConvertTest extends TestCase{
 		Validator validator;
 		try {
 			validator = ValidatorTools.getValidator(text);
-			fail();
+			fail(validator.toString());
 		} catch (ValidatorNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
@@ -262,10 +304,27 @@ public class ValidatorConvertTest extends TestCase{
 		Validator validator;
 		try {
 			validator = ValidatorTools.getValidator(text);
-			fail();
+			fail(validator.toString());
+		} catch (ValidatorNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+		}	
+	}
+	
+
+	
+	//need min or max value
+	public void testFail11(){
+		String text="range";
+		Validator validator;
+		try {
+			validator = ValidatorTools.getValidator(text);
+			fail(validator.toString());
 		} catch (ValidatorNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 		}	
 	} 
+	
+	
 }

@@ -32,12 +32,25 @@ public class Validators {
 	public static BetweenStringSize betweenStringSize(int min,int max){
 		  return new BetweenStringSize(min,max);
 	  }
-	 
+	
+	
+
 	 private static class RangedNumber extends AbstractValidator{
 			public RangedNumber(Double min,Double max) {
 			super(VALIDATOR_RANGE_NUMBER);
 			this.min=min;
 			this.max=max;
+			if(min==null){
+				add("");
+			}else{
+				add(""+min);
+			}
+			
+			if(max==null){
+				add("");
+			}else{
+				add(""+max);
+			}
 		}
 
 
@@ -49,10 +62,7 @@ public class Validators {
 
 
 
-			public void setMax(Double max) {
-				this.max = max;
-			}
-
+		
 
 
 			public Double getMin() {
@@ -61,13 +71,10 @@ public class Validators {
 
 
 
-			public void setMin(Double min) {
-				this.min = min;
-			}
-
-
 
 			private Double min;
+			
+			
 			
 			
 			@Override
