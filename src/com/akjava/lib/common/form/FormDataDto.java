@@ -209,7 +209,7 @@ public static List<FormData> linesToFormData(List<String> lines){
 	}
 	for(FormData data:formDatas){
 		for(FormFieldData fdata:data.getFormFieldDatas()){
-			if(fdata.getType()==FormFieldData.TYPE_NUMBER||fdata.getType()==FormFieldData.TYPE_SELECT_SINGLE){//in this time number only have relation
+			if(FormFieldData.isSupportRelativeOptionType(fdata.getType())){//in this time number only have relation
 				Parameter param=parseParameter(fdata.getOptionText());
 				if(param!=null){
 					FormData parent=map.get(param.getName());

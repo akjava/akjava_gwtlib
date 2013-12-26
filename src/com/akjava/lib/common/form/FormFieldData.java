@@ -179,6 +179,15 @@ public static int getTypeByLabel(String v){
 	}
 	return type;
 }
+/**
+ * text_short not tested so much
+ * @param type
+ * @return
+ */
+public static boolean isSupportRelativeOptionType(int type){
+	return type==TYPE_SELECT_MULTI||type==TYPE_SELECT_SINGLE||type==TYPE_NUMBER||type==TYPE_TEXT_SHORT;
+}
+
 public static boolean isSelectionType(int type){
 	return type==TYPE_SELECT_MULTI||type==TYPE_SELECT_SINGLE;
 }
