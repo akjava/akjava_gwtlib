@@ -22,13 +22,14 @@ public class TemplateUtils {
 			if(map.get(key)!=null){
 			result=result.replace("${"+key+"}", map.get(key));
 			}else{
-				System.out.println("TemplateUtils.createText()#null value:"+key);
+				System.out.println("TemplateUtils.createText()#null value:"+key+" skipped");
 			}
 		}
 		return result;
 	}
 	/**
-	 * dont insert null
+	 * please dont insert null-key
+	 * support upper-camel,lower-camel,upper-case,lower-case,filename-only,file-extension-name-only
 	 * @param template
 	 * @param map
 	 * @return
@@ -43,11 +44,22 @@ public class TemplateUtils {
 		String result=template;
 		for(String key:map.keySet()){
 			if(map.get(key)!=null){
-			result=result.replace("${"+key+"}", map.get(key));
-			result=result.replace("${u+"+key+"}", ValuesUtils.toUpperCamel(map.get(key)));
-			result=result.replace("${l+"+key+"}", ValuesUtils.toLowerCamel(map.get(key)));
+			String value=map.get(key);
+			result=result.replace("${"+key+"}",value);
+			result=result.replace("${u+"+key+"}", ValuesUtils.toUpperCamel(value));
+			result=result.replace("${l+"+key+"}", ValuesUtils.toLowerCamel(value));
+			result=result.replace("${U+"+key+"}", value.toUpperCase());
+			result=result.replace("${L+"+key+"}", value.toLowerCase());
+			int mutch=value.lastIndexOf(".");
+			if(mutch!=-1){
+				result=result.replace("${name+"+key+"}",value.substring(0,mutch));
+				result=result.replace("${ext+"+key+"}",value.substring(mutch+1));
+			}else{//is this make slow?
+				result=result.replace("${name+"+key+"}",value);
+				result=result.replace("${ext+"+key+"}","");
+				}
 			}else{
-				System.out.println("TemplateUtils.createText()#null value:"+key);
+				System.out.println("TemplateUtils.createText()#null value:"+key+" skipped");
 			}
 		}
 		return result;
