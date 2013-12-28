@@ -6,10 +6,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.akjava.gwt.lib.client.ValueUtils;
+import com.akjava.lib.common.functions.SplitLineFunction;
 import com.google.common.base.Joiner;
+import com.google.common.base.Splitter;
+import com.google.common.collect.Lists;
 
 public class CSVUtils {
+private static final Splitter NLinerSplitter=Splitter.on('\n');	
 private CSVUtils(){}
 public static String toNLineSeparator(String text){
 	String ret=text.replace("\r\n", "\n");
@@ -17,10 +20,30 @@ public static String toNLineSeparator(String text){
 	return ret;
 }
 
+
+public static List<String> splitLinesWithGuava(String text){
+    text=toNLineSeparator(text);
+    return Lists.newArrayList(NLinerSplitter.split(text));
+}
+
+/**
+ * this is simple but emit last continue lineseparator ,if it's problem use splitLinesWithGuava
+ * @param text
+ * @return
+ */
 public static String[] splitLines(String text){
     text=toNLineSeparator(text);
     String[] lines=text.split("\n");
     return lines;
+}
+
+public static String[] splitAtFirst(String text,String separator){
+    int index=text.indexOf(separator);
+    if(index==-1){
+    	return new String[]{text};
+    }else{
+    	return new String[]{text.substring(0, index),text.substring(index+separator.length())};
+    }
 }
 
 public static String[][] csvTextToArray(String line,char separator){
@@ -36,8 +59,41 @@ public static String[][] csvTextToArray(String line,char separator){
 	}
 	return ret;
 }
+public static int countMaxColumnSizeByList(List<List<String>> csvs){
+	int max=0;
+	for(List<String> csv:csvs){
+		if(csv.size()>max){
+			max=csv.size();
+		}
+	}
+	return max;
+}
+public static int countMaxColumnSizeByArray(List<String[]> csvs){
+	int max=0;
+	for(String[] csv:csvs){
+		if(csv.length>max){
+			max=csv.length;
+		}
+	}
+	return max;
+}
 
 
+/**
+ * support multiple csv separator
+ * @param text
+ * @param tabbedCsv
+ * @param conmaCsv
+ * @return
+ */
+public static List<List<String>> csvToListList(String text,boolean tabbedCsv,boolean conmaCsv){
+	if(text.isEmpty()){
+		return new ArrayList<List<String>>();
+	}
+	List<String> lines=CSVUtils.splitLinesWithGuava(text);
+	
+	return Lists.transform(Lists.newArrayList(lines), new SplitLineFunction(tabbedCsv,conmaCsv));
+}
 
 public static List<String[]> csvTextToArrayList(String line,char separator){
 	line=toNLineSeparator(line);
