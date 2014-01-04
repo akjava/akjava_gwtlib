@@ -1,5 +1,6 @@
 package com.akjava.gwt.lib.client;
 
+import com.google.common.base.Optional;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.TextArea;
 
@@ -53,16 +54,16 @@ public class TextSelection {
 	}
 	
 	
-	 public static TextSelection createTextSelection(TextArea textArea){
+	 public static Optional<TextSelection> createTextSelection(TextArea textArea){
 	    	try{
 		  		if(textArea.getSelectedText()==null ){
-		  			return null;
+		  			return Optional.absent();
 		  		}}catch(Exception e){
-		  			return null;
+		  			return Optional.absent();
 		  		}
 		  		int pos=textArea.getCursorPos();
 		  		if(pos==textArea.getText().length()){
-		  			return new TextSelection(textArea.getText().length(),textArea.getText().length(),textArea);
+		  			return Optional.of(new TextSelection(textArea.getText().length(),textArea.getText().length(),textArea));
 		  		}
 		  		GWT.log("pos:"+pos);
 		  		int ch=textArea.getText().charAt(pos);
@@ -75,6 +76,6 @@ public class TextSelection {
 		  		
 		  		
 		  		//String realSelect=textArea.getText().substring(pos,pos+len);
-		  		return new TextSelection(pos,pos+len,textArea);
+		  		return Optional.of(new TextSelection(pos,pos+len,textArea));
 	    }
 }

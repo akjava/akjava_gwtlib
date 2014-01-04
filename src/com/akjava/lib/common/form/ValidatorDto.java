@@ -5,6 +5,8 @@ import java.util.List;
 import com.akjava.lib.common.form.ValidatorTools.ValidatorNotFoundException;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
+import com.google.common.base.Predicates;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
 
 public class ValidatorDto {
@@ -26,7 +28,8 @@ private static ValidatorToNameFunction validatorToNameFunction=new ValidatorToNa
 	}
 
 	public static List<Validator> nameListToValidatorList(List<String> names){
-		return Lists.transform(names, nameToValidatorFunction);
+		return FluentIterable.from(names).transform(nameToValidatorFunction).filter(Predicates.notNull()).toList();
+		//return Lists.transform(names, nameToValidatorFunction);
 	}
 	
 	public static class NameToValidatorFunction implements Function<String,Validator>{
