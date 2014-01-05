@@ -70,8 +70,17 @@ public void addChild(Tag tag){
 	tag.setParent(this);
 }
 
+public Tag attr(String name,int value){
+	setAttribute(name,""+ value);
+	return this;
+}
+
 public Tag attr(String name,String value){
 	setAttribute(name, value);
+	return this;
+}
+public Tag single(){
+	setSingleTag(true);
 	return this;
 }
 

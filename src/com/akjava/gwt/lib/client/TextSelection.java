@@ -1,5 +1,6 @@
 package com.akjava.gwt.lib.client;
 
+import com.google.common.base.Ascii;
 import com.google.common.base.Optional;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.TextArea;
@@ -7,6 +8,9 @@ import com.google.gwt.user.client.ui.TextArea;
 public class TextSelection {
 
 	TextArea targetTextArea;
+	public TextArea getTargetTextArea() {
+		return targetTextArea;
+	}
 	public TextSelection(int start,int end,TextArea text){
 		this.start=start;
 		this.end=end;
@@ -33,6 +37,9 @@ public class TextSelection {
 	public void setEnd(int end) {
 		this.end = end;
 	}
+	public boolean containLineBreak(){
+		return getSelection().indexOf("\n")!=-1;
+	}
 	public String getSelection() {
 		return targetTextArea.getText().substring(start,end);
 	}
@@ -53,6 +60,91 @@ public class TextSelection {
 		targetTextArea.setCursorPos(pos);
 	}
 	
+	public String getTextUntilPrevLineBreak(){
+		String targetText=targetTextArea.getText();
+		String text="";
+		for(int i=start-1;i>=0;i--){
+			char ch=targetText.charAt(i);
+			if(ch==Ascii.LF){
+				break;
+			}else{
+				text=ch+text;
+			}
+		}
+		return text;
+	}
+	/**
+	 * not contain prev-line line-break
+	 * but contain end line-break if exits
+	 * @return
+	 */
+	public Optional<TextSelection> getNextLine(){
+		int firstLineBreak=-1;
+		String targetText=targetTextArea.getText();
+		if(end>=targetText.length()){
+			return Optional.absent();
+		}
+		if(targetText.charAt(end-1)==Ascii.LF){
+			firstLineBreak=end;
+			LogUtils.log("end with line-break");
+		}else{
+			for(int i=end+1;i<targetText.length();i++){
+			char ch=targetText.charAt(i);
+			if(ch==Ascii.LF){
+				firstLineBreak=i;
+				break;
+			}
+			}
+		}
+		if(firstLineBreak==-1){
+			return Optional.absent();
+		}
+		int start=firstLineBreak+1;
+		if(start>=targetText.length()){
+			return Optional.absent();
+		}
+		int end=start;
+		//String text="";
+		for(int i=firstLineBreak+1;i<targetText.length();i++){
+			char ch=targetText.charAt(i);
+			end=i;
+			if(ch==Ascii.LF){
+				break;
+			}
+		}
+		LogUtils.log("tmp-next:"+start+","+Math.min(end+1,targetText.length()));
+		return Optional.of(new TextSelection(start,Math.min(end+1,targetText.length()),targetTextArea));
+	}
+	
+	/**
+	 * not contain prev-line line-break
+	 * but contain end line-break if exits
+	 * @return
+	 */
+	public TextSelection getCurrentLine(){
+		int firstLineBreak=0;
+		String targetText=targetTextArea.getText();
+		
+		for(int i=start-1;i>=0;i--){
+			char ch=targetText.charAt(i);
+			if(ch==Ascii.LF){
+				firstLineBreak=i+1;
+				break;
+			}
+			}
+		
+		int start=firstLineBreak;
+		int end=start;
+		//String text="";
+		for(int i=firstLineBreak+1;i<targetText.length();i++){
+			char ch=targetText.charAt(i);
+			end=i;
+			if(ch==Ascii.LF){
+				break;
+			}
+		}
+		return new TextSelection(start,Math.min(end+1,targetText.length()),targetTextArea);
+	}
 	
 	 public static Optional<TextSelection> createTextSelection(TextArea textArea){
 	    	try{
@@ -65,14 +157,14 @@ public class TextSelection {
 		  		if(pos==textArea.getText().length()){
 		  			return Optional.of(new TextSelection(textArea.getText().length(),textArea.getText().length(),textArea));
 		  		}
-		  		GWT.log("pos:"+pos);
+		  		
 		  		int ch=textArea.getText().charAt(pos);
 		  		int len=textArea.getSelectionLength();
-		  		GWT.log("ch:"+ch+","+len);
-		  		if(ch==13){
+		  		
+		  		if(ch==Ascii.CR){
 		  			pos+=2;
 		  		}
-		  		GWT.log("pos:"+pos);
+		  		
 		  		
 		  		
 		  		//String realSelect=textArea.getText().substring(pos,pos+len);
