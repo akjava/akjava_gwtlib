@@ -84,7 +84,11 @@ private FileUploadForm uploadForm;
 						textModified();
 					}
 					else if(event.isControlKeyDown()){//copy or paste
-						textModified();
+						
+						if(event.getNativeKeyCode()!=65){//ignore select all
+							textModified();
+						}
+						
 					}
 					else{
 						textModified();
