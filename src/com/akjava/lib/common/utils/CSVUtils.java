@@ -126,6 +126,8 @@ public static String joinOn(Iterable<String> values,String separator){
  * csv value cracch quot if it contain a line-separator.
  * and that case quot string must be escaped with additional quot;
  * 
+ * can't read this csv from CSVReader
+ * 
  * @param text
  * @param splitString
  * @param replaceSplitChar usually use empty to remove splitString
@@ -144,6 +146,15 @@ public static String toCsvString(String text,String splitString,String replaceSp
 		return text;
 	}
 }
+
+/*
+ * this works fine on CSVReader
+ */
+public static String toSimpleQuoteString(String text){
+	text=text.replace("\"", "\"\"");
+	return "\""+text+"\"";
+}
+
 
 public static String mapToCsv(Map<String,String> map,List<String> keys,String splitString){
 	List<String> result=new ArrayList<String>();

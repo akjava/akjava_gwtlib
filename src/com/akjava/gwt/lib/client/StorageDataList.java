@@ -3,6 +3,11 @@ package com.akjava.gwt.lib.client;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * try to use Storage data as simple list datas
+ * @author aki
+ *
+ */
 public class StorageDataList {
 private String key;
 public static final String KEY_INDEX="_IND_";
