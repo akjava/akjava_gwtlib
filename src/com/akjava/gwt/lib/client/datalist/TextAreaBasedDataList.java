@@ -22,6 +22,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.Command;
@@ -68,22 +70,51 @@ private FileUploadForm uploadForm;
 		super(dataList);
 		textArea=new TabInputableTextArea();
 		
-		addKeyUpHandler(textArea);
+		addKeyHandler(textArea);
 		 
 		 
 		 getSimpleDataListWidget().setCellContextMenu(new TestContextMenu());
 		 
 	}
 	
-	public void addKeyUpHandler(TextArea text){
+	private boolean saved;
+	public void addKeyHandler(TextArea text){
+		text.addKeyDownHandler(new KeyDownHandler() {
+			@Override
+			public void onKeyDown(KeyDownEvent event) {
+				if(event.isControlKeyDown()){
+					if(event.getNativeKeyCode()==83){//ignore save
+						event.preventDefault();
+						saved=true;
+						return;
+					}
+				}
+				saved=false;
+			}
+		})
+		;
 		 text.addKeyUpHandler(new KeyUpHandler() {
 				@Override
 				public void onKeyUp(KeyUpEvent event) {
+					if(saved){//ignore save key
+						return;
+					}
+					//ignore single ctrl,this happen after save
+					if(event.getNativeKeyCode()==KeyCodes.KEY_CTRL){
+						return;
+					}
 					
+					LogUtils.log("key-up:"+event.getNativeKeyCode());
 					if(event.getNativeKeyCode()==KeyCodes.KEY_ENTER){
 						textModified();
 					}
-					else if(event.isControlKeyDown()){//copy or paste
+					else if(event.isControlKeyDown()){
+						
+						
+						if(event.getNativeKeyCode()==83){
+							event.preventDefault();
+							return;
+						}
 						
 						if(event.getNativeKeyCode()!=65){//ignore select all
 							textModified();

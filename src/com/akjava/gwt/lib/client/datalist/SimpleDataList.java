@@ -79,20 +79,7 @@ saveBt = new Button("Save");
 saveBt.addClickHandler(new ClickHandler() {
 	@Override
 	public void onClick(ClickEvent event) {
-		//save.setEnabled(false);
-		saveBt.setText("Saving");
-		boolean done=false;
-		try{
-		done=ioControler.save();
-		}catch(Exception e){
-			e.getMessage();
-			LogUtils.log(e.getMessage());
-		}
-		saveBt.setText("Save");
-		//save.setEnabled(true);
-		if(done){
-			setModified(false);
-		}
+		save();
 		
 	}
 });
@@ -380,6 +367,23 @@ private class TestContextMenu implements CellContextMenu{
 	}
 	
 }*/
+
+public void save() {
+	//save.setEnabled(false);
+			saveBt.setText("Saving");
+			boolean done=false;
+			try{
+			done=ioControler.save();
+			}catch(Exception e){
+				e.getMessage();
+				LogUtils.log(e.getMessage());
+			}
+			saveBt.setText("Save");
+			//save.setEnabled(true);
+			if(done){
+				setModified(false);
+			}
+}
 
 public void unselect() {
 	ioControler.unselect();
