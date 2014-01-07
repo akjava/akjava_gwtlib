@@ -114,68 +114,104 @@ public static final int TYPE_MODIFIED_DATE=8;
 public static final int TYPE_MODIFIED_USER=9;
 
 public static final int TYPE_NUMBER=10;//long
-//TODO future support
-public static final int TYPE_INTEGER=11;
-public static final int TYPE_DECIMAL=12;
+
+public static final int TYPE_INTEGER=11;//int
+public static final int TYPE_POINT=12;//a decimal point
+public static final int TYPE_HIDDEN=13;
+
+
+public static final String VALUE_TYPE_TEXT_SHORT="text";
+
+public static final String VALUE_TYPE_TEXT_LONG="text_long";
+public static final String VALUE_TYPE_ID="id";
+public static final String VALUE_TYPE_CHECK="check";
+public static final String VALUE_TYPE_SELECT_SINGLE="select";
+public static final String VALUE_TYPE_SELECT_MULTI="select_multi";
+public static final String VALUE_TYPE_CREATE_DATE="create_date";
+public static final String VALUE_TYPE_CREATE_USER="create_user";
+
+public static final String VALUE_TYPE_MODIFIED_DATE="modified_date";
+public static final String VALUE_TYPE_MODIFIED_USER="modified_user";
+
+public static final String VALUE_TYPE_NUMBER="number";//long
+
+public static final String VALUE_TYPE_INTEGER="int";
+public static final String VALUE_TYPE_POINT="point";
+public static final String VALUE_TYPE_HIDDEN="hidden";
 
 public static String getTypeByNumber(int value){
 	switch(value){	
 	case TYPE_TEXT_LONG:
-	return "text_long";
+	return VALUE_TYPE_TEXT_LONG;
 
 	case TYPE_ID:
-	return "id";
+	return VALUE_TYPE_ID;
 	case TYPE_CHECK:
-	return "check";
+	return VALUE_TYPE_CHECK;
 	
 	case TYPE_SELECT_SINGLE:
-	return "select";
+	return VALUE_TYPE_SELECT_SINGLE;
 
 	case TYPE_SELECT_MULTI:
-	return "select_multi";
+	return VALUE_TYPE_SELECT_MULTI;
 
 	case TYPE_CREATE_DATE:
-	return "create_date";
+	return VALUE_TYPE_CREATE_DATE;
 
 	case TYPE_CREATE_USER:
-	return "create_user";
+	return VALUE_TYPE_CREATE_USER;
 	
 	case TYPE_MODIFIED_DATE:
-		return "modified_date";
+		return VALUE_TYPE_MODIFIED_DATE;
 		
 	case TYPE_MODIFIED_USER:
-		return "modified_user";
+		return VALUE_TYPE_MODIFIED_USER;
 	case TYPE_NUMBER:
-		return "number";
+		return VALUE_TYPE_NUMBER;
+	case TYPE_INTEGER:
+		return VALUE_TYPE_INTEGER;
+	case TYPE_POINT:
+		return VALUE_TYPE_POINT;
+	case TYPE_HIDDEN:
+		return VALUE_TYPE_HIDDEN;	
 	default:
-		return "text";
+		return VALUE_TYPE_TEXT_SHORT;
 	}
 }
-public static final List<String> TYPES=Lists.newArrayList("text","text_short","text_long","id","check","select","select_single","select_multi","create_date","create_user","modified_date","modified_user","number");
+public static final List<String> TYPES=Lists.newArrayList(VALUE_TYPE_TEXT_SHORT,"text_short",
+		VALUE_TYPE_TEXT_LONG,VALUE_TYPE_ID,VALUE_TYPE_CHECK,
+		VALUE_TYPE_SELECT_SINGLE,"select_single",
+		VALUE_TYPE_SELECT_MULTI,VALUE_TYPE_CREATE_DATE,VALUE_TYPE_CREATE_USER,VALUE_TYPE_MODIFIED_DATE,VALUE_TYPE_MODIFIED_USER,VALUE_TYPE_NUMBER,"long",VALUE_TYPE_INTEGER,VALUE_TYPE_POINT,VALUE_TYPE_HIDDEN);
 public static int getTypeByLabel(String v){
 	int type=0;
-	if(v.equals("text")||v.equals("text_short")){
+	if(v.equals(VALUE_TYPE_TEXT_SHORT)||v.equals("text_short")){
 		type=TYPE_TEXT_SHORT;
-	}else if(v.equals("text_long")){
+	}else if(v.equals(VALUE_TYPE_TEXT_LONG)){
 		type=TYPE_TEXT_LONG;
-	}else if(v.equals("id")){
+	}else if(v.equals(VALUE_TYPE_ID)){
 		type=TYPE_ID;
-	}else if(v.equals("check")){
+	}else if(v.equals(VALUE_TYPE_CHECK)){
 		type=TYPE_CHECK;
-	}else if(v.equals("select")||v.equals("select_single")){
+	}else if(v.equals(VALUE_TYPE_SELECT_SINGLE)||v.equals("select_single")){
 		type=TYPE_SELECT_SINGLE;
-	}else if(v.equals("select_multi")){
+	}else if(v.equals(VALUE_TYPE_SELECT_MULTI)){
 		type=TYPE_SELECT_MULTI;
-	}else if(v.equals("create_date")){
+	}else if(v.equals(VALUE_TYPE_CREATE_DATE)){
 		type=TYPE_CREATE_DATE;
-	}else if(v.equals("create_user")){
+	}else if(v.equals(VALUE_TYPE_CREATE_USER)){
 		type=TYPE_CREATE_USER;
-	}else if(v.equals("modified_date")){
+	}else if(v.equals(VALUE_TYPE_MODIFIED_DATE)){
 		type=TYPE_CREATE_DATE;
-	}else if(v.equals("modified_user")){
+	}else if(v.equals(VALUE_TYPE_MODIFIED_USER)){
 		type=TYPE_MODIFIED_USER;
-	}else if(v.equals("number")){
+	}else if(v.equals(VALUE_TYPE_NUMBER)||v.equals("long")){
 		type=TYPE_NUMBER;
+	}else if(v.equals(VALUE_TYPE_INTEGER)){
+		type=TYPE_INTEGER;
+	}else if(v.equals(VALUE_TYPE_POINT)||v.equals("double")){
+		type=TYPE_POINT;
+	}else if(v.equals(VALUE_TYPE_HIDDEN)){
+		type=TYPE_HIDDEN;
 	}
 	return type;
 }
