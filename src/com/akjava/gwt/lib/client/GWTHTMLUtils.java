@@ -24,6 +24,23 @@ public class GWTHTMLUtils {
 		}
 	}
 	
+	/**
+	 * intension to set hidden value
+	 * @param id
+	 * @param value
+	 */
+	public static void setValueAttributeById(String id,String value){
+		setAttributeById(id,"value",value);
+	}
+	public static void setAttributeById(String id,String attributeName,String value){
+		Element element=DOM.getElementById(id);
+		if(element!=null){
+			element.setAttribute(attributeName, value);
+		}else{
+			LogUtils.log("not found element:setInputValueById"+id);
+		}
+	}
+	
 	public static void setPlaceHolder(TextBoxBase textbox,String text){
 		textbox.getElement().setAttribute("placeHolder", text);
 	}
@@ -64,7 +81,7 @@ public class GWTHTMLUtils {
 	/**
 	 * used when only add modules if target id exists.
 	 * @param name
-	 * @return whether panel exist or not
+	 * @return whether panel or input exist or not
 	 *
 	 */
 	public static boolean isExistPanel(String name){
