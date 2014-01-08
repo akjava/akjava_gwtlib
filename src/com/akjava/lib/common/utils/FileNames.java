@@ -10,6 +10,9 @@ public class FileNames {
 		this.fileSeparator=fileSeparator;
 	}
 	
+	public static FileNames asSlash(){
+		return new FileNames(SLASH);
+	}
 	public static FileNames as(char fileSeparator){
 		return new FileNames(fileSeparator);
 	}
