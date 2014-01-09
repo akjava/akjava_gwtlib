@@ -8,7 +8,7 @@ import com.google.gwt.cell.client.ValueUpdater;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 
-@SuppressWarnings("unchecked")
+
 public abstract class AbstractContextCell<T> extends AbstractCell<T>{
 	private CellContextMenu cellContextMenu;
 
@@ -20,8 +20,9 @@ public abstract class AbstractContextCell<T> extends AbstractCell<T>{
 		this.cellContextMenu = cellContextMenu;
 	}
 
+
 	@Override
-     public Set getConsumedEvents()
+     public Set<String> getConsumedEvents()
      {
            return consumeEvents;
      }

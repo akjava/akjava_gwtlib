@@ -8,10 +8,15 @@ import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
+import com.google.gwt.view.client.SelectionModel;
 
 
 public abstract class SimpleCellTable<T> extends VerticalPanel{
 	NaturalPager pager;
+	public NaturalPager getPager() {
+		return pager;
+	}
+
 	private CellTable<T> table;
 
 	public static DateTimeFormat DATE_FORMAT_DATE_ONLY=DateTimeFormat.getFormat("yy/MM/dd");
@@ -43,6 +48,9 @@ public abstract class SimpleCellTable<T> extends VerticalPanel{
 		//pager.setRangeLimited(false);
 		 this.add(table);
 	}
+	
+	
+	
 	public abstract void addColumns(CellTable<T> table);
 	
 	public void setData(List<T> datas){
@@ -74,5 +82,9 @@ public void setData(List<T> datas,int page){
 	}
 	public int getPage(){
 		return pager.getPage();
+	}
+	public void setSelectionModel(
+			SelectionModel<T> selectionModel) {
+		getCellTable().setSelectionModel(selectionModel);
 	}
 }
