@@ -2,7 +2,15 @@ package com.akjava.lib.common.utils;
 
 
 
-
+/**
+ * TODO
+ * define standards file-sets,htmls,images
+ * define \
+ * 
+ * getLastDirectory()
+ * @author aki
+ *
+ */
 public class FileNames {
 	public static final char SLASH='/';
 	private char fileSeparator;
@@ -10,9 +18,18 @@ public class FileNames {
 		this.fileSeparator=fileSeparator;
 	}
 	
+	public boolean isEndsWithFileSeparator(String path){
+		return path.charAt(path.length()-1)==fileSeparator;
+	}
+	
 	public static FileNames asSlash(){
 		return new FileNames(SLASH);
 	}
+	/**
+	 * i'm not sure why i choose method name "as.
+	 * @param fileSeparator
+	 * @return
+	 */
 	public static FileNames as(char fileSeparator){
 		return new FileNames(fileSeparator);
 	}
@@ -75,6 +92,11 @@ public class FileNames {
 		}
 		return path;
 	}
+	/**
+	 * technically not filename,TODO make urls
+	 * @param path
+	 * @return
+	 */
 	public String getRemovedDomainName(String path){
 		int s=path.indexOf("://");
 		if(s!=-1){
@@ -94,9 +116,9 @@ public class FileNames {
 	 * @param isNoExtensionIsDir  recognie  filename which has no extension as folder 
 	 * @return
 	 */
-	public  String getDirectoryPath(String path,boolean isNoExtensionIsDir){
+	public  String getDirectoryPath(String path,boolean isHandleNoExtensionFileAsDir){
 		String extension=getExtension(path);
-		if(extension.isEmpty() && (path.endsWith(""+fileSeparator) || isNoExtensionIsDir)){
+		if(extension.isEmpty() && (path.endsWith(""+fileSeparator) || isHandleNoExtensionFileAsDir)){
 			if(path.endsWith(""+fileSeparator)){
 				return path;
 			}else{

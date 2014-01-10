@@ -221,13 +221,7 @@ unselectBt = new Button("Unselect",new ClickHandler() {
 });
 buttons2.add(unselectBt);
 
-Button back=new Button("Back",new ClickHandler() {
-	@Override
-	public void onClick(ClickEvent event) {
-		ioControler.back();
-	}
-});
-buttons2.add(back);
+
 
 expandButton = new Button("Expand>>",new ClickHandler() {
 	@Override
@@ -290,8 +284,16 @@ selectionModel.addSelectionChangeHandler(selectionChangeHandler);
 
 HorizontalPanel downButtons=new HorizontalPanel();
 add(downButtons);
+downButtons2 = new HorizontalPanel();
+add(downButtons);
 
-
+Button back=new Button("Back",new ClickHandler() {
+	@Override
+	public void onClick(ClickEvent event) {
+		ioControler.back();
+	}
+});
+downButtons.add(back);
 
 Button prev=new Button("Prev",new ClickHandler() {
 	@Override
@@ -634,6 +636,17 @@ private Button copyBt;
 private Button deleteBt;
 
 private Button renameBt;
+
+private HorizontalPanel downButtons2;
+
+/**
+ * for user customize
+ * @return
+ */
+public HorizontalPanel getOptionButtonPanel(){
+	return downButtons2;
+}
+
 public CellContextMenu getCellContextMenu() {
 	return cell.getCellContextMenu();
 }
