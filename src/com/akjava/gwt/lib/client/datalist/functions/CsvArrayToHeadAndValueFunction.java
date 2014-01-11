@@ -1,15 +1,20 @@
 package com.akjava.gwt.lib.client.datalist.functions;
 
-import com.akjava.gwt.lib.client.HeaderAndValue;
+import com.akjava.gwt.lib.client.datalist.SimpleTextData;
 import com.akjava.lib.common.utils.ValuesUtils;
 import com.google.common.base.Function;
 
+/**
+ * not support cdate yet;
+ * @author aki
+ *
+ */
 /*
  * the case read from CSV Reader
  */
-public class CsvArrayToHeadAndValueFunction implements Function<String[],HeaderAndValue> {
+public class CsvArrayToHeadAndValueFunction implements Function<String[],SimpleTextData> {
 	@Override
-	public HeaderAndValue apply(String[] input) {
+	public SimpleTextData apply(String[] input) {
 		int id=-1;
 		String header="";
 		String data="";
@@ -23,7 +28,7 @@ public class CsvArrayToHeadAndValueFunction implements Function<String[],HeaderA
 		if(input.length>2){
 			data=input[2];
 		}
-		HeaderAndValue hv=new HeaderAndValue(id,header,data);
+		SimpleTextData hv=new SimpleTextData(id,header,data);
 		return hv;
 	}
 

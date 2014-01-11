@@ -3,6 +3,8 @@ package com.akjava.gwt.lib.client;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.akjava.gwt.lib.client.datalist.SimpleTextData;
+
 /**
  * try to use Storage data as simple list datas
  * @author aki
@@ -58,15 +60,46 @@ try{
 		
 	}
 	
-	public List<HeaderAndValue> getDataList(){
+	private String[] splitCdateAndData(String line){
+		String[] result=new String[2];
+
+		for(int i=0;i<line.length();i++){
+			if(Character.isDigit(line.charAt(i))){
+				continue;
+			}else if(line.charAt(i)==','){
+				//find split
+				result[0]=line.substring(i+1);
+				result[1]=line.substring(0,i);
+				return result;
+			}else{
+				//not found
+				result[0]=line;
+				result[1]="";
+				return result;
+			}
+		}
+		//just number 
+		if(result[0]==null){
+			result[0]=line;
+			result[1]="";
+		}
+		
+		return result;
+	}
+	public List<SimpleTextData> getDataList(){
 try{
-	List<HeaderAndValue> values=new ArrayList<HeaderAndValue>();
+	List<SimpleTextData> values=new ArrayList<SimpleTextData>();
 	int id=getCurrentId();
 	for(int i=0;i<id;i++){
 		String header=controler.getValue(key+KEY_HEADER+i, null);
 		if(header!=null){
-			String data=controler.getValue(key+KEY_DATA+i, null);
-			values.add(new HeaderAndValue(i, header, data));
+			String data=controler.getValue(key+KEY_DATA+i, "");//now null as empty
+			String[] data_cdate=splitCdateAndData(data);
+			
+			
+			SimpleTextData sdata=new SimpleTextData(i, header,data_cdate[0],data_cdate[1]);
+			LogUtils.log(i+","+sdata.getName()+","+sdata.getData()+",cdate="+sdata.getCdate());
+			values.add(sdata);
 		}
 	}
 	return values;
@@ -145,12 +178,14 @@ try{
 		
 	}
 	
-	public HeaderAndValue getDataValue(int id){
+	public SimpleTextData getDataValue(int id){
 try{
 	String header=controler.getValue(key+KEY_HEADER+id, null);
 	if(header!=null){
-		String data=controler.getValue(key+KEY_DATA+id, null);
-		return new HeaderAndValue(id, header, data);
+		String data=controler.getValue(key+KEY_DATA+id, "");
+		String[] data_cdate=splitCdateAndData(data);
+		SimpleTextData sdata=new SimpleTextData(id, header,data_cdate[0],data_cdate[1]);
+		return sdata;
 	}
 	return null;
 		}catch(StorageException e){

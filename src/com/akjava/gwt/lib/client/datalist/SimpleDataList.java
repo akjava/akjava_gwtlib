@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import com.akjava.gwt.lib.client.HeaderAndValue;
 import com.akjava.gwt.lib.client.LogUtils;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
@@ -29,16 +28,16 @@ import com.google.gwt.view.client.SingleSelectionModel;
 public class SimpleDataList extends VerticalPanel{
 //TODO comparable
 	
-	 private static final ProvidesKey<DataListData<HeaderAndValue>> KEY_PROVIDER = new ProvidesKey<DataListData<HeaderAndValue>>() {
-		    public Object getKey(DataListData<HeaderAndValue> item) {
+	 private static final ProvidesKey<DataListData<SimpleTextData>> KEY_PROVIDER = new ProvidesKey<DataListData<SimpleTextData>>() {
+		    public Object getKey(DataListData<SimpleTextData> item) {
 		      return item.getData().getId();
 		    }
 		  };	
 
 private ItemIOControler ioControler;
 
-private CellList<DataListData<HeaderAndValue>> cellList;
-private SingleSelectionModel<DataListData<HeaderAndValue>> selectionModel;
+private CellList<DataListData<SimpleTextData>> cellList;
+private SingleSelectionModel<DataListData<SimpleTextData>> selectionModel;
 
 
 private Handler selectionChangeHandler;
@@ -54,7 +53,7 @@ public void setModified(boolean modified) {
 	}
 }
 
-public List<DataListData<HeaderAndValue>> getCellData(){
+public List<DataListData<SimpleTextData>> getCellData(){
 	return dataListDatas;
 }
 
@@ -103,7 +102,7 @@ renameBt = new Button("Rename",new ClickHandler() {
 	public void onClick(ClickEvent event) {
 		String newName=ioControler.rename();
 		if(newName!=null){
-		currentSelection.getData().setHeader(newName);
+		currentSelection.getData().setName(newName);
 		cellList.redraw();
 		}
 	}
@@ -242,12 +241,12 @@ add(scroll);
 
 
 cell = new DataListDataCell();
-cellList = new CellList<DataListData<HeaderAndValue>>(cell,KEY_PROVIDER);
+cellList = new CellList<DataListData<SimpleTextData>>(cell,KEY_PROVIDER);
 cellList.setStylePrimaryName("table");
 
 scroll.setWidget(cellList);
 
-selectionModel = new SingleSelectionModel<DataListData<HeaderAndValue>>(KEY_PROVIDER);
+selectionModel = new SingleSelectionModel<DataListData<SimpleTextData>>(KEY_PROVIDER);
 cellList.setSelectionModel(selectionModel);
 selectionChangeHandler = new Handler() {
 	@Override
@@ -264,7 +263,7 @@ selectionChangeHandler = new Handler() {
 			//LogUtils.log("backselected");
 			return;
 		}
-		DataListData<HeaderAndValue> data=selectionModel.getSelectedObject();
+		DataListData<SimpleTextData> data=selectionModel.getSelectedObject();
 		if(data!=null){
 			//LogUtils.log("select and call load:"+data.getData().getHeader()+","+data.getData().getId());	
 		selectFromSelectionModel(data);
@@ -445,31 +444,31 @@ private boolean askContinueAction(){
 	return true;
 }
 
-private List<DataListData<HeaderAndValue>> dataListDatas=new ArrayList<DataListData<HeaderAndValue>>();
-private DataListData<HeaderAndValue> currentSelection;
+private List<DataListData<SimpleTextData>> dataListDatas=new ArrayList<DataListData<SimpleTextData>>();
+private DataListData<SimpleTextData> currentSelection;
 public static final int ORDER_ID=0;
 public static final int ORDER_ID_DESC=1;
 public static final int ORDER_AZ=2;
 private int order=1;
-private HeaderAndValueComparator comparator=new HeaderAndValueComparator();
+private SimpleTextDataComparator comparator=new SimpleTextDataComparator();
 private String getConfirmMessage(){
 	return "last selection is modified?disband this and select another?";
 }
 public void update(){
 	try{
 	dataListDatas.clear();
-	List<HeaderAndValue> hvs=ioControler.getDataList().getDataList();
+	List<SimpleTextData> hvs=ioControler.getDataList().getDataList();
 	
 	comparator.setOrder(order);
 	Collections.sort(hvs, comparator);
 	
-	for(HeaderAndValue hv:hvs){
-		dataListDatas.add(new DataListData<HeaderAndValue>(hv));
+	for(SimpleTextData hv:hvs){
+		dataListDatas.add(new DataListData<SimpleTextData>(hv));
 	}
 	 
 	 selectionModel.clear();
 	/*
-	 selectionModel=new SingleSelectionModel<DataListData<HeaderAndValue>>();
+	 selectionModel=new SingleSelectionModel<DataListData<SimpleTextData>>();
 	 selectionModel.addSelectionChangeHandler(selectionChangeHandler);
 	 cellList.setSelectionModel(selectionModel);
 	*/
@@ -488,7 +487,7 @@ public void redraw(){
 	cellList.redraw();
 }
 
-public static class HeaderAndValueComparator implements Comparator<HeaderAndValue>{
+public static class SimpleTextDataComparator implements Comparator<SimpleTextData>{
 private  int order;
 	public int getOrder() {
 	return order;
@@ -497,12 +496,12 @@ public void setOrder(int order) {
 	this.order = order;
 }
 @Override
-public int compare(HeaderAndValue o1, HeaderAndValue o2) {
+public int compare(SimpleTextData o1, SimpleTextData o2) {
 	if(order==ORDER_ID_DESC){
 		return o2.getId()-o1.getId();
 	}
 	if(order==ORDER_AZ){
-		return o1.getHeader().compareTo(o2.getHeader());
+		return o1.getName().compareTo(o2.getName());
 	}
 	return o1.getId()-o2.getId();
 }
@@ -513,12 +512,12 @@ public int compare(HeaderAndValue o1, HeaderAndValue o2) {
 boolean ignoreSelectionChange;
 
 private Button expandButton;
-private void backselect(DataListData<HeaderAndValue> item){
+private void backselect(DataListData<SimpleTextData> item){
 	ignoreSelectionChange=true;
 	selectionModel.setSelected(item, true);
 }
 
-private void selectFromSelectionModel(DataListData<HeaderAndValue> item){
+private void selectFromSelectionModel(DataListData<SimpleTextData> item){
 	//never call selectionModel.setSelected(item, true);
 	currentSelection=item;
 	ioControler.load(item.getData().getId());
@@ -527,7 +526,7 @@ private void selectFromSelectionModel(DataListData<HeaderAndValue> item){
 	setSelectionStatus(true);
 }
 
-public DataListData<HeaderAndValue> getSelection(){
+public DataListData<SimpleTextData> getSelection(){
 	return currentSelection;
 }
 
@@ -539,7 +538,7 @@ public int getSelectedIndex(){
 		return -1;
 	}
 	
-	DataListData<HeaderAndValue> data=selectionModel.getSelectedObject();
+	DataListData<SimpleTextData> data=selectionModel.getSelectedObject();
 	return dataListDatas.indexOf(data);
 }
 
@@ -594,12 +593,12 @@ public void select(int index) {
 	if(index<0){
 	LogUtils.log("invalid index:"+index);
 	}
-	DataListData<HeaderAndValue> data=dataListDatas.get(index);
+	DataListData<SimpleTextData> data=dataListDatas.get(index);
 	select(data);
 	setSelectionStatus(true);
 }
 
-private void select(final DataListData<HeaderAndValue> data) {
+private void select(final DataListData<SimpleTextData> data) {
 	Scheduler.get().scheduleFinally(new ScheduledCommand() {
 		@Override
 		public void execute() {
@@ -611,7 +610,7 @@ private void select(final DataListData<HeaderAndValue> data) {
 
 
 public void selectById(int id) {
-	for(DataListData<HeaderAndValue> data:dataListDatas){
+	for(DataListData<SimpleTextData> data:dataListDatas){
 		if(data.getData().getId()==id){
 			select(data);
 			break;
@@ -660,18 +659,18 @@ public void setCellContextMenu(CellContextMenu cellContextMenu) {
 
 
 @SuppressWarnings("unchecked")
-public class DataListDataCell  extends AbstractContextCell<DataListData<HeaderAndValue>>{
+public class DataListDataCell  extends AbstractContextCell<DataListData<SimpleTextData>>{
 
 	
 	@Override
 	public void render(com.google.gwt.cell.client.Cell.Context context,
-			DataListData<HeaderAndValue> value, SafeHtmlBuilder sb) {
+			DataListData<SimpleTextData> value, SafeHtmlBuilder sb) {
 		if(value==null){
 			return;
 		}
 		
 		String title="";
-		title+=value.getData().getHeader();
+		title+=value.getData().getName();
 		if(value.isModified()){
 			title="*"+title;
 		}

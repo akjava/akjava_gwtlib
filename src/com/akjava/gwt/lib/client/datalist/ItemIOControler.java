@@ -3,7 +3,6 @@ package com.akjava.gwt.lib.client.datalist;
 import java.util.List;
 import java.util.Stack;
 
-import com.akjava.gwt.lib.client.HeaderAndValue;
 import com.akjava.gwt.lib.client.StorageDataList;
 import com.google.common.base.Optional;
 import com.google.gwt.core.client.GWT;
@@ -16,7 +15,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.user.client.Window;
 
-public abstract class ItemIOControler implements HasValueChangeHandlers<HeaderAndValue>{
+public abstract class ItemIOControler implements HasValueChangeHandlers<SimpleTextData>{
 private StorageDataList dataList;	
 
 
@@ -30,8 +29,8 @@ public StorageDataList getDataList() {
 private boolean modified;
 protected int selectedId=-1;
 
-private HeaderAndValue lastSaved;
-public HeaderAndValue getLastSaved() {
+private SimpleTextData lastSaved;
+public SimpleTextData getLastSaved() {
 	return lastSaved;
 }
 
@@ -39,16 +38,17 @@ public boolean save(){
 	if(selectedId==-1){
 		return saveAs();
 	}else{
-		HeaderAndValue hv=createSaveData(getCurrentName());
+		SimpleTextData hv=createSaveData(getCurrentName());
 		
 		lastSaved=dataList.getDataValue(selectedId);//for backup
-		
-		dataList.updateData(selectedId, hv.getHeader(), hv.getData());
+		//store cdate+data
+		 String storedData=hv.getCdate()+","+hv.getData();
+		dataList.updateData(selectedId, hv.getName(), storedData);
 		
 		//validate
-		HeaderAndValue storedHV=dataList.getDataValue(selectedId);
-		if(!storedHV.getData().equals(hv.getData())){
-			Window.alert("faild to save");
+		SimpleTextData storedHV=dataList.getDataValue(selectedId);
+		if(!(storedHV.getCdate()+","+storedHV.getData()).equals(storedData)){
+			Window.alert("faild to save:expected ="+storedData+" but stored="+storedHV.getData());
 			throw new RuntimeException("faild to save");
 		}
 		
@@ -63,14 +63,14 @@ public boolean saveAs(){
 		return false;
 	}
 	
-	HeaderAndValue hv=createSaveData(saveName);
-	GWT.log(dataList+","+hv);
-	int selection=dataList.addData(hv.getHeader(), hv.getData());
+	SimpleTextData hv=createSaveData(saveName);
+	String storedData=hv.getCdate()+","+hv.getData();
+	int selection=dataList.addData(hv.getName(), storedData);
 	selectedId=selection;
 	
 	//validate
-	HeaderAndValue storedHV=dataList.getDataValue(selectedId);
-	if(!storedHV.getData().equals(hv.getData())){
+	SimpleTextData storedHV=dataList.getDataValue(selectedId);
+	if(!(storedHV.getCdate()+","+storedHV.getData()).equals(storedData)){
 		Window.alert("faild to save");
 		throw new RuntimeException("faild to save");
 	}
@@ -86,8 +86,8 @@ public boolean saveAs(){
 public String rename(String newName){
 	
 	
-	HeaderAndValue hv=createSaveData(newName);
-	dataList.updateData(selectedId, hv.getHeader(), hv.getData());
+	SimpleTextData hv=createSaveData(newName);
+	dataList.updateData(selectedId, hv.getName(), hv.getCdate()+","+hv.getData());
 	setCurrentName(newName);//doit for avoid reload
 	ValueChangeEvent.fire(this, hv);
 	return newName;
@@ -99,8 +99,8 @@ public String rename(){
 		return null;
 	}
 	
-	HeaderAndValue hv=createSaveData(saveName);
-	dataList.updateData(selectedId, hv.getHeader(), hv.getData());
+	SimpleTextData hv=createSaveData(saveName);
+	dataList.updateData(selectedId, hv.getName(), hv.getCdate()+","+hv.getData());
 	setCurrentName(saveName);//doit for avoid reload
 	ValueChangeEvent.fire(this, hv);
 	return saveName;
@@ -132,9 +132,9 @@ public void load(int id){
 	selectedId=id;
 	//TODO confirm
 	if(id!=-1){
-	HeaderAndValue hv=dataList.getDataValue(id);
+		SimpleTextData hv=dataList.getDataValue(id);
 	if(hv==null){
-		loadData(Optional.<HeaderAndValue>absent());
+		loadData(Optional.<SimpleTextData>absent());
 	}else{
 		loadData(Optional.of(hv));
 	}
@@ -151,16 +151,16 @@ public void load(int id){
 
 public abstract void setCurrentName(String name);
 public abstract String getCurrentName();
-public abstract HeaderAndValue createSaveData(String fileName);
-public abstract HeaderAndValue createNewData(String fileName);
+public abstract SimpleTextData createSaveData(String fileName);
+public abstract SimpleTextData createNewData(String fileName);
 
 /**
  * Optional.absense means notselected;clear selection
  * @param hv
  */
-public abstract void loadData(Optional<HeaderAndValue> hv);
+public abstract void loadData(Optional<SimpleTextData> hv);
 
-public abstract void exportDatas(List<HeaderAndValue> list);
+public abstract void exportDatas(List<SimpleTextData> list);
 
 public abstract void updateList();
 
@@ -171,7 +171,7 @@ public abstract void copy(Object object);
 
 public abstract void paste();
 
-public abstract void recoverLastSaved(HeaderAndValue hv);
+public abstract void recoverLastSaved(SimpleTextData hv);
 
 private String controlerName;
 public String getControlerName() {
@@ -183,7 +183,7 @@ public void setControlerName(String controlerName) {
 }
 
 public void exportAll() {
-	List<HeaderAndValue> list=dataList.getDataList();
+	List<SimpleTextData> list=dataList.getDataList();
 	exportDatas(list);
 }
 
@@ -194,21 +194,21 @@ public abstract void restore();
 public void unselect() {
 	selectedId=-1;
 	updateList();
-	loadData(Optional.<HeaderAndValue>absent());
+	loadData(Optional.<SimpleTextData>absent());
 }
 
-public HeaderAndValue doNew(){
+public SimpleTextData doNew(){
 	return doNew("Undefined");
 }
-public HeaderAndValue doNew(String defaultName){
+public SimpleTextData doNew(String defaultName){
 	String saveName=Window.prompt("name", defaultName);
 	if(saveName==null){
 		return null;
 	}
 	
-	HeaderAndValue hv=createNewData(saveName);
+	SimpleTextData hv=createNewData(saveName);
 	
-	int selection=dataList.addData(hv.getHeader(), hv.getData());
+	int selection=dataList.addData(hv.getName(), hv.getCdate()+","+hv.getData());
 	selectedId=selection;
 	updateList();
 	ValueChangeEvent.fire(this, hv);
@@ -228,7 +228,7 @@ public void back() {
 		
 		@Override
 		public void execute() {
-			HeaderAndValue hv=dataList.getDataValue(id);
+			SimpleTextData hv=dataList.getDataValue(id);
 			
 			load(id);
 		}
@@ -246,7 +246,7 @@ public void fireEvent(GwtEvent<?> event) {
 
 @Override
 public HandlerRegistration addValueChangeHandler(
-		ValueChangeHandler<HeaderAndValue> handler) {
+		ValueChangeHandler<SimpleTextData> handler) {
 	return bus.addHandler(ValueChangeEvent.getType(), handler);
 }
 
