@@ -5,8 +5,27 @@ import java.util.List;
 
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
+import com.google.common.base.Splitter;
 
 public class StringFunctions {
+	
+	public static FirstLineOnly getFirstLineOnly(){
+		return FirstLineOnly.INSTANCE;
+	}
+	public enum FirstLineOnly implements Function<String,String>{
+		INSTANCE ;
+		@Override
+		public String apply(String input) {
+			int index=input.indexOf("\n");
+			if(index==-1){
+				return input;
+			}else{
+				return input.substring(0,index);
+			}
+		}
+		
+	}
+	
 	/**
 	 * 
 	 * 
@@ -46,6 +65,19 @@ public class StringFunctions {
 			
 			
 			return result;
+		}
+	}
+
+	public static class StringToPreFixAndSuffix implements Function<String,String>{
+		private String prefix;
+		private String suffix;
+		public StringToPreFixAndSuffix(String prefix,String suffix){
+			this.prefix=prefix;
+			this.suffix=suffix;
+		}
+		@Override
+		public String apply(String value) {
+			return prefix+value+suffix;
 		}
 	}
 }

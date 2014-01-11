@@ -60,7 +60,13 @@ public class FileNames {
 		return ext;
 	}
 	
+	/**
+	 * not support directory name contain .
+	 * @param name
+	 * @return
+	 */
 	public  static String getRemovedExtensionName(String name){
+		
 		String baseName;
 		if(name.lastIndexOf(".")==-1){
 			baseName=name;
@@ -117,6 +123,18 @@ public class FileNames {
 	 * @return
 	 */
 	public  String getDirectoryPath(String path,boolean isHandleNoExtensionFileAsDir){
+		return getDirectoryPath(path,isHandleNoExtensionFileAsDir,true);
+	}
+	
+	/**
+	 * 
+	 * @param path
+	 * @param isHandleNoExtensionFileAsDir
+	 * @param noDirContainAsDirectory
+	 * the case path is "name" ,if true return "name":false return ""
+	 * @return
+	 */
+	public  String getDirectoryPath(String path,boolean isHandleNoExtensionFileAsDir,boolean noDirContainAsDirectory){
 		String extension=getExtension(path);
 		if(extension.isEmpty() && (path.endsWith(""+fileSeparator) || isHandleNoExtensionFileAsDir)){
 			if(path.endsWith(""+fileSeparator)){
@@ -129,7 +147,11 @@ public class FileNames {
 			if(last!=-1){
 				return path.substring(0,last+1);
 			}else{
+				if(noDirContainAsDirectory){
 				return path;
+				}else{
+				return "";//root
+				}
 			}
 		}
 	}

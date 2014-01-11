@@ -151,7 +151,12 @@ private FileUploadForm uploadForm;
 	@Override
 	public SimpleTextData createSaveData(String fileName) {
 		String text=textArea.getText();
+		SimpleTextData current=getSimpleDataListWidget().getSelection().getData();
+		if(current==null){
 		return new SimpleTextData(-1,fileName,text);
+		}else{
+			return new SimpleTextData(-1,fileName,text,current.getCdate());	//copy cdate
+		}
 	}
 
 	@Override

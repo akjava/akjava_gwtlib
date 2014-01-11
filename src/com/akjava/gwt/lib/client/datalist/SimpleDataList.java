@@ -70,8 +70,8 @@ add(buttons);
 HorizontalPanel buttons2=new HorizontalPanel();
 add(buttons2);
 
-VerticalPanel opVerticalPanel=new VerticalPanel();
-add(opVerticalPanel);
+
+
 final HorizontalPanel expandButtons=new HorizontalPanel();
 add(expandButtons);
 expandButtons.setVisible(false);
@@ -289,6 +289,9 @@ add(downButtons);
 downButtons2 = new HorizontalPanel();
 add(downButtons2);
 
+optionButtons3=new VerticalPanel();
+add(optionButtons3);
+
 Button back=new Button("Back",new ClickHandler() {
 	@Override
 	public void onClick(ClickEvent event) {
@@ -491,6 +494,12 @@ public void redraw(){
 }
 
 public static class SimpleTextDataComparator implements Comparator<SimpleTextData>{
+public SimpleTextDataComparator(int order){
+	this.order=order;
+};
+public SimpleTextDataComparator(){
+	this(ORDER_ID);
+}
 private  int order;
 	public int getOrder() {
 	return order;
