@@ -69,6 +69,9 @@ HorizontalPanel buttons=new HorizontalPanel();
 add(buttons);
 HorizontalPanel buttons2=new HorizontalPanel();
 add(buttons2);
+
+VerticalPanel opVerticalPanel=new VerticalPanel();
+add(opVerticalPanel);
 final HorizontalPanel expandButtons=new HorizontalPanel();
 add(expandButtons);
 expandButtons.setVisible(false);
@@ -284,7 +287,7 @@ selectionModel.addSelectionChangeHandler(selectionChangeHandler);
 HorizontalPanel downButtons=new HorizontalPanel();
 add(downButtons);
 downButtons2 = new HorizontalPanel();
-add(downButtons);
+add(downButtons2);
 
 Button back=new Button("Back",new ClickHandler() {
 	@Override
@@ -637,6 +640,7 @@ private Button deleteBt;
 private Button renameBt;
 
 private HorizontalPanel downButtons2;
+private VerticalPanel optionButtons3;
 
 /**
  * for user customize
@@ -645,6 +649,10 @@ private HorizontalPanel downButtons2;
 public HorizontalPanel getOptionButtonPanel(){
 	return downButtons2;
 }
+public VerticalPanel getVerticalOptionPanel(){
+	return optionButtons3;
+}
+
 
 public CellContextMenu getCellContextMenu() {
 	return cell.getCellContextMenu();

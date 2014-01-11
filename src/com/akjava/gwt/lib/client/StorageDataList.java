@@ -98,7 +98,7 @@ try{
 			
 			
 			SimpleTextData sdata=new SimpleTextData(i, header,data_cdate[0],data_cdate[1]);
-			LogUtils.log(i+","+sdata.getName()+","+sdata.getData()+",cdate="+sdata.getCdate());
+			//LogUtils.log(i+","+sdata.getName()+","+sdata.getData()+",cdate="+sdata.getCdate());
 			values.add(sdata);
 		}
 	}

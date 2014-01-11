@@ -4,8 +4,10 @@
 	<inherits name="com.google.gwt.user.User" />
 	<inherits name="com.akjava.lib.common.Common" />
 	<inherits name="com.akjava.gwt.lib.Commons" />
-	   <inherits name="com.google.common.base.Base"/>
-	      <inherits name="com.google.common.collect.Collect"/>
+	<inherits name="com.google.common.base.Base"/>
+	<inherits name="com.google.common.collect.Collect"/>
+	<inherits name="com.google.common.io.IO"/>
+	<inherits name="com.akjava.gwt.html5.Html5widget" />
 	
 	<source path=""/>
 </module>
