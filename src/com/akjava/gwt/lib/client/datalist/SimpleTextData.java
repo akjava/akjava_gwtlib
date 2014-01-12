@@ -92,6 +92,11 @@ public boolean equals(Object obj) {
 		return false;
 	return true;
 }
+public SimpleTextData copy() {
+	SimpleTextData data=new SimpleTextData(this.id,this.getName(),this.getData(),this.getCdate());
+	
+	return data;
+}
 
 
 
