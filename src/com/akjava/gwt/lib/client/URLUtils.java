@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.user.client.History;
@@ -41,6 +40,8 @@ public class URLUtils {
 		
 		return Window.Location.getPath()+createQuery(changedParams)+token;
 	}
+	
+
 	
 
 	public static String getCurrentUrl(boolean path,boolean query,boolean hash){
