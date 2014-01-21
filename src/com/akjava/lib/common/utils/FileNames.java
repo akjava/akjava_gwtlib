@@ -14,6 +14,7 @@ package com.akjava.lib.common.utils;
 public class FileNames {
 	public static final char SLASH='/';
 	private char fileSeparator;
+	public static FileNames asSlashFileName=new FileNames(SLASH);
 	private FileNames(char fileSeparator){
 		this.fileSeparator=fileSeparator;
 	}
@@ -23,7 +24,7 @@ public class FileNames {
 	}
 	
 	public static FileNames asSlash(){
-		return new FileNames(SLASH);
+		return asSlashFileName;
 	}
 	/**
 	 * i'm not sure why i choose method name "as.
@@ -48,6 +49,11 @@ public class FileNames {
 	}
 	}
 	
+	/**
+	 * this method have bugs ignore folder have . 
+	 * @param name
+	 * @return
+	 */
 	public  static String getExtension(String name){
 		String ext;
 		if(name.lastIndexOf(".")==-1){

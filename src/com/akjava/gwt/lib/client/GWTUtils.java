@@ -10,4 +10,12 @@ public static String getSimpleName(Class clazz){
 		return name;
 	}
 }
+/**
+ * via http://stackoverflow.com/questions/9038625/detect-if-device-is-ios
+ * @return
+ */
+public final native static boolean isIOS()/*-{
+return navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false ;
+}-*/;
+
 }

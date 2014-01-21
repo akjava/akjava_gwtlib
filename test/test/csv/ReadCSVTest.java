@@ -5,7 +5,6 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
-import com.akjava.lib.common.csv.CSVParser;
 import com.akjava.lib.common.csv.CSVReader;
 
 public class ReadCSVTest extends TestCase{

@@ -175,8 +175,10 @@ private FileUploadForm uploadForm;
 			textArea.setReadOnly(true);
 			textArea.setText("CREATE NEW or SELECT");
 		}
-		
+		onLoad();
 	}
+	
+	public void onLoad(){}
 	
 	/**
 	 * used for export file name

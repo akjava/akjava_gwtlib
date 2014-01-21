@@ -14,6 +14,7 @@ import com.google.common.collect.Lists;
 public class CSVUtils {
 private static final Splitter NLinerSplitter=Splitter.on('\n');	
 private CSVUtils(){}
+
 public static String toNLineSeparator(String text){
 	String ret=text.replace("\r\n", "\n");
 	ret= ret.replace("\r", "\n");

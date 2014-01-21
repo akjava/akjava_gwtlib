@@ -9,4 +9,12 @@ public static int[] toRGB(int value){
 	rgb[2]=value&0xff;
 	return rgb;
 }
+
+public static String toCssColor(int rgb){
+	String ret=Integer.toHexString(rgb);
+	while(ret.length()<6){
+		ret="0"+ret;
+	}
+	return "#"+ret;
+}	
 }

@@ -31,8 +31,12 @@ public class CSVFunctions {
 		}
 		@Override
 		public Map<String,String> apply(String input){
-			String[] lines=CSVUtils.splitLines(input);
 			Map<String,String> map=new HashMap<String, String>();
+			if(input.isEmpty()){
+				return map;
+			}
+			String[] lines=CSVUtils.splitLines(input);
+			
 			for(String line:lines){
 				if(line.isEmpty()){
 					continue;

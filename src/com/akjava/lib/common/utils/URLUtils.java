@@ -6,6 +6,10 @@ public class URLUtils {
 	private URLUtils(){}
 	
 	public static URLInfo parseUrl(String url){
+		if(url.isEmpty()){
+			return new URLInfo(null,null,null,"");
+		}
+		
 		int pend=url.indexOf("://");
 		String protocol=null;
 		if(pend!=-1){

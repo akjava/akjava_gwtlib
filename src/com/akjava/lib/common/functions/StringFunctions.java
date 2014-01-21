@@ -3,6 +3,7 @@ package com.akjava.lib.common.functions;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.akjava.lib.common.utils.TemplateUtils;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
@@ -78,6 +79,22 @@ public class StringFunctions {
 		@Override
 		public String apply(String value) {
 			return prefix+value+suffix;
+		}
+	}
+	
+	public static class StringToPreFixAndSuffixWithLineNumber implements Function<String,String>{
+		private String prefix;
+		private String suffix;
+		private int number;
+		public StringToPreFixAndSuffixWithLineNumber(int start,String prefix,String suffix){
+			this.prefix=prefix;
+			this.suffix=suffix;
+			this.number=start-1;
+		}
+		@Override
+		public String apply(String value) {
+			number++;
+			return TemplateUtils.createText(prefix,""+(number))+value+TemplateUtils.createText(suffix,""+(number));
 		}
 	}
 }
