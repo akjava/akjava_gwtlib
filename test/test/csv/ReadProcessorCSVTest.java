@@ -166,7 +166,7 @@ public class ReadProcessorCSVTest extends TestCase{
 		assertEquals(correct,result);
 	}
 	
-	//this is invalid but read as 1 line
+	//if line in inQuote force add line separator,even in this case
 	public void testLine8(){
 		String line="\"hello,world\n.";
 		
