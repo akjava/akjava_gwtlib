@@ -8,6 +8,7 @@ import junit.framework.TestCase;
 import com.akjava.lib.common.csv.CSVProcessor;
 import com.akjava.lib.common.csv.CSVReader;
 import com.akjava.lib.common.csv.NewCSVReader;
+import com.akjava.lib.common.utils.CSVUtils;
 import com.google.common.io.CharSource;
 
 public class ReadProcessorCSVTest extends TestCase{
@@ -179,7 +180,7 @@ public class ReadProcessorCSVTest extends TestCase{
 		}
 		String result="row-size="+csvs.size()+"\n";
 		result+="column[0]-size="+csvs.get(0).size()+"\n";
-		result+="column[0][0]="+csvs.get(0).get(0)+"\n";
+		result+="column[0][0]="+csvs.get(0).get(0);
 		
 		
 		String correct="row-size=1\n" +
@@ -215,8 +216,14 @@ public class ReadProcessorCSVTest extends TestCase{
 		assertEquals(correct,result);
 	}
 	
+	
+	public void testLine3a(){
+		String line="hello,world\n";
+		int size=CSVUtils.splitLinesWithGuava(line).size();
+		assertEquals(2, size);
+	}
 	/**
-	 * first one is ignored but second is recognized
+	 * first one is ignored but second is ignored by CharSource
 	 */
 	public void testLine3(){
 		String line="hello,world\n";
@@ -234,13 +241,13 @@ public class ReadProcessorCSVTest extends TestCase{
 		result+="column[0]-size="+csvs.get(0).size()+"\n";
 		result+="column[0][0]="+csvs.get(0).get(0)+"\n";
 		result+="column[0][1]="+csvs.get(0).get(1)+"\n";
-		result+="column[1][0]="+csvs.get(1).get(0)+"\n";
+		//result+="column[1][0]="+csvs.get(1).get(0)+"\n";
 		
-		String correct="row-size=2\n" +
+		String correct="row-size=1\n" +
 				"column[0]-size=2\n" +
 				"column[0][0]=hello\n" +
-				"column[0][1]=world\n"+
-				"column[1][0]=\n";
+				"column[0][1]=world\n";
+				//"column[1][0]=\n";
 		
 		assertEquals(correct, result);
 	}

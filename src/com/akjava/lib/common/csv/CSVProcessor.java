@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.akjava.gwt.lib.client.LogUtils;
 import com.google.common.base.Preconditions;
 import com.google.common.io.LineProcessor;
 
@@ -51,14 +52,12 @@ public class CSVProcessor implements LineProcessor<List<List<String>>> {
 		
 		if(!resultCalled){
 		if(!values.isEmpty()){
+			//LogUtils.log("values not empty add:"+values);
 			columns.add(values);
 		}
 		
 		if(!columns.isEmpty()){
-			result.add(columns);
-		}else{
-			//line end
-			columns.add("");//at least one
+			//LogUtils.log("columns not empty add:"+columns);
 			result.add(columns);
 		}
 		resultCalled=true;
@@ -72,6 +71,17 @@ public class CSVProcessor implements LineProcessor<List<List<String>>> {
 		if(resultCalled){
 			throw new IOException("need reset()");
 		}
+		
+		System.out.println("line:"+line);
+		if(line.isEmpty()){
+			columns.add(values);
+			values="";
+			result.add(columns);
+			columns=new ArrayList<String>();
+			
+			return true;
+		}
+		
 
 		for(int i=0;i<line.length();i++){
 			char ch=line.charAt(i);
