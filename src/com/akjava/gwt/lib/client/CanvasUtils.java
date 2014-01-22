@@ -29,6 +29,9 @@ public static ImageElement toImageElement(Canvas canvas){
 	ImageElement imageElement=ImageElement.as(img.getElement());
 	return imageElement;
 }
+public static void clear(Canvas canvas){
+	canvas.getContext2d().clearRect(0, 0, canvas.getCoordinateSpaceWidth(), canvas.getCoordinateSpaceHeight());
+}
 
 public static String createColorRectImageDataUrl(int r,int g,int b,double opacity,int w,int h){
 	Canvas canvas=CanvasUtils.createCanvas(w, h);
@@ -136,14 +139,17 @@ public static void drawFitImage(Canvas canvas,ImageElement img,int align,int val
 			double rw=(double)canvasWidth/imageWidth;
 			double rh=(double)canvasHeight/imageHeight;
 			
+			
+			
 			double[] result=new double[2];
 			if(rw<rh){
 				result[0]=canvasWidth;
 				result[1]=rw*imageHeight;
 			}else{
-				result[0]=canvasHeight;
-				result[1]=rh*imageWidth;
+				result[0]=rh*imageWidth;
+				result[1]=canvasHeight;
 			}
+
 			return result;
 		}
 		public static int ALIGN_CENTER=0;
@@ -157,12 +163,12 @@ public static void drawFitImage(Canvas canvas,ImageElement img,int align,int val
 	
 	//simple draw center,no resize
 public static void drawCenter(Canvas canvas,ImageElement img){
-		int cw=canvas.getCoordinateSpaceWidth();
-		int ch=canvas.getCoordinateSpaceHeight();
-		int dx=(cw-img.getWidth())/2;
-		int dy=(ch-img.getHeight())/2;
-		//log("draw:"+dx+","+dy);
-		canvas.getContext2d().drawImage(img, dx, dy, img.getWidth(), img.getHeight());
+	int cw=canvas.getCoordinateSpaceWidth();
+	int ch=canvas.getCoordinateSpaceHeight();
+	int dx=(cw-img.getWidth())/2;
+	int dy=(ch-img.getHeight())/2;
+	//log("draw:"+dx+","+dy);
+	canvas.getContext2d().drawImage(img, dx, dy, img.getWidth(), img.getHeight());
 	}
 
 

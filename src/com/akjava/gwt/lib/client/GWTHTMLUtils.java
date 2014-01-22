@@ -1,12 +1,12 @@
 package com.akjava.gwt.lib.client;
 
-import com.google.gwt.dom.client.CanvasElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.ScriptElement;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBoxBase;
+import com.google.gwt.user.client.ui.UIObject;
 
 public class GWTHTMLUtils {
 
@@ -22,6 +22,10 @@ public class GWTHTMLUtils {
 		}else{
 			return defaultValue;
 		}
+	}
+	
+	public static void addFloatLeftStyle(UIObject object){
+		object.getElement().getStyle().setProperty("float", "left");
 	}
 	
 	/**

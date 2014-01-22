@@ -19,4 +19,19 @@ public class StringUtils {
 		 }
 		 return result;
 	 }
+	 
+	 public static int countStartWith(String text,char ch){
+		 if(text==null){
+			 return 0;
+		 }
+		 int match=0;
+		 for(int i=0;i<text.length();i++){
+			 if(text.charAt(i)==ch){
+				 match++;
+			 }else{
+				 break;
+			 }
+		 }
+		 return match;
+	 }
 }
