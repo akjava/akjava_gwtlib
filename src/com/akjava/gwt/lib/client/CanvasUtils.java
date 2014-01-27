@@ -103,6 +103,10 @@ public static void drawFitCenter(Canvas canvas,ImageElement img){
 	drawFitImage(canvas,img,ALIGN_CENTER,VALIGN_MIDDLE);
 }
 
+public static void drawExpandCenter(Canvas canvas,ImageElement img){
+	drawExpandImage(canvas,img,ALIGN_CENTER,VALIGN_MIDDLE);
+}
+
 /**
  * TODO use transform
  * @param canvas
@@ -114,7 +118,7 @@ public static void drawFitImage(Canvas canvas,ImageElement img,int align,int val
 			int cw=canvas.getCoordinateSpaceWidth();
 			int ch=canvas.getCoordinateSpaceHeight();
 			
-			double[] newImageSize=calcurateFitWidth(canvas.getCoordinateSpaceWidth(),canvas.getCoordinateSpaceHeight(),img.getWidth(),img.getHeight());
+			double[] newImageSize=calcurateFitSize(canvas.getCoordinateSpaceWidth(),canvas.getCoordinateSpaceHeight(),img.getWidth(),img.getHeight());
 			
 			
 			double dx=0;	//ALIGN_LEFT
@@ -135,7 +139,32 @@ public static void drawFitImage(Canvas canvas,ImageElement img,int align,int val
 			canvas.getContext2d().drawImage(img, dx, dy, newImageSize[0], newImageSize[1]);
 		}
 
-		public static double[] calcurateFitWidth(int canvasWidth,int canvasHeight,int imageWidth,int imageHeight){	
+public static void drawExpandImage(Canvas canvas,ImageElement img,int align,int valign){
+	int cw=canvas.getCoordinateSpaceWidth();
+	int ch=canvas.getCoordinateSpaceHeight();
+	
+	double[] newImageSize=calcurateExpandSize(canvas.getCoordinateSpaceWidth(),canvas.getCoordinateSpaceHeight(),img.getWidth(),img.getHeight());
+	
+	
+	double dx=0;	//ALIGN_LEFT
+	double dy=0;
+	if(align==ALIGN_CENTER){
+	dx=(cw-newImageSize[0])/2;
+	}else if(align==ALIGN_RIGHT){
+	dx=cw-newImageSize[0];
+	}
+	if(valign==VALIGN_MIDDLE){
+	dy=(ch-newImageSize[1])/2;
+	}else if(valign==VALIGN_BOTTOM){
+	dy=ch-newImageSize[1];	
+	}
+	
+	
+	//log("draw:"+dx+","+dy);
+	canvas.getContext2d().drawImage(img, dx, dy, newImageSize[0], newImageSize[1]);
+}
+
+		public static double[] calcurateFitSize(int canvasWidth,int canvasHeight,int imageWidth,int imageHeight){	
 			double rw=(double)canvasWidth/imageWidth;
 			double rh=(double)canvasHeight/imageHeight;
 			
@@ -148,6 +177,25 @@ public static void drawFitImage(Canvas canvas,ImageElement img,int align,int val
 			}else{
 				result[0]=rh*imageWidth;
 				result[1]=canvasHeight;
+			}
+
+			return result;
+		}
+		
+		public static double[] calcurateExpandSize(int canvasWidth,int canvasHeight,int imageWidth,int imageHeight){	
+			double rw=(double)canvasWidth/imageWidth;
+			double rh=(double)canvasHeight/imageHeight;
+			
+			
+			
+			double[] result=new double[2];
+			if(rw<rh){
+				result[0]=rh*imageWidth;
+				result[1]=canvasHeight;
+				
+			}else{
+				result[0]=canvasWidth;
+				result[1]=rw*imageHeight;
 			}
 
 			return result;

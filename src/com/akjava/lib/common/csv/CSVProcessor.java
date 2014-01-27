@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.akjava.gwt.lib.client.LogUtils;
 import com.google.common.base.Preconditions;
 import com.google.common.io.LineProcessor;
 
@@ -72,7 +71,7 @@ public class CSVProcessor implements LineProcessor<List<List<String>>> {
 			throw new IOException("need reset()");
 		}
 		
-		System.out.println("line:"+line);
+		
 		if(line.isEmpty()){
 			columns.add(values);
 			values="";

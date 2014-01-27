@@ -3,6 +3,9 @@ package com.akjava.gwt.lib.client.widget.cell;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.akjava.gwt.lib.client.LogUtils;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -49,11 +52,19 @@ public abstract class SimpleCellTable<T> extends VerticalPanel{
 		 this.add(table);
 	}
 	
-	
+	@Override
+	public void setWidth(String width){
+		super.setWidth(width);
+		table.setWidth(width);
+	}
 	
 	public abstract void addColumns(CellTable<T> table);
 	
 	public void setData(List<T> datas){
+		setData(datas,false);
+	}
+	
+	public void setData(List<T> datas,boolean flush){
 		if(datas==null){
 			datas=new ArrayList<T>();
 		}
@@ -63,9 +74,23 @@ public abstract class SimpleCellTable<T> extends VerticalPanel{
 		pager.setPage(0);
 		
 		dataProvider.setList(datas);
-		//resultTable.setRowCount(datas.size());
-		
-		//resultTable.setRowData(datas);
+		if(flush){//draw immediately
+			table.flush();
+		}
+	}
+	
+	/**
+	 * call this,if dont render on event,however try Scheduler first
+	 * 
+	 * Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+					@Override
+					public void execute() {
+						//
+					}
+				});
+	 */
+	public void flush(){
+		table.flush();
 	}
 public void setData(List<T> datas,int page){
 		table.setRowCount(datas.size());

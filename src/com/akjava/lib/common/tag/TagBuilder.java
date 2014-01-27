@@ -11,6 +11,13 @@ import com.akjava.lib.common.utils.ValuesUtils;
 public class TagBuilder {
 private TagBuilder(){}
 
+
+public static Tag createAnchor(String text,String href){
+	Tag tag=new Tag("a");
+	tag.setAttribute("href", href);
+	tag.setText(text);
+	return tag;
+}
 	public static Tag createHidden(String name,String value){
 		Tag tag=new Tag("input");
 		tag.setSingleTag(true);

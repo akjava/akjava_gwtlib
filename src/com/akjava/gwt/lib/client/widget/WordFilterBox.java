@@ -1,10 +1,16 @@
 package com.akjava.gwt.lib.client.widget;
 
+import com.google.common.base.Predicate;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.TextBox;
 
-public class WordFilterBox extends HorizontalPanel{
+public class WordFilterBox extends HorizontalPanel implements Predicate<String>{
 private TextBox textBox;
 private HorizontalPanel middlePanel;
 public TextBox getTextBox() {
@@ -28,12 +34,32 @@ private RadioButton contain;
 private RadioButton endWith;
 private RadioButton exactly;
 
+private BoxUpdateListener boxUpdateListener;
+
+public BoxUpdateListener getBoxUpdateListener() {
+	return boxUpdateListener;
+}
+
+public void setBoxUpdateListener(BoxUpdateListener boxUpdateListener) {
+	this.boxUpdateListener = boxUpdateListener;
+}
+
 public WordFilterBox(TextBox textbox){
 	if(textbox==null){
 		textbox=new TextBox();
 		add(textbox);
 	}
 	this.textBox = textbox;
+	textBox.addKeyDownHandler(new KeyDownHandler() {
+
+	    @Override
+	    public void onKeyDown(KeyDownEvent event) {
+	     if(event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+	                onUpdate();
+	           }
+	    }
+	});
+
 	
 	
 	
@@ -48,10 +74,46 @@ public WordFilterBox(TextBox textbox){
 	radioPanel.add(contain);
 	endWith = new RadioButton("mode", "End With");
 	radioPanel.add(endWith);
-	exactly = new RadioButton("mode", "exactly");
+	exactly = new RadioButton("mode", "Exactly");
 	radioPanel.add(exactly);
 	
+	startWith.addClickHandler(new ClickHandler() {
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			onUpdate();
+		}
+	});
+	contain.addClickHandler(new ClickHandler() {
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			onUpdate();
+		}
+	});
+	endWith.addClickHandler(new ClickHandler() {
+	
+	@Override
+	public void onClick(ClickEvent event) {
+		onUpdate();
+	}
+});
+	exactly.addClickHandler(new ClickHandler() {
+	
+	@Override
+	public void onClick(ClickEvent event) {
+		onUpdate();
+	}
+});
+	
+	
 	endWith.setValue(true);
+}
+
+private void onUpdate(){
+	if(boxUpdateListener!=null){
+		boxUpdateListener.onUpdateWordFilterBox(this);
+	}
 }
 
 public WordFilterBox(){
@@ -78,6 +140,8 @@ public int getMode(){
 		return END_MODE;
 	}
 }
+
+
 
 public boolean isMutchText(String word){
 	String text=textBox.getText();
@@ -170,6 +234,10 @@ public static String chompWord(String text){
 	}
 }
 
+public interface BoxUpdateListener{
+	public void onUpdateWordFilterBox(WordFilterBox wordFilterBox);
+}
+
 public void setMode(int mode) {
 	if(mode==START_MODE){
 		startWith.setValue(true);
@@ -180,6 +248,11 @@ public void setMode(int mode) {
 	}else{
 		endWith.setValue(true);
 	}
+}
+
+@Override
+public boolean apply(String input) {
+	return isMutchText(input);
 }
 
 

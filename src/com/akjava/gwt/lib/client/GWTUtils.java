@@ -1,5 +1,7 @@
 package com.akjava.gwt.lib.client;
 
+import com.google.gwt.user.client.Window;
+
 public class GWTUtils {
 public static String getSimpleName(Class clazz){
 	String name=clazz.getName();
@@ -18,4 +20,8 @@ public final native static boolean isIOS()/*-{
 return navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false ;
 }-*/;
 
+public static boolean isIE(){
+	String agent=Window.Navigator.getUserAgent().toLowerCase();
+	return agent.indexOf("msie")!=-1 || agent.indexOf("trident")!=-1;
+}
 }
