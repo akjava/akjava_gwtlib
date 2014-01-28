@@ -249,6 +249,14 @@ private FileUploadForm uploadForm;
 		updateList();
 		
 	}
+	
+
+	public void add(SimpleTextData data) {
+		if(data!=null){
+		getDataList().addData(data.getName(), data.getCdate()+","+data.getData());
+		updateList();
+		}
+	}
 
 	@Override
 	public void copy(Object object) {

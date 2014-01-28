@@ -1,5 +1,7 @@
 package com.akjava.lib.common.utils;
 
+import com.google.common.base.Strings;
+
 
 
 /**
@@ -21,6 +23,29 @@ public class FileNames {
 	
 	public boolean isEndsWithFileSeparator(String path){
 		return path.charAt(path.length()-1)==fileSeparator;
+	}
+	
+	
+	public static String addEndWithSeparator(String string,char separator){
+		if(Strings.isNullOrEmpty(string)){
+			return string;
+		}
+		if(string.charAt(string.length()-1)==separator){
+			return string;
+		}else{
+			return string+separator;
+		}
+	}
+	
+	public static String removeStartWithSeparator(String string,char separator){
+		if(Strings.isNullOrEmpty(string)){
+			return string;
+		}
+		if(string.charAt(0)==separator){
+			return string.substring(1);
+		}else{
+			return string;
+		}
 	}
 	
 	public static FileNames asSlash(){
