@@ -1,5 +1,6 @@
 package com.akjava.gwt.lib.client;
 
+import com.akjava.lib.common.utils.log.GWTLogger;
 import com.google.gwt.core.client.JavaScriptObject;
 
 public class LogUtils {
