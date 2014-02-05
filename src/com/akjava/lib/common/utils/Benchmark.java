@@ -9,6 +9,7 @@ import com.akjava.gwt.lib.client.LogUtils;
  * i have no idea why benchmark is here?
  */
 public class Benchmark {
+	private Benchmark(){}
 	private static Map<String,Long> keyMap=new HashMap<String,Long>();
 	public static String last;
 	public static void start(String key){
@@ -23,8 +24,8 @@ public class Benchmark {
 		return System.currentTimeMillis()-t.longValue();
 	}
 	public static long endAndLog(String key){
-		long t=end(last);
-		LogUtils.log("Benchmark "+last+":"+t+"ms");
+		long t=end(key);
+		LogUtils.log("Benchmark "+key+":"+t+"ms");
 		return t;
 	}
 	

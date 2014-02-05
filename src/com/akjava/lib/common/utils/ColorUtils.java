@@ -10,6 +10,27 @@ public static int[] toRGB(int value){
 	return rgb;
 }
 
+
+public static double getColorLength(int r1,int g1,int b1,int r2,int g2,int b2){
+	return Math.sqrt(Math.pow(r2-r1,2)+Math.pow(g2-g1,2)+Math.pow(b2-b1,2));
+}
+
+public static int[] toRGB(String hexString){
+	if(hexString.startsWith("0x")){
+		hexString=hexString.substring(2);
+	}else if(hexString.startsWith("#")){
+		hexString=hexString.substring(1);
+	}
+	
+	int value=Integer.parseInt(hexString,16);
+	return toRGB(value);
+}
+public static String toCssColor(int r,int g,int b){
+	int rgb=(r<<16) | (g<<8) | b;
+	return toCssColor(rgb);
+}	
+
+
 public static String toCssColor(int rgb){
 	String ret=Integer.toHexString(rgb);
 	while(ret.length()<6){

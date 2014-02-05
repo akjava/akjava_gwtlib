@@ -1,7 +1,9 @@
 package com.akjava.gwt.lib.client;
 
 import com.akjava.gwt.html5.client.download.HTML5Download;
+import com.akjava.gwt.html5.client.file.Uint8Array;
 import com.google.gwt.canvas.client.Canvas;
+import com.google.gwt.canvas.dom.client.ImageData;
 import com.google.gwt.dom.client.CanvasElement;
 import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.user.client.ui.Anchor;
@@ -18,9 +20,79 @@ public static Canvas createCanvas(int w,int h){
 	}
 	return canvas;
 }
+
+public static void clip(Canvas canvas,int x,int y,int width,int height){
+	canvas.getContext2d().beginPath();
+	canvas.getContext2d().moveTo(x,y);
+	canvas.getContext2d().lineTo(x+width,y);
+	canvas.getContext2d().lineTo(x+width,y+height);
+	canvas.getContext2d().lineTo(x,y+height);
+	canvas.getContext2d().clip();
+}
+
+public static String toDataUrl(Canvas canvas,Canvas useCanvas,int x,int y,int width,int height){
+	ImageData data=canvas.getContext2d().getImageData(x, y, width, height);
+	if(useCanvas==null){
+		useCanvas=Canvas.createIfSupported();
+	}
+	copyTo(data, useCanvas);
+	return useCanvas.toDataUrl();
+}
+
+public static Canvas createCanvas(Canvas canvas,ImageData data){
+	if(canvas==null){
+	canvas=Canvas.createIfSupported();
+	}
+	canvas.setCoordinateSpaceWidth(data.getWidth());
+	canvas.setCoordinateSpaceHeight(data.getHeight());
+	
+	canvas.getContext2d().putImageData(data, 0, 0);
+	
+	return canvas;
+}
+
 public static void disableSelection(Canvas canvas){
 	GWTHTMLUtils.disableSelectionStart(canvas.getCanvasElement());
 }
+
+
+public static void drawCenter(Canvas canvas,ImageElement image,int offsetX,int offsetY,double scaleX,double scaleY,double angle,double alpha){
+	canvas.getContext2d().save();
+	double rx=(canvas.getCoordinateSpaceWidth())/2;
+	double ry=(canvas.getCoordinateSpaceHeight())/2;
+	
+	canvas.getContext2d().translate(rx,ry);//rotate center
+	double rotate=(Math.PI / 180)*angle;
+	canvas.getContext2d().rotate(rotate);
+	canvas.getContext2d().translate(-rx,-ry);//and back
+	
+	canvas.getContext2d().scale(scaleX,scaleY);
+	
+	double px=(canvas.getCoordinateSpaceWidth()/scaleX-image.getWidth())/2;
+	double py=(canvas.getCoordinateSpaceHeight()/scaleY-image.getHeight())/2;
+	
+	//LogUtils.log("w="+canvas.getCoordinateSpaceWidth()+",scaled="+(element.getWidth()*scale));
+	
+	//LogUtils.log("scale:"+scale+",x="+px+",y="+py);
+	
+	int ox=(int) (offsetX/scaleX);
+	int oy=(int) (offsetY/scaleY);
+	//canvas.getContext2d().rotate(-rotate);
+	
+	double x=ox;
+	double y=oy;
+	
+	//offset is effect on angle,but scroll no need do it
+	double nx = px+x * Math.cos(-rotate) - y * Math.sin(-rotate);
+	double ny = py+x * Math.sin(-rotate) + y * Math.cos(-rotate);
+	
+	canvas.getContext2d().translate(nx,ny);	
+	canvas.getContext2d().setGlobalAlpha(alpha);
+	canvas.getContext2d().drawImage(image, 0,0);
+	canvas.getContext2d().restore();
+}
+
+
 /*
  * if you need use ImageElementLoader
  */
@@ -218,6 +290,45 @@ public static void drawCenter(Canvas canvas,ImageElement img){
 	//log("draw:"+dx+","+dy);
 	canvas.getContext2d().drawImage(img, dx, dy, img.getWidth(), img.getHeight());
 	}
+
+public static ImageData getImageData(Canvas canvas,boolean copy) {
+	if(copy){
+	return canvas.getContext2d().getImageData(0, 0, canvas.getCoordinateSpaceWidth(), canvas.getCoordinateSpaceHeight());
+	}else{
+	return canvas.getContext2d().createImageData(canvas.getCoordinateSpaceWidth(), canvas.getCoordinateSpaceHeight());
+	}
+}
+
+public static Canvas copyTo(ImageData imageData,Canvas canvas) {
+	if(canvas==null){
+		canvas=Canvas.createIfSupported();
+	}
+	canvas.setCoordinateSpaceWidth(imageData.getWidth());
+	canvas.setCoordinateSpaceHeight(imageData.getHeight());
+	canvas.getContext2d().putImageData(imageData, 0, 0);
+	return canvas;
+}
+
+public static void drawImage(Canvas sharedCanvas,ImageElement element) {
+	sharedCanvas.getContext2d().drawImage(element, 0,0);
+}
+public static void drawImage(Canvas sharedCanvas,ImageElement element,int x,int y) {
+	sharedCanvas.getContext2d().drawImage(element, x,y);
+}
+
+public static void copyAlpha(ImageData paintedData, Uint8Array grayByte) {
+	for(int y=0;y<paintedData.getHeight();y++){
+		for(int x=0;x<paintedData.getWidth();x++){
+			paintedData.setAlphaAt(grayByte.get(y*paintedData.getWidth()+x), x, y);
+		}
+	}
+}
+
+public static void drawImage(Canvas sharedCanvas, Canvas imageCanvas) {
+	sharedCanvas.getContext2d().drawImage(imageCanvas.getCanvasElement(), 0,0);
+}
+
+
 
 
 }
