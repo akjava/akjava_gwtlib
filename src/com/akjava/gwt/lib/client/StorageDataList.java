@@ -12,6 +12,10 @@ import com.akjava.gwt.lib.client.datalist.SimpleTextData;
  */
 public class StorageDataList {
 private String key;
+public String getKey() {
+	return key;
+}
+
 public static final String KEY_INDEX="_IND_";
 public static final String KEY_DATA="_DAT_";
 public static final String KEY_HEADER="_HED_";

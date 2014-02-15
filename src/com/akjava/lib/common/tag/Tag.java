@@ -5,6 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.collect.MapConstraints;
+
 public class Tag {
 private String name;
 private boolean singleTag;
@@ -59,7 +61,7 @@ public void setAttributes(Map<String, String> attributes) {
 }
 
 private String text;
-private Map<String,String> attributes=new LinkedHashMap<String, String>();
+private Map<String,String> attributes=MapConstraints.constrainedMap(new LinkedHashMap<String, String>(), ValidAttributeMapConstraint.getValidAttributeMapConstraint());
 
 public Tag(String name){
 	this.name=name;

@@ -52,5 +52,12 @@ public class CanvasResizer {
 		
 		return canvas.toDataUrl();
 	}
+	public String toJpegDataUrl(){
+		
+		canvas.getContext2d().clearRect(0, 0, canvas.getCoordinateSpaceWidth(),canvas.getCoordinateSpaceHeight());
+		canvas.getContext2d().drawImage(image, dx, dy,dw,dh);
+		
+		return canvas.toDataUrl("image/jpeg");
+	}
 	
 }

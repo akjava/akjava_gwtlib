@@ -1,5 +1,6 @@
 package com.akjava.lib.common.utils;
 
+import com.google.common.base.Ascii;
 import com.google.common.base.Strings;
 
 
@@ -187,6 +188,22 @@ public class FileNames {
 		}
 	}
 	
+	public static final String TYPE_PNG="png";
+	public static final String TYPE_JPEG="jpeg";
+	public static final String TYPE_GIF="gif";
+	public static final String TYPE_UNKNOWN="*";
+	public static String getImageType(String name){
+	
+		String ext=getExtension(name).toLowerCase();
+		if(ext.equals("png")){
+			return TYPE_PNG;
+		}else if(ext.equals("jpg")||ext.equals("jpeg")){
+			return TYPE_JPEG;
+		}if(ext.equals("gif")){
+			return TYPE_GIF;
+		}
+		return TYPE_UNKNOWN;
+	}
 
 	
 }

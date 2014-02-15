@@ -25,6 +25,8 @@ public abstract class SimpleCellTable<T> extends VerticalPanel{
 	public static DateTimeFormat DATE_FORMAT_DATE_ONLY=DateTimeFormat.getFormat("yy/MM/dd");
 	public static DateTimeFormat DATE_FORMAT_DATE_TIME=DateTimeFormat.getFormat("yy/MM/dd hh:mm:ss");
 
+
+
 	public CellTable<T> getCellTable() {
 		return table;
 	}
@@ -32,6 +34,10 @@ public abstract class SimpleCellTable<T> extends VerticalPanel{
 	ListDataProvider<T> dataProvider = new ListDataProvider<T>();
 	private HorizontalPanel controlPanel;
 	
+	/**
+	 * this is pager contain panel
+	 * @return
+	 */
 	public HorizontalPanel getControlPanel() {
 		return controlPanel;
 	}
@@ -39,10 +45,12 @@ public abstract class SimpleCellTable<T> extends VerticalPanel{
 		table=new CellTable<T>();
 		table.setRowCount(0);
 		dataProvider.addDataDisplay(table);
+		
 		//resultTable.setPageSize(pageSize);
 		addColumns(table);
 		pager = new NaturalPager();
 		controlPanel = new HorizontalPanel();
+		controlPanel.setVerticalAlignment(HorizontalPanel.ALIGN_MIDDLE);
 		this.add(controlPanel);
 		
 		controlPanel.add(pager);

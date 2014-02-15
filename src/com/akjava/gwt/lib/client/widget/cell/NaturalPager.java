@@ -17,6 +17,14 @@ private static Resources getDefaultResources() {
   return DEFAULT_RESOURCES;
 }
 
+protected String createText() {
+	  if(getDisplay().getRowCount()==0){
+	  		return "0 of 0";
+	  	}else{
+	  		return super.createText();
+	  	}
+	  }	  
+
 @Override
 public void nextPage() {
   super.setPage(getPage()+1);

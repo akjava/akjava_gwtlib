@@ -53,6 +53,42 @@ public class TagTest extends TestCase{
 		doTest("<input type=\"hidden\" name=\"name\"/>",tag);
 	}
 	
+	//empty not allowed
+	public void testAttribute1(){
+		Tag tag=TagBuilder.createHidden("name", null);
+		try{
+		tag.setAttribute("");
+		}catch(IllegalArgumentException e){
+			assertTrue(true);
+			return;
+		}
+		fail();
+		
+		
+	}
+	//not start it
+	public void testAttribute2(){
+		Tag tag=TagBuilder.createHidden("name", null);
+		try{
+		tag.setAttribute("_");
+		}catch(IllegalArgumentException e){
+			assertTrue(true);
+			return;
+		}
+		fail();
+	}
+	
+	//this ok
+	public void testAttribute3(){
+		Tag tag=TagBuilder.createHidden("name", null);
+		try{
+		tag.setAttribute("a_9");
+		}catch(IllegalArgumentException e){
+			fail();
+			return;
+		}
+		assertTrue(true);
+	}
 
 	
 	//checkbox

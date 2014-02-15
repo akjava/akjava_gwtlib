@@ -20,6 +20,10 @@ public static ImageElement create(String url){
 	element.setSrc(url);
 	return element;
 }
+
+public static Canvas copytoCanvas(String dataUrl,Canvas canvas){
+	return copytoCanvas(create(dataUrl), canvas,true);
+}
 public static Canvas copytoCanvas(ImageElement element,Canvas canvas){
 	return copytoCanvas(element, canvas,true);
 }

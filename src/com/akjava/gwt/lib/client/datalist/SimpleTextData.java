@@ -97,6 +97,10 @@ public SimpleTextData copy() {
 	
 	return data;
 }
+@Override
+public String toString() {
+	return "SimpleTextData [id=" + id + ", cdate=" + cdate + ", name=" + name + ", data=" + data + "]";
+}
 
 
 

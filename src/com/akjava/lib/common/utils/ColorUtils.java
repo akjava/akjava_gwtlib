@@ -11,6 +11,9 @@ public static int[] toRGB(int value){
 }
 
 
+/*
+ * not so good
+ */
 public static double getColorLength(int r1,int g1,int b1,int r2,int g2,int b2){
 	return Math.sqrt(Math.pow(r2-r1,2)+Math.pow(g2-g1,2)+Math.pow(b2-b1,2));
 }
