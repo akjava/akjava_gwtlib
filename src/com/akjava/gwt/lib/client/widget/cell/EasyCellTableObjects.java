@@ -37,6 +37,9 @@ public abstract class EasyCellTableObjects<T> {
 		
 		
 	}
+	public T getSelection(){
+		return selectionModel.getSelectedObject();
+	}
 	
 	public abstract void onSelect(T selection);
 
@@ -52,7 +55,7 @@ public abstract class EasyCellTableObjects<T> {
 	}
 
 	public EasyCellTableObjects(SimpleCellTable<T> simpleCellTable){
-		this.simpleCellTable=simpleCellTable;
+		this(simpleCellTable,true);
 	}
 	
 	public EasyCellTableObjects(SimpleCellTable<T> simpleCellTable, boolean showPager) {
@@ -104,6 +107,13 @@ public abstract class EasyCellTableObjects<T> {
 		datas.remove(object);
 		datas.add(Math.max(0, index-1),object);
 		update(true);
+		}
+	}
+
+	public void unselect() {
+		T selection=getSelection();
+		if(selection!=null){
+			selectionModel.setSelected(selection, false);
 		}
 	}
 }

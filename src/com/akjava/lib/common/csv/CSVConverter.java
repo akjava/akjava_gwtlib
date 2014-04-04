@@ -3,7 +3,7 @@ package com.akjava.lib.common.csv;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.akjava.lib.common.csv.CSVUtils.CSVJoiner;
+import com.akjava.lib.common.csv.CSVLibUtils.CSVJoiner;
 import com.google.common.base.Converter;
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;

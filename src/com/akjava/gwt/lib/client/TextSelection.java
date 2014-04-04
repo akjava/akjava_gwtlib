@@ -53,6 +53,11 @@ public class TextSelection {
 		targetTextArea.setText(text);
 		
 	}
+	
+	public void select(){
+		targetTextArea.setSelectionRange(start, end-start);
+	}
+	
 	public void setFocus(){
 		targetTextArea.setFocus(true);
 	}

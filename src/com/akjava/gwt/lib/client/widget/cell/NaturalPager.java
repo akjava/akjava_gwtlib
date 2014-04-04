@@ -17,6 +17,23 @@ private static Resources getDefaultResources() {
   return DEFAULT_RESOURCES;
 }
 
+private RangeOrRowCountChangeListener listener;
+public RangeOrRowCountChangeListener getListener() {
+	return listener;
+}
+
+public void setListener(RangeOrRowCountChangeListener listener) {
+	this.listener = listener;
+}
+
+@Override
+protected void onRangeOrRowCountChanged() {
+	super.onRangeOrRowCountChanged();
+	if(listener!=null){
+		listener.changed(this.getPageStart(),this.getPageSize());
+	}
+}
+
 protected String createText() {
 	  if(getDisplay().getRowCount()==0){
 	  		return "0 of 0";
@@ -33,5 +50,9 @@ public void nextPage() {
 @Override
 public void previousPage() {
 	super.setPage(getPage()-1);
+}
+
+public  interface RangeOrRowCountChangeListener{
+	public void changed(int start,int size);
 }
 }

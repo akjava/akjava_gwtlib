@@ -3,6 +3,7 @@ package com.akjava.gwt.lib.client;
 import com.akjava.gwt.html5.client.download.HTML5Download;
 import com.akjava.gwt.html5.client.file.Uint8Array;
 import com.google.gwt.canvas.client.Canvas;
+import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.ImageData;
 import com.google.gwt.dom.client.CanvasElement;
 import com.google.gwt.dom.client.ImageElement;
@@ -326,6 +327,15 @@ public static void copyAlpha(ImageData paintedData, Uint8Array grayByte) {
 
 public static void drawImage(Canvas sharedCanvas, Canvas imageCanvas) {
 	sharedCanvas.getContext2d().drawImage(imageCanvas.getCanvasElement(), 0,0);
+}
+
+public static void drawLine(Canvas canvas, double x1, double y1, double x2, double y2) {
+	Context2d c2d=canvas.getContext2d();
+	c2d.beginPath();
+	c2d.moveTo(x1, y1);
+	c2d.lineTo(x2,y2);
+	c2d.closePath();
+	c2d.stroke();
 }
 
 

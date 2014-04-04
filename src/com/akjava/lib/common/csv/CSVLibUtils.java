@@ -6,8 +6,8 @@ import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
 
-public class CSVUtils {
-private CSVUtils(){}
+public class CSVLibUtils {
+private CSVLibUtils(){}
 
 public static class CSVJoiner implements Function<List<String>,String>{
 	private Joiner joiner;
