@@ -50,6 +50,7 @@ public class TemplateUtils {
 			result=result.replace("${l+"+key+"}", ValuesUtils.toLowerCamel(value));
 			result=result.replace("${U+"+key+"}", value.toUpperCase());
 			result=result.replace("${L+"+key+"}", value.toLowerCase());
+			result=result.replace("${_+"+key+"}", value.replace("-","_").replace(" ", "_"));
 			int mutch=value.lastIndexOf(".");
 			if(mutch!=-1){
 				result=result.replace("${name+"+key+"}",value.substring(0,mutch));
