@@ -1,5 +1,7 @@
 package com.akjava.gwt.lib.client.canvas;
 
+import com.akjava.gwt.lib.client.LogUtils;
+
 public class RectBuilder {
 	private int width;
 	private int height;
@@ -89,7 +91,22 @@ public class RectBuilder {
 		return this;
 	}
 	
-	
+	public RectBuilder parsePostion(String position){
+		
+		if(position.toLowerCase().equals("lefttop")){
+			return topLeft();
+		}else if(position.toLowerCase().equals("righttop")){
+			return topRight();
+		}else if(position.toLowerCase().equals("leftbottom")){
+			return bottomLeft();
+		}else if(position.toLowerCase().equals("rightbottom")){
+			return bottomRight();
+		}else if(position.toLowerCase().equals("center")){
+			LogUtils.log("position:"+position);
+			return middleCenter();
+		}
+		return this;
+	}
 	public RectBuilder topRight(){
 		if(sliceX!=0){
 			currentX=sliceX-1;

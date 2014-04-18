@@ -45,6 +45,25 @@ public class CanvasResizer {
 		//canvas.getContext2d().drawImage(image, 0, 0,width,newHeight);
 		return this;
 	}
+	
+	public CanvasResizer height(int size){
+		int w=canvas.getCoordinateSpaceWidth();
+		int h=canvas.getCoordinateSpaceHeight();
+		double hr=(double)h/size;
+
+		int newWidth=(int)(w/hr);
+		canvas.setCoordinateSpaceWidth(newWidth);
+		canvas.setCoordinateSpaceHeight(size);
+		dx=0;
+		dy=0;
+		dw=newWidth;
+		dh=size;
+		
+		LogUtils.log("canvas-height:"+dw+","+dh);
+		//canvas.getContext2d().drawImage(image, 0, 0,width,newHeight);
+		return this;
+	}
+	
 	public String toPngDataUrl(){
 		
 		canvas.getContext2d().clearRect(0, 0, canvas.getCoordinateSpaceWidth(),canvas.getCoordinateSpaceHeight());
@@ -58,6 +77,14 @@ public class CanvasResizer {
 		canvas.getContext2d().drawImage(image, dx, dy,dw,dh);
 		
 		return canvas.toDataUrl("image/jpeg");
+	}
+	
+public String toWebpDataUrl(){
+		
+		canvas.getContext2d().clearRect(0, 0, canvas.getCoordinateSpaceWidth(),canvas.getCoordinateSpaceHeight());
+		canvas.getContext2d().drawImage(image, dx, dy,dw,dh);
+		
+		return canvas.toDataUrl("image/webp");
 	}
 	
 }

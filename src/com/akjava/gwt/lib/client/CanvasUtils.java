@@ -105,6 +105,10 @@ public static ImageElement toImageElement(Canvas canvas){
 public static void clear(Canvas canvas){
 	canvas.getContext2d().clearRect(0, 0, canvas.getCoordinateSpaceWidth(), canvas.getCoordinateSpaceHeight());
 }
+public static void fillRect(Canvas canvas,String style){
+	canvas.getContext2d().setFillStyle(style);
+	canvas.getContext2d().fillRect(0, 0, canvas.getCoordinateSpaceWidth(), canvas.getCoordinateSpaceHeight());
+}
 
 public static String createColorRectImageDataUrl(int r,int g,int b,double opacity,int w,int h){
 	Canvas canvas=CanvasUtils.createCanvas(w, h);
@@ -273,6 +277,7 @@ public static void drawExpandImage(Canvas canvas,ImageElement img,int align,int 
 
 			return result;
 		}
+		//TODO merge or change halign
 		public static int ALIGN_CENTER=0;
 		public static int ALIGN_LEFT=1;
 		public static int ALIGN_RIGHT=2;
@@ -336,6 +341,15 @@ public static void drawLine(Canvas canvas, double x1, double y1, double x2, doub
 	c2d.lineTo(x2,y2);
 	c2d.closePath();
 	c2d.stroke();
+}
+
+public static void setSize(Canvas canvas, int w, int h) {
+	if(canvas!=null){
+		canvas.setCoordinateSpaceWidth(w);
+		canvas.setCoordinateSpaceHeight(h);
+		canvas.setWidth(w+"px");
+		canvas.setHeight(h+"px");
+	}
 }
 
 
