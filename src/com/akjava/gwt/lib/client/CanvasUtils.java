@@ -11,15 +11,21 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Image;
 
 public class CanvasUtils {
+
+
+	public static Canvas createCanvas(Canvas canvas,int w,int h){
+		if(canvas!=null){
+			canvas.setCoordinateSpaceWidth(w);
+			canvas.setCoordinateSpaceHeight(h);
+			canvas.setWidth(w+"px");
+			canvas.setHeight(h+"px");
+		}
+		return canvas;
+	}
+	
 public static Canvas createCanvas(int w,int h){
 	Canvas canvas=Canvas.createIfSupported();
-	if(canvas!=null){
-		canvas.setCoordinateSpaceWidth(w);
-		canvas.setCoordinateSpaceHeight(h);
-		canvas.setWidth(w+"px");
-		canvas.setHeight(h+"px");
-	}
-	return canvas;
+	return createCanvas(canvas,w,h);
 }
 
 public static void clip(Canvas canvas,int x,int y,int width,int height){
