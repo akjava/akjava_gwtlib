@@ -1,6 +1,7 @@
 package com.akjava.gwt.lib.client;
 
 import com.google.gwt.canvas.client.Canvas;
+import com.google.gwt.canvas.dom.client.ImageData;
 import com.google.gwt.dom.client.ImageElement;
 
 public class CanvasResizer {
@@ -15,7 +16,10 @@ public class CanvasResizer {
 	private int dy;
 	private int dw;
 	private int dh;
-	public static CanvasResizer on(Canvas canvas){
+	
+	private boolean useDownScale;
+	
+	public static CanvasResizer on(Canvas canvas){//need canvas for reduce re-create canvas.
 		return new CanvasResizer(canvas);
 	}
 	
@@ -38,14 +42,20 @@ public class CanvasResizer {
 		int newHeight=(int)(h/wr);
 		canvas.setCoordinateSpaceWidth(width);
 		canvas.setCoordinateSpaceHeight(newHeight);
+		
+		
 		dx=0;
 		dy=0;
 		dw=width;
 		dh=newHeight;
-		//canvas.getContext2d().drawImage(image, 0, 0,width,newHeight);
+		
 		return this;
 	}
 	
+	public CanvasResizer downscale(boolean downscale){
+		this.useDownScale=downscale;
+		return this;
+	}
 	public CanvasResizer height(int size){
 		int w=canvas.getCoordinateSpaceWidth();
 		int h=canvas.getCoordinateSpaceHeight();
@@ -59,22 +69,46 @@ public class CanvasResizer {
 		dw=newWidth;
 		dh=size;
 		
-		LogUtils.log("canvas-height:"+dw+","+dh);
-		//canvas.getContext2d().drawImage(image, 0, 0,width,newHeight);
 		return this;
 	}
 	
+	private void drawImage(){
+		boolean needDownscale=false;
+		
+		if(useDownScale){
+			if(image!=null && image.getWidth()>dw){
+				needDownscale=true;
+			}
+		}
+		if(needDownscale){
+			double scale=(double)dw/image.getWidth();
+			ImageData data=JSDownScale.downScaleCanvas(ImageElementUtils.copytoCanvas(image, null).getCanvasElement(), scale);
+			canvas.getContext2d().putImageData(data, dx, dy);
+		}else{
+			canvas.getContext2d().drawImage(image, dx, dy,dw,dh);
+		}
+		
+	}
+	
+	public Canvas toCanvas(){
+		
+		canvas.getContext2d().clearRect(0, 0, canvas.getCoordinateSpaceWidth(),canvas.getCoordinateSpaceHeight());
+		drawImage();
+		
+		return canvas;
+	}
+
 	public String toPngDataUrl(){
 		
 		canvas.getContext2d().clearRect(0, 0, canvas.getCoordinateSpaceWidth(),canvas.getCoordinateSpaceHeight());
-		canvas.getContext2d().drawImage(image, dx, dy,dw,dh);
+		drawImage();
 		
 		return canvas.toDataUrl();
 	}
 	public String toJpegDataUrl(){
 		
 		canvas.getContext2d().clearRect(0, 0, canvas.getCoordinateSpaceWidth(),canvas.getCoordinateSpaceHeight());
-		canvas.getContext2d().drawImage(image, dx, dy,dw,dh);
+		drawImage();
 		
 		return canvas.toDataUrl("image/jpeg");
 	}
@@ -82,8 +116,7 @@ public class CanvasResizer {
 public String toWebpDataUrl(){
 		
 		canvas.getContext2d().clearRect(0, 0, canvas.getCoordinateSpaceWidth(),canvas.getCoordinateSpaceHeight());
-		canvas.getContext2d().drawImage(image, dx, dy,dw,dh);
-		
+		drawImage();
 		return canvas.toDataUrl("image/webp");
 	}
 	

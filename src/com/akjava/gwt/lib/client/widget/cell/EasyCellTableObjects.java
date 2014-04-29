@@ -3,7 +3,7 @@ package com.akjava.gwt.lib.client.widget.cell;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.akjava.gwt.lib.client.widget.cell.SimpleCellTable;
+import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 import com.google.gwt.view.client.SingleSelectionModel;
@@ -116,4 +116,17 @@ public abstract class EasyCellTableObjects<T> {
 			selectionModel.setSelected(selection, false);
 		}
 	}
-}
+	public Column<T,T> generateUpDownActionColumn(String upLabel,String downLabel){
+		return new ActionCellGenerator<T>(){
+
+			@Override
+			public void executeAt(int index, T object) {
+				if(index==0){
+					EasyCellTableObjects.this.upItem(object);
+				}else if(index==1){
+					EasyCellTableObjects.this.downItem(object);
+				}
+			}}.generateColumn(upLabel, downLabel);
+	}
+	}
+	
