@@ -84,6 +84,10 @@ public class CanvasResizer {
 			double scale=(double)dw/image.getWidth();
 			ImageData data=JSDownScale.downScaleCanvas(ImageElementUtils.copytoCanvas(image, null).getCanvasElement(), scale);
 			canvas.getContext2d().putImageData(data, dx, dy);
+			
+			//TODO
+			//how to keep alpha?
+			//simple draw & get alpha from original and recopy it?
 		}else{
 			canvas.getContext2d().drawImage(image, dx, dy,dw,dh);
 		}

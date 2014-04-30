@@ -11,6 +11,11 @@ import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
 
 public class JsonValueUtils {
+	
+	public static native final String stringify(JavaScriptObject json)/*-{
+	return $wnd.JSON.stringify(json,null,2);
+	}-*/;
+	
 	public static String getString(JSONObject object,String key,String defaultValue){
 		if(object==null){
 			return defaultValue;
