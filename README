@@ -3,9 +3,6 @@ this is used on my other projects.
 
 if you interested in inside library check this.
 
-Release 12
-akjavalibgwt_131220.jar
-
 dep contains dependency jars in libs
 mostly newer guava contains.
 
@@ -15,3 +12,4 @@ How to use add this line at your xml
 [Info]
 some my experimental project use dev branch,check it out.
 
+akjavalibgwt-dep contain guava & html5gwt
