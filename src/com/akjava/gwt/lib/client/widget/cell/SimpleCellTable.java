@@ -41,6 +41,9 @@ public abstract class SimpleCellTable<T> extends VerticalPanel{
 	public HorizontalPanel getControlPanel() {
 		return controlPanel;
 	}
+	public SimpleCellTable(){
+		this(Integer.MAX_VALUE);
+	}
 	public SimpleCellTable(int pageSize){
 		table=new CellTable<T>();
 		table.setRowCount(0);
@@ -72,6 +75,12 @@ public abstract class SimpleCellTable<T> extends VerticalPanel{
 		setData(datas,false);
 	}
 	
+	
+	/**
+	 * @deprecated no more flush option supported
+	 * @param datas
+	 * @param flush
+	 */
 	public void setData(List<T> datas,boolean flush){
 		if(datas==null){
 			datas=new ArrayList<T>();
@@ -83,7 +92,7 @@ public abstract class SimpleCellTable<T> extends VerticalPanel{
 		
 		dataProvider.setList(datas);
 		if(flush){//draw immediately
-			table.flush();
+			//table.flush(); //now stop using flush,because some case error happend.if this make problem use flush by hand
 		}
 	}
 	

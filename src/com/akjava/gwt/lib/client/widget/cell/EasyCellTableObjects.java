@@ -88,7 +88,7 @@ public abstract class EasyCellTableObjects<T> {
 	 * @param flush
 	 */
 	public void update(boolean flush){
-		simpleCellTable.setData(datas,flush);
+		simpleCellTable.setData(datas,flush);//no more flush support?
 	}
 
 	public void downItem(T object) {
