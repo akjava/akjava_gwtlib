@@ -84,11 +84,15 @@ public abstract class EasyCellTableObjects<T> {
 		update(false);
 	}
 	/**
-	 * 
-	 * @param flush
+	 * @deprecated
+	 * @param flush //no more flush support.
 	 */
 	public void update(boolean flush){
-		simpleCellTable.setData(datas,flush);//no more flush support?
+		simpleCellTable.setData(datas,flush);
+	}
+	
+	public void update(){
+		simpleCellTable.setData(datas);//no more flush support?
 	}
 
 	public void downItem(T object) {
