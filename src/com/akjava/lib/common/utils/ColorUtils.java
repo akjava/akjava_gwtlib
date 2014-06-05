@@ -32,6 +32,17 @@ public static String toCssColor(int r,int g,int b){
 	int rgb=(r<<16) | (g<<8) | b;
 	return toCssColor(rgb);
 }
+
+/**
+ * 0xfffff,#ffffff
+ * @param hexString
+ * @return
+ */
+public static int toColor(String hexString){
+	return toColor(toRGB(hexString));
+}	
+
+
 public static int toColor(int[] rgb){
 	int r=rgb[0];
 	int g=rgb[1];

@@ -99,6 +99,37 @@ public class StorageControler implements IStorageControler {
 		
 	}
 	
+	//TODO add IStorageControler and test all
+	public boolean getValue(String key,boolean defaultValue){
+		if(storage==null){
+			return defaultValue;
+		}else{
+			String v=storage.getItem(key);
+			if(v==null){
+				return defaultValue;
+			}else{
+				try{
+					return Boolean.parseBoolean(v);
+					}catch(Exception e){}
+				return defaultValue;
+			}
+		}
+	}
+	
+	//TODO add IStorageControler and test all
+	public void  setValue(String key,boolean value) throws StorageException{
+		if(storage==null){
+			throw new StorageException("Storage not found");
+		}else{
+			try{
+			storage.setItem(key, ""+value);
+			}catch(Exception e){
+				throw new StorageException(e.getMessage());
+			}
+		}
+	}
+	
+	
 	/* (non-Javadoc)
 	 * @see com.akjava.gwt.lib.client.IStorageControler#getValue(java.lang.String, java.lang.String)
 	 */
