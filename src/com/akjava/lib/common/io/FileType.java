@@ -1,5 +1,9 @@
 package com.akjava.lib.common.io;
 
+import java.util.List;
+
+import com.google.common.collect.Lists;
+
 /**
  * has extension
  * @author aki
@@ -27,6 +31,10 @@ public class FileType {
 	public FileType(String type, String subtype) {
 		this(type,subtype,subtype);
 	}
+	
+	public String getMimeType(){
+		return getType()+"/"+getSubtype();
+	}
 	public FileType(String type, String subtype, String extension) {
 		super();
 		this.type = type;
@@ -41,6 +49,18 @@ public class FileType {
 	public static final FileType JPEG=new FileType("image","jpeg","jpg");
 	public static final FileType GIF=new FileType("image","gif");
 	public static final FileType BMP=new FileType("image","bmp");
+	
+	public static final List<FileType> fileTypes=Lists.newArrayList(WEBP,PNG,JPEG,GIF,BMP);
+	
+	public static FileType getFileTypeByExtension(String extension){
+		extension=extension.toLowerCase();
+		for(FileType fileType:fileTypes){
+			if(fileType.getExtension().equals(extension)){
+				return fileType;
+			}
+		}
+		return null;
+	}
 	
 	public String toString(){
 		return subtype;//for valuelistbox
