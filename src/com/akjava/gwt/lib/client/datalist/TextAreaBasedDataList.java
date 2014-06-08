@@ -1,6 +1,7 @@
 package com.akjava.gwt.lib.client.datalist;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import com.akjava.gwt.html5.client.download.HTML5Download;
@@ -138,12 +139,19 @@ private FileUploadForm uploadForm;
 		public void createMenus(MenuBar menuBar) {
 			Command test1Command = new Command() {
 				  public void execute() {
-					LogUtils.log(getCurrentName());  
-				    hide(); 
+					SimpleTextData data=getSimpleDataListWidget().getSelection().getData();
+					String currentDate=getSimpleDataListWidget().dateFormat.format(new Date(data.getCdate()));
+					hide(); 
+					String value=Window.prompt("New Date", currentDate);
+				    if(value!=null){
+				    	Date d=getSimpleDataListWidget().dateFormat.parse(value);
+				    	data.setCdate(d.getTime());
+				    	getSimpleDataListWidget().save();//it's work?
+				    	getSimpleDataListWidget().redraw();
+				    }
 				  }
 			};
-			LogUtils.log("context-menu");
-			//menuBar.addItem("Test", test1Command);
+			menuBar.addItem("Modify create date", test1Command);
 			
 		}
 	}

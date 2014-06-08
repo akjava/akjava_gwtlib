@@ -676,7 +676,7 @@ public void setCellContextMenu(CellContextMenu cellContextMenu) {
 }
 
 
-protected DateTimeFormat format=DateTimeFormat.getFormat("yy/MM/dd hh:mm:ss");
+protected DateTimeFormat dateFormat=DateTimeFormat.getFormat("yy/MM/dd hh:mm:ss");
 
 @SuppressWarnings("unchecked")
 public class DataListDataCell  extends AbstractContextCell<DataListData<SimpleTextData>>{
@@ -689,7 +689,7 @@ public class DataListDataCell  extends AbstractContextCell<DataListData<SimpleTe
 			return;
 		}
 		
-		String title=format.format(new Date(value.getData().getCdate()))+" - ";
+		String title=dateFormat.format(new Date(value.getData().getCdate()))+" - ";
 		title+=value.getData().getName();
 		if(value.isModified()){
 			title="*"+title;
