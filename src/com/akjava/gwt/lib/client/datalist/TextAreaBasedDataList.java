@@ -142,8 +142,8 @@ private FileUploadForm uploadForm;
 				    hide(); 
 				  }
 			};
-			
-			menuBar.addItem("Test", test1Command);
+			LogUtils.log("context-menu");
+			//menuBar.addItem("Test", test1Command);
 			
 		}
 	}
@@ -165,6 +165,7 @@ private FileUploadForm uploadForm;
 		return new SimpleTextData(-1,fileName,text);
 	}
 
+	protected String unselectedText="CREATE NEW or SELECT";
 	
 	@Override
 	public void loadData(Optional<SimpleTextData> hv) {
@@ -173,7 +174,7 @@ private FileUploadForm uploadForm;
 			textArea.setText(hv.get().getData());		
 		}else{//unselected and clear
 			textArea.setReadOnly(true);
-			textArea.setText("CREATE NEW or SELECT");
+			textArea.setText(unselectedText);
 		}
 		onLoad();
 	}

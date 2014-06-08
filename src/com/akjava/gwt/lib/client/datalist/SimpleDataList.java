@@ -3,6 +3,7 @@ package com.akjava.gwt.lib.client.datalist;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import com.akjava.gwt.lib.client.LogUtils;
@@ -12,6 +13,7 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.client.Window;
@@ -674,6 +676,7 @@ public void setCellContextMenu(CellContextMenu cellContextMenu) {
 }
 
 
+protected DateTimeFormat format=DateTimeFormat.getFormat("yy/MM/dd hh:mm:ss");
 
 @SuppressWarnings("unchecked")
 public class DataListDataCell  extends AbstractContextCell<DataListData<SimpleTextData>>{
@@ -686,11 +689,13 @@ public class DataListDataCell  extends AbstractContextCell<DataListData<SimpleTe
 			return;
 		}
 		
-		String title="";
+		String title=format.format(new Date(value.getData().getCdate()))+" - ";
 		title+=value.getData().getName();
 		if(value.isModified()){
 			title="*"+title;
 		}
+		
+		
 		sb.appendEscaped(title);
 	}
 	
