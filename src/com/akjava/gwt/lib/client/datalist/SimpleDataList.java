@@ -18,6 +18,7 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.ScrollPanel;
@@ -239,6 +240,16 @@ expandButton = new Button("Expand>>",new ClickHandler() {
 	}
 });
 buttons2.add(expandButton);
+
+showDate = new CheckBox("show cdate");
+buttons2.add(showDate);
+showDate.addClickHandler(new ClickHandler() {
+	
+	@Override
+	public void onClick(ClickEvent event) {
+		redraw();
+	}
+});
 
 ScrollPanel scroll=new ScrollPanel();
 scroll.setHeight("300px");
@@ -678,6 +689,8 @@ public void setCellContextMenu(CellContextMenu cellContextMenu) {
 
 protected DateTimeFormat dateFormat=DateTimeFormat.getFormat("yy/MM/dd hh:mm:ss");
 
+private CheckBox showDate;
+
 @SuppressWarnings("unchecked")
 public class DataListDataCell  extends AbstractContextCell<DataListData<SimpleTextData>>{
 
@@ -689,7 +702,11 @@ public class DataListDataCell  extends AbstractContextCell<DataListData<SimpleTe
 			return;
 		}
 		
-		String title=dateFormat.format(new Date(value.getData().getCdate()))+" - ";
+		String title="";
+		if(showDate.getValue()){
+			title=dateFormat.format(new Date(value.getData().getCdate()))+" - ";
+		}
+		
 		title+=value.getData().getName();
 		if(value.isModified()){
 			title="*"+title;
