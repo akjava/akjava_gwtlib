@@ -111,12 +111,12 @@ private FileUploadForm uploadForm;
 					else if(event.isControlKeyDown()){
 						
 						
-						if(event.getNativeKeyCode()==83){
+						if(event.getNativeKeyCode()==83){//S(save)
 							event.preventDefault();
 							return;
 						}
 						
-						if(event.getNativeKeyCode()!=65){//ignore select all
+						if(event.getNativeKeyCode()!=65 && event.getNativeKeyCode()!=67){//ignore A(select all) && C(copy)
 							textModified();
 						}
 						
