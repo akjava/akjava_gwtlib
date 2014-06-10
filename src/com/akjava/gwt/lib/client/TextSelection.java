@@ -19,6 +19,23 @@ public class TextSelection {
 	public void replace(String replace) {
 		setText(getSelectionBefore()+replace+getSelectionAfter());
 	}
+	
+	public void replaceInLine(String replace) {
+		
+		if(replace.endsWith("\n")){
+			//replace text should not contain line-end
+			replace=replace.substring(0,replace.length()-1);
+		}
+		
+		
+		String selection=getSelection();
+		String append="";
+		if(selection.endsWith("\n")){//not last line
+			append="\n";
+		}
+		setText(getSelectionBefore()+replace+append+getSelectionAfter());
+	}
+	
 	int start;
 	int end;
 
@@ -43,6 +60,15 @@ public class TextSelection {
 	public String getSelection() {
 		return targetTextArea.getText().substring(start,end);
 	}
+	public String getLineEndRemovedSelection() {
+		String selection=getSelection();
+		if(selection.endsWith("\n")){
+			return selection.substring(0,selection.length()-1);
+		}else{
+			return selection;
+		}
+	}
+	
 	public String getSelectionBefore(){
 		return targetTextArea.getText().substring(0,start);
 	}
