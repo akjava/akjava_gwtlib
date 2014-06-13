@@ -153,8 +153,16 @@ public class TextSelection {
 	 * @return
 	 */
 	public TextSelection getCurrentLine(){
+		
+		
+		
 		int firstLineBreak=0;
 		String targetText=targetTextArea.getText();
+		
+		if(targetText.length()>start && targetText.charAt(start)==Ascii.LF){
+			//first line is line-separator
+			return new TextSelection(start,start,targetTextArea);//this empty selection
+		}
 		
 		for(int i=start-1;i>=0;i--){
 			char ch=targetText.charAt(i);
