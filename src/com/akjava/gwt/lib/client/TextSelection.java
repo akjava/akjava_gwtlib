@@ -160,8 +160,10 @@ public class TextSelection {
 		String targetText=targetTextArea.getText();
 		
 		if(targetText.length()>start && targetText.charAt(start)==Ascii.LF){
+			if(start>0 && targetText.charAt(start-1)==Ascii.LF || start==0){
 			//first line is line-separator
 			return new TextSelection(start,start,targetTextArea);//this empty selection
+			}
 		}
 		
 		for(int i=start-1;i>=0;i--){
