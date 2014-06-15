@@ -23,7 +23,18 @@ public class FileNames {
 	}
 	
 	public boolean isEndsWithFileSeparator(String path){
+		if(Strings.isNullOrEmpty(path)){
+			return false;
+		}
 		return path.charAt(path.length()-1)==fileSeparator;
+	}
+	
+	public String chompIfEndsWithFileSeparator(String path){
+		if(isEndsWithFileSeparator(path)){
+			return path.substring(0,path.length()-1);
+		}else{
+			return path;
+		}
 	}
 	
 	

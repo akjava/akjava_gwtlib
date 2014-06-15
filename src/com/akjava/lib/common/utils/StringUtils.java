@@ -19,6 +19,12 @@ public class StringUtils {
 		 }
 		 return result;
 	 }
+	 public static String chomp(String value){
+		 if(value.length()>0){
+			 return value.substring(0,value.length()-1);
+		 }
+		 return value;
+	 }
 	 
 	 public static int countStartWith(String text,char ch){
 		 if(text==null){

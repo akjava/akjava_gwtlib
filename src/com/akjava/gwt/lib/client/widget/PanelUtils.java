@@ -26,9 +26,9 @@ public class PanelUtils {
 		return panel;
 	}
 	
-	public static VerticalPanel createScrolledVerticalPanel98(Panel parent){
+	public static VerticalPanel createScrolledVerticalPanel(Panel parent,int persent){
 		ScrollPanel scroll=new ScrollPanel();
-		scroll.setSize("98%", "98%");
+		scroll.setSize(persent+"%", persent+"%");
 		parent.add(scroll);
 		VerticalPanel panel=new VerticalPanel();
 		scroll.add(panel);
