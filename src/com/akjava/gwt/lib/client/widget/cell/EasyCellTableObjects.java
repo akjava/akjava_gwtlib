@@ -74,14 +74,14 @@ public abstract class EasyCellTableObjects<T> {
 
 	public void addItem(T data){
 		datas.add(data);
-		update(false);
+		update();
 	}
 	
 	public void removeItem(T data){
 		selectionModel.setSelected(data, false);
 		datas.remove(data);
 		
-		update(false);
+		update();
 	}
 	/**
 	 * @deprecated
