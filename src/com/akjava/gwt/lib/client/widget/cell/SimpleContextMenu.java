@@ -47,11 +47,19 @@ public class SimpleContextMenu implements ContextMenuHandler,CellContextMenu{
 		}
 		@Override
 		public void onContextMenu(ContextMenuEvent event) {
+			if(!isAvaiableContextMenu()){
+				return;
+			}
 				event.preventDefault();
 			    event.stopPropagation();
 
 			    onContextMenu(event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
 		}
+		
+		public boolean isAvaiableContextMenu(){
+			return true;
+		}
+		
 		private int clientX;
 		public int getClientX() {
 			return clientX;
@@ -62,6 +70,9 @@ public class SimpleContextMenu implements ContextMenuHandler,CellContextMenu{
 		private int clientY;
 		@Override
 		public void onContextMenu(int clientX, int clientY) {
+			if(!isAvaiableContextMenu()){
+				return;
+			}
 			this.clientX=clientX;
 			this.clientY=clientY;
 			// TODO Auto-generated method stub

@@ -1,9 +1,12 @@
 package com.akjava.gwt.lib.client;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
@@ -81,6 +84,19 @@ public class JsonValueUtils {
 			return defaultValue;
 		}
 		return jsonString.booleanValue();
+	}
+	public static List<JSONObject> convertToJSONObjectList(JSONArray array){
+		List<JSONObject> list=new ArrayList<JSONObject>();
+		for(int i=0;i<array.size();i++){
+			JSONValue value=array.get(i);
+			JSONObject object=value.isObject();
+			if(object!=null){
+				list.add(object);
+			}else{
+				LogUtils.log(i+" is not object");
+			}
+		}
+		return list;
 	}
 	public static JSONObject convertToJson(Map<String,String> map){
 		

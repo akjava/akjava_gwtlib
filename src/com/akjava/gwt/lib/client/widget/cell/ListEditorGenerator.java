@@ -83,6 +83,7 @@ public abstract class ListEditorGenerator<T> {
 		
 
 		HorizontalPanel buttons=new HorizontalPanel();
+		buttons.setVerticalAlignment(HorizontalPanel.ALIGN_MIDDLE);
 		panel.add(buttons);
 		
 		newButton = new Button(Objects.firstNonNull(labelMaps.get("new"),"New"),new ClickHandler() {
