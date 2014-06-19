@@ -61,6 +61,11 @@ public static final String STYLE_WIDGET_LIST_SELECT="widgetList-select";
 	private Panel container;
 	private List<T> datas;
 	private List<FocusPanel> widgets;
+	public List<FocusPanel> getWidgets() {
+		return widgets;
+	}
+
+
 	public WidgetList(){
 		//horizontal only
 		container=new HorizontalPanel();
