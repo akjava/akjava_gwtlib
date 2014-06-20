@@ -77,7 +77,7 @@ public abstract class ListEditorGenerator<T> {
 		//some case no need convert
 		if(converter!=null){
 		easyCells.setDatas(converter.reverse().convert(baseText));
-		easyCells.update(true);
+		easyCells.update();
 		}
 		}
 		
