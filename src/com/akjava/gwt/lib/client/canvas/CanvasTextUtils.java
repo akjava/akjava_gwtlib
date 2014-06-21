@@ -10,17 +10,21 @@ import com.google.gwt.regexp.shared.RegExp;
 
 public class CanvasTextUtils {
 
-	
+	//TODO Test
 	public static void drawCenterInRect(Canvas canvas,String text,Rect rect){
+		canvas.getContext2d().save();
 		TextMetrics metrix=canvas.getContext2d().measureText(text);
 		
 		int dx=(int) ((rect.getWidth()-metrix.getWidth())/2);
 		int dy=rect.getHeight()/2;
 		
-		int size=parseFontSize(canvas.getContext2d().getFont());
-		double descentOffset=(double)size/4;
+		//int size=parseFontSize(canvas.getContext2d().getFont());
+		//double descentOffset=(double)size/4; offset no need anymore
 		
-		canvas.getContext2d().fillText(text, rect.getX()+dx, rect.getY()+dy+descentOffset);
+		canvas.getContext2d().setTextBaseline("middle");
+		
+		canvas.getContext2d().fillText(text, rect.getX()+dx, rect.getY()+dy);
+		canvas.getContext2d().restore();
 	}
 	
 	static RegExp nums=RegExp.compile("(\\d+)px");
