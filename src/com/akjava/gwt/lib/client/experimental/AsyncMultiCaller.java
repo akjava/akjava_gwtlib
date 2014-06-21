@@ -44,5 +44,9 @@ public  abstract class AsyncMultiCaller<T>{
 			LogUtils.log("finally:cancelled="+cancelled);
 		}
 		
+		/**
+		 * must call public void done(T data,boolean success) from here
+		 * @param data
+		 */
 		public abstract void execAsync(final T data);
 	}
