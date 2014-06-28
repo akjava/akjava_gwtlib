@@ -29,6 +29,13 @@ public class CSVConverter extends Converter<String,List<List<String>>> {
 		this.quotechar=quotechar;
 	}
 	
+	/*
+	 * 
+	 * because need all lines to convert for some line-separator contained value
+	 * 
+	 * (non-Javadoc)
+	 * @see com.google.common.base.Converter#doBackward(java.lang.Object)
+	 */
 	@Override
 	protected String doBackward(List<List<String>> csvs) {
 		CSVJoiner joiner=new CSVJoiner(separator,quotechar);
