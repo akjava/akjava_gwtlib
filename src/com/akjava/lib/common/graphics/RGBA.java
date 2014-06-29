@@ -1,5 +1,8 @@
 package com.akjava.lib.common.graphics;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkPositionIndex;
+
 public class RGBA {
 	@Override
 	public int hashCode() {
@@ -36,10 +39,10 @@ public class RGBA {
 		this(red,green,blue,1);
 	}
 public RGBA(int red, int green, int blue, double alpha) {
-		super();
-		this.red = red;
-		this.green = green;
-		this.blue = blue;
+		checkArgument(alpha>=0 && alpha<=1.0);
+		this.red = checkPositionIndex(red, 255);
+		this.green = checkPositionIndex(green, 255);
+		this.blue = checkPositionIndex(blue, 255);
 		this.alpha = alpha;
 	}
 private int red;
@@ -47,19 +50,19 @@ public int getRed() {
 	return red;
 }
 public void setRed(int red) {
-	this.red = red;
+	this.red = checkPositionIndex(red, 255);
 }
 public int getGreen() {
 	return green;
 }
 public void setGreen(int green) {
-	this.green = green;
+	this.green = checkPositionIndex(green, 255);
 }
 public int getBlue() {
 	return blue;
 }
 public void setBlue(int blue) {
-	this.blue = blue;
+	this.blue = checkPositionIndex(blue, 255);
 }
 public double getAlpha() {
 	return alpha;
