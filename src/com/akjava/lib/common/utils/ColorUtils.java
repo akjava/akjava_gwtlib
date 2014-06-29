@@ -1,5 +1,10 @@
 package com.akjava.lib.common.utils;
 
+import com.akjava.lib.common.functions.ColorFunctions;
+import com.google.common.base.Equivalence;
+import com.google.common.base.Supplier;
+import com.google.common.base.Suppliers;
+
 public class ColorUtils {
 	private ColorUtils(){}
 public static int[] toRGB(int value){
@@ -9,6 +14,28 @@ public static int[] toRGB(int value){
 	rgb[2]=value&0xff;
 	return rgb;
 }
+
+
+
+
+/**
+ * I'm not sure ,are these cut down initialize cost?
+ * 
+ * can compare #ff0000 , #fff ,rgb(0,0,0) and rgba(0,0,0,1)
+ * 
+ * @return
+ */
+public static Equivalence<String> getColorEquivalance(){
+    return colorMemoize.get();
+    }
+
+private static Supplier<Equivalence<String>> colorSupplier=new Supplier<Equivalence<String>>(){
+    public Equivalence<String> get(){
+    	return Equivalence.equals().onResultOf(ColorFunctions.getStringToRGBAFunction());
+    }
+};
+
+private static volatile Supplier<Equivalence<String>> colorMemoize = Suppliers.memoize(colorSupplier);
 
 
 /*
