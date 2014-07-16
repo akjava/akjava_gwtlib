@@ -7,7 +7,7 @@ import com.akjava.gwt.lib.client.LogUtils;
 public  abstract class AsyncMultiCaller<T>{
 		List<T> datas;
 		private boolean cancelled;
-		public AsyncMultiCaller(List<T> datas){
+		 public AsyncMultiCaller(List<T> datas){
 			this.datas=datas;
 		}
 		public void done(T data,boolean success){

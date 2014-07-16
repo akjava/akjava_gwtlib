@@ -1,6 +1,7 @@
 package com.akjava.gwt.lib.client.canvas;
 
 import com.akjava.gwt.lib.client.LogUtils;
+import com.akjava.lib.common.graphics.Rect;
 
 public class RectBuilder {
 	private int width;

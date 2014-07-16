@@ -1,9 +1,19 @@
-package com.akjava.gwt.lib.client.canvas;
+package com.akjava.lib.common.graphics;
 
 public class Rect {
 private int x;
 private int y;
 private int width;
+public Rect() {
+	this(0,0,0,0);
+}
+public boolean hasWidthAndHeight(){
+	return width>0 && height>0;
+}
+public boolean contains(int px,int py){
+	return px>=x && px<=x+width && py>=y && py<=y+height;
+}
+
 public Rect(int x, int y, int width, int height) {
 	super();
 	this.x = x;
@@ -11,6 +21,12 @@ public Rect(int x, int y, int width, int height) {
 	this.width = width;
 	this.height = height;
 }
+
+public Rect expand(int w,int h){
+	return new Rect(x-w/2,y-h/2,width+w,height+h);
+}
+
+
 public int getX() {
 	return x;
 }
