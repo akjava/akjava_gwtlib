@@ -247,7 +247,14 @@ public static void drawExpandImage(Canvas canvas,ImageElement img,int align,int 
 	canvas.getContext2d().drawImage(img, dx, dy, newImageSize[0], newImageSize[1]);
 }
 
-		public static double[] calcurateFitSize(int canvasWidth,int canvasHeight,int imageWidth,int imageHeight){	
+/**
+ * @deprecated typo
+ */
+public static double[] calcurateFitSize(int canvasWidth,int canvasHeight,int imageWidth,int imageHeight){	
+	return calculateFitSize(canvasWidth,canvasHeight,imageWidth,imageHeight);
+}
+
+		public static double[] calculateFitSize(int canvasWidth,int canvasHeight,int imageWidth,int imageHeight){	
 			double rw=(double)canvasWidth/imageWidth;
 			double rh=(double)canvasHeight/imageHeight;
 			
@@ -265,7 +272,13 @@ public static void drawExpandImage(Canvas canvas,ImageElement img,int align,int 
 			return result;
 		}
 		
-		public static double[] calcurateExpandSize(int canvasWidth,int canvasHeight,int imageWidth,int imageHeight){	
+		/**
+		 * @deprecated typo
+		 */
+		public static double[] calcurateExpandSize(int canvasWidth,int canvasHeight,int imageWidth,int imageHeight){
+			return calculateExpandSize(canvasWidth,canvasHeight,imageWidth,imageHeight);
+		}
+		public static double[] calculateExpandSize(int canvasWidth,int canvasHeight,int imageWidth,int imageHeight){	
 			double rw=(double)canvasWidth/imageWidth;
 			double rh=(double)canvasHeight/imageHeight;
 			

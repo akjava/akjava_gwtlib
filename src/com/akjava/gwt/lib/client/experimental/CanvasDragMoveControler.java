@@ -79,6 +79,8 @@ public  class CanvasDragMoveControler{
 	public void start(int x,int y){
 		startX=x;
 		startY=y;
+		clickStartX=x;
+		clickStartY=y;
 		started=true;
 		if(moveListener!=null){
 			moveListener.start(startX, startY);
@@ -104,6 +106,18 @@ public  class CanvasDragMoveControler{
 		startX=x;
 		startY=y;
 	}
+	
+	private int clickStartX;
+	public int getClickStartX() {
+		return clickStartX;
+	}
+
+	public int getClickStartY() {
+		return clickStartY;
+	}
+
+	private int clickStartY;
+	
 	public void end(int x,int y){
 		move(x,y);
 		started=false;
