@@ -1,5 +1,12 @@
 package com.akjava.gwt.lib.client;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import com.akjava.gwt.html5.client.download.DownloadURL;
+import com.akjava.gwt.html5.client.file.Blob;
+import com.akjava.gwt.html5.client.file.File;
+import com.akjava.gwt.html5.client.file.webkit.FileCallback;
+import com.akjava.gwt.html5.client.file.webkit.FileEntry;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.ImageData;
 import com.google.gwt.dom.client.Document;
@@ -21,9 +28,32 @@ public static ImageElement create(String url){
 	return element;
 }
 
+
+
+public static void fileEntryToImage(FileEntry fileEntry,final ImageElementListener listener){
+	checkNotNull(fileEntry,"file is null");
+	checkNotNull(listener,"listener is null");
+	fileEntry.file(new FileCallback() {
+		
+		@Override
+		public void callback(File file) {
+			fileToImage(file,listener);
+		}
+	});
+}
+
+public static void fileToImage(Blob file,ImageElementListener listener){
+	checkNotNull(file,"file is null");
+	checkNotNull(listener,"listener is null");
+	new ImageElementLoader().load(DownloadURL.get().createObjectURL(file), listener);
+}
+
+
 public static Canvas copytoCanvas(String dataUrl,Canvas canvas){
 	return copytoCanvas(create(dataUrl), canvas,true);
 }
+
+
 public static Canvas copytoCanvas(ImageElement element,Canvas canvas){
 	return copytoCanvas(element, canvas,true);
 }
@@ -40,6 +70,7 @@ public static Canvas copytoCanvas(ImageElement element,Canvas canvas,boolean dra
 	}
 	return canvas;
 }
+
 
 
 

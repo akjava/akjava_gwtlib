@@ -187,6 +187,15 @@ public class TextSelection {
 		return new TextSelection(start,Math.min(end+1,targetText.length()),targetTextArea);
 	}
 	
+	public static void insertBetweenSelectionText(TextSelection selection,String header,String footer){
+    	String newText=header+selection.getSelection()+footer;
+		selection.replace(newText);
+    	
+		TextArea target=selection.getTargetTextArea();
+		target.setCursorPos(selection.getStart()+(header+selection.getSelection()).length());
+		target.setFocus(true);
+	    }
+	
 	 public static Optional<TextSelection> createTextSelection(TextArea textArea){
 	    	try{
 		  		if(textArea.getSelectedText()==null ){

@@ -2,6 +2,7 @@ package com.akjava.gwt.lib.client;
 
 import com.akjava.gwt.html5.client.download.HTML5Download;
 import com.akjava.gwt.html5.client.file.Uint8Array;
+import com.akjava.lib.common.graphics.Rect;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.ImageData;
@@ -17,6 +18,22 @@ public class CanvasUtils {
 		if(canvas!=null){
 			canvas.setCoordinateSpaceWidth(w);
 			canvas.setCoordinateSpaceHeight(h);
+			canvas.setWidth(w+"px");
+			canvas.setHeight(h+"px");
+		}
+		return canvas;
+	}
+	
+	public static Canvas setCoordinateSpace(Canvas canvas,int w,int h){
+		if(canvas!=null){
+			canvas.setCoordinateSpaceWidth(w);
+			canvas.setCoordinateSpaceHeight(h);
+		}
+		return canvas;
+	}
+	
+	public static Canvas setSizeCanvas(Canvas canvas,int w,int h){
+		if(canvas!=null){
 			canvas.setWidth(w+"px");
 			canvas.setHeight(h+"px");
 		}
@@ -222,6 +239,32 @@ public static void drawFitImage(Canvas canvas,ImageElement img,int align,int val
 			canvas.getContext2d().drawImage(img, dx, dy, newImageSize[0], newImageSize[1]);
 		}
 
+
+public static void drawFitImage(Canvas canvas,ImageElement img,Rect rect,int align,int valign){
+	int cw=rect.getWidth();
+	int ch=rect.getHeight();
+	
+	double[] newImageSize=calculateFitSize(rect.getWidth(),rect.getHeight(),img.getWidth(),img.getHeight());
+	
+	
+	double dx=rect.getX();	//ALIGN_LEFT
+	double dy=rect.getY();
+	if(align==ALIGN_CENTER){
+	dx=dx+(cw-newImageSize[0])/2;
+	}else if(align==ALIGN_RIGHT){
+	dx=dx+cw-newImageSize[0];
+	}
+	if(valign==VALIGN_MIDDLE){
+	dy=dy+(ch-newImageSize[1])/2;
+	}else if(valign==VALIGN_BOTTOM){
+	dy=dy+ch-newImageSize[1];	
+	}
+	
+	
+	//log("draw:"+dx+","+dy);
+	canvas.getContext2d().drawImage(img, dx, dy, newImageSize[0], newImageSize[1]);
+}
+
 public static void drawExpandImage(Canvas canvas,ImageElement img,int align,int valign){
 	int cw=canvas.getCoordinateSpaceWidth();
 	int ch=canvas.getCoordinateSpaceHeight();
@@ -334,6 +377,21 @@ public static Canvas copyTo(ImageData imageData,Canvas canvas) {
 	return canvas;
 }
 
+public static Canvas copyTo(Canvas imageCanvas,Canvas canvas,boolean drawImage){
+	if(canvas==null){
+		canvas=Canvas.createIfSupported();
+	}
+	canvas.setWidth(imageCanvas.getCoordinateSpaceWidth()+"px");
+	canvas.setHeight(imageCanvas.getCoordinateSpaceHeight()+"px");
+	canvas.setCoordinateSpaceWidth(imageCanvas.getCoordinateSpaceWidth());
+	canvas.setCoordinateSpaceHeight(imageCanvas.getCoordinateSpaceHeight());
+	if(drawImage){
+		canvas.getContext2d().drawImage(imageCanvas.getCanvasElement(), 0, 0);
+	}
+	return canvas;
+}
+
+
 public static void drawImage(Canvas sharedCanvas,ImageElement element) {
 	sharedCanvas.getContext2d().drawImage(element, 0,0);
 }
@@ -369,6 +427,34 @@ public static void setSize(Canvas canvas, int w, int h) {
 		canvas.setWidth(w+"px");
 		canvas.setHeight(h+"px");
 	}
+}
+
+/*
+ * bugs;remove all style
+ */
+public static void clearBackgroundImage(Canvas canvas){
+	canvas.getElement().removeAttribute("style");//for remove background-image not so good?
+}
+public static void setBackgroundImage(Canvas canvas,String imageUrl){
+	//LogUtils.log(canvas.getElement().getStyle());
+	
+	//need width & height .at least
+	String w=canvas.getElement().getStyle().getWidth();
+	String h=canvas.getElement().getStyle().getHeight();
+	
+	canvas.getElement().setAttribute("style", "width:"+w+";height:"+h+";background-image:"+"url(\""+imageUrl+"\");");
+	
+}
+
+public static void setBackgroundImage(Canvas canvas,String imageUrl,int iw,int ih){
+	//LogUtils.log(canvas.getElement().getStyle());
+	
+	//need width & height .at least
+	String w=canvas.getElement().getStyle().getWidth();
+	String h=canvas.getElement().getStyle().getHeight();
+	
+	canvas.getElement().setAttribute("style", "width:"+w+";height:"+h+";background-image:"+"url(\""+imageUrl+"\");background-size:"+iw+"px "+ih+"px;");
+	
 }
 
 

@@ -33,4 +33,12 @@ public static final String DATA_BASE64_KEY=";base64,";
 			return BaseEncoding.base64().decode(url);
 		}
 	}
+	public static String cutHeader(String url){
+		int index=url.indexOf(DATA_BASE64_KEY);
+		if(index!=-1){
+			return url.substring(index+DATA_BASE64_KEY.length());
+		}else{
+			return url;
+		}
+	}
 }

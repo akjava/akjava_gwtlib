@@ -1,8 +1,6 @@
 package com.akjava.lib.common.graphics;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkState;
 
 import com.akjava.lib.common.utils.ValuesUtils;
 
@@ -26,6 +24,9 @@ public Rect(int x, int y, int width, int height) {
 	this.y = y;
 	this.width = width;
 	this.height = height;
+}
+public void clear(){
+	set(0,0,0,0);
 }
 public int getRightPos(){
 	return x+width;
@@ -56,6 +57,28 @@ public void set(int x,int y,int width,int height){
 public Rect expand(int w,int h){
 	return new Rect(x-w/2,y-h/2,width+w,height+h);
 }
+
+public Rect expandIn(int w,int h,int maxW,int maxH){
+	Rect r= expand(w,h);
+	if(r.getX()<0){
+		r.setWidth(r.getWidth()+r.getX());
+		r.setX(0);
+	}
+	if(r.getY()<0){
+		r.setHeight(r.getHeight()+r.getY());
+		r.setX(y);
+	}
+	if(r.getRightPos()>maxW){
+		r.setWidth(maxW-r.getX());
+	}
+	
+	if(r.getBottomPos()>maxH){
+		r.setHeight(maxH-r.getY());
+	}
+	return r;
+}
+
+
 
 public Rect rightTop(int size){
 	return new Rect(x+width-size,y,size,size);

@@ -12,7 +12,7 @@ public class TimeUtils {
 
 	public static final int UNIT_MONTH=6;
 	
-	public static TimeUnit getAboutTime(long ms){
+	public static TimeUnit2 getAboutTime(long ms){
 		TimeValue timeValue=new TimeValue(ms);
 		int unit=UNIT_MILLISECOND;
 		int value=0;
@@ -49,11 +49,11 @@ public class TimeUtils {
 			value=timeValue.getMillisecond();
 		break;
 		}
-		return new TimeUnit(unit,value);
+		return new TimeUnit2(unit,value);
 	}
 	
-	public static class TimeUnit{
-		public TimeUnit(int unit2, int value2) {
+	public static class TimeUnit2{
+		public TimeUnit2(int unit2, int value2) {
 			unit=unit2;
 			value=value2;
 		}

@@ -12,7 +12,15 @@ public class LogUtils {
 	}
 	}-*/;
 	public static final  void log(Object value){
+		if(value!=null){
+		if(value instanceof JavaScriptObject){
+			log((JavaScriptObject)value);
+		}else{
 		log(value.toString());
+		}
+		}else{
+			log("null");
+		}
 	}
 	public static final  void log(double value){
 		log(""+value);

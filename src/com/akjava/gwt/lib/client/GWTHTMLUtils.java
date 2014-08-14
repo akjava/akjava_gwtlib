@@ -92,6 +92,14 @@ public class GWTHTMLUtils {
 	return RootPanel.get(name)!=null;	
 	}
 	
+	
+	public static void setBackgroundColor(UIObject object,String color){
+		object.getElement().getStyle().setBackgroundColor(color);
+	}
+	public static void clearBackgroundColor(UIObject object,String color){
+		object.getElement().getStyle().clearBackgroundColor();
+	}
+	
 	/*
 	 * canvas never annoying selected
 	 * via http://stackoverflow.com/questions/3684285/how-to-prevent-text-select-outside-html5-canvas-on-double-click
