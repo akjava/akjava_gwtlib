@@ -11,6 +11,11 @@ public static final String NONE="none";//somehow not exist on Cursor;
 		 DOM.setStyleAttribute(RootPanel.getBodyElement(), "cursor", cursor.getCssName());
 	}
 	
+	/**
+	 * not work? or style problem
+	 * @param object
+	 * @param cursor
+	 */
 	public static void setCursor(UIObject object,Cursor cursor){
 		object.getElement().getStyle().setCursor(cursor);
 	}

@@ -26,6 +26,22 @@ public class PanelUtils {
 		return panel;
 	}
 	
+	public static ScrollPanel createScrollPanel(double persent){
+		ScrollPanel scroll=new ScrollPanel();
+		scroll.setSize(persent+"%", persent+"%");
+		
+		return scroll;
+	}
+	
+	public static VerticalPanel createScrolledVerticalPanel(Panel parent,double persent){
+		ScrollPanel scroll=new ScrollPanel();
+		scroll.setSize(persent+"%", persent+"%");
+		parent.add(scroll);
+		VerticalPanel panel=new VerticalPanel();
+		scroll.add(panel);
+		return panel;
+	}
+	
 	public static VerticalPanel createScrolledVerticalPanel(Panel parent,int persent){
 		ScrollPanel scroll=new ScrollPanel();
 		scroll.setSize(persent+"%", persent+"%");

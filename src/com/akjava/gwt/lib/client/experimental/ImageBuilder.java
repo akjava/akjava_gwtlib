@@ -7,11 +7,15 @@ import com.akjava.gwt.lib.client.CanvasUtils;
 import com.akjava.gwt.lib.client.ImageElementUtils;
 import com.akjava.lib.common.io.FileType;
 import com.google.gwt.canvas.client.Canvas;
+import com.google.gwt.canvas.dom.client.ImageData;
 import com.google.gwt.dom.client.ImageElement;
 
 public class ImageBuilder {
 public static Canvas sharedCanvas;
 	public static Canvas getSharedCanvas() {
+	if(sharedCanvas==null){
+		sharedCanvas=Canvas.createIfSupported();
+	}
 	return sharedCanvas;
 }
 	
@@ -103,6 +107,14 @@ protected FileType fileType=FileType.PNG;
 		checkNotNull(canvas);
 		return new ImageBuilder(canvas);
 	}
+	
+	/*
+	public static ImageBuilder from(ImageData imageData){
+		checkNotNull(imageData);
+		//need own canvas
+		return new ImageBuilder(CanvasUtils.createCanvas(getSharedCanvas(), imageData));
+	}
+	*/
 	
 	public static ImageBuilder from(ImageElement imageElement){
 		checkNotNull(imageElement);
