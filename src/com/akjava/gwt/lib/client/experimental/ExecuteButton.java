@@ -14,25 +14,31 @@ public abstract class ExecuteButton extends Button{
 		this.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				setEnabled(false);
-				Timer timer=new Timer(){
-					@Override
-					public void run() {
-						try{
-							executeOnClick();
-						}catch(Exception e){
-							new RuntimeException(e);//i dont care
-						}finally{
-							if(autoEnableButton){
-							setEnabled(true);
-							}
-						}
-					}
-					
-				};
-				timer.schedule(20);
+				startExecute(autoEnableButton);
 			}
 		});
+	}
+	public void startExecute(final boolean autoEnableButton){
+		if(!isEnabled()){
+			return;
+		}
+		setEnabled(false);
+		Timer timer=new Timer(){
+			@Override
+			public void run() {
+				try{
+					executeOnClick();
+				}catch(Exception e){
+					new RuntimeException(e);//i dont care
+				}finally{
+					if(autoEnableButton){
+					setEnabled(true);
+					}
+				}
+			}
+			
+		};
+		timer.schedule(20);
 	}
 	public abstract void executeOnClick();
 }

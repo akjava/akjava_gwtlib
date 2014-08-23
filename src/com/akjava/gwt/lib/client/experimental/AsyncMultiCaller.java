@@ -11,6 +11,13 @@ import com.google.gwt.user.client.Timer;
 public  abstract class AsyncMultiCaller<T>{
 		List<T> datas;
 		private boolean cancelled;
+		public boolean isCancelled() {
+			return cancelled;
+		}
+		public void setCancelled(boolean cancelled) {
+			this.cancelled = cancelled;
+		}
+
 		private boolean executing;
 		 public AsyncMultiCaller(List<T> datas){
 			 checkNotNull(datas,"AsyncMultiCaller:data is null");

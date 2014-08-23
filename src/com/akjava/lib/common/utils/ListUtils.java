@@ -2,6 +2,8 @@ package com.akjava.lib.common.utils;
 
 import java.util.List;
 
+import com.akjava.gwt.lib.client.experimental.ArrayTool;
+
 public class ListUtils {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -46,4 +48,9 @@ public class ListUtils {
 				}
 			}
 	}
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static void shuffle(List list){
+		new ArrayTool().shuffle(list);
+	}
+	
 }

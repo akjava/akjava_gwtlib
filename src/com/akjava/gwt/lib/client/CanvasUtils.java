@@ -116,6 +116,42 @@ public static void drawCenter(Canvas canvas,ImageElement image,int offsetX,int o
 	canvas.getContext2d().restore();
 }
 
+public static void drawCenter(Canvas canvas,CanvasElement canvasImage,int offsetX,int offsetY,double scaleX,double scaleY,double angle,double alpha){
+	canvas.getContext2d().save();
+	double rx=(canvas.getCoordinateSpaceWidth())/2;
+	double ry=(canvas.getCoordinateSpaceHeight())/2;
+	
+	canvas.getContext2d().translate(rx,ry);//rotate center
+	double rotate=(Math.PI / 180)*angle;
+	canvas.getContext2d().rotate(rotate);
+	canvas.getContext2d().translate(-rx,-ry);//and back
+	
+	canvas.getContext2d().scale(scaleX,scaleY);
+	
+	double px=(canvas.getCoordinateSpaceWidth()/scaleX-canvasImage.getWidth())/2;
+	double py=(canvas.getCoordinateSpaceHeight()/scaleY-canvasImage.getHeight())/2;
+	
+	//LogUtils.log("w="+canvas.getCoordinateSpaceWidth()+",scaled="+(element.getWidth()*scale));
+	
+	//LogUtils.log("scale:"+scale+",x="+px+",y="+py);
+	
+	int ox=(int) (offsetX/scaleX);
+	int oy=(int) (offsetY/scaleY);
+	//canvas.getContext2d().rotate(-rotate);
+	
+	double x=ox;
+	double y=oy;
+	
+	//offset is effect on angle,but scroll no need do it
+	double nx = px+x * Math.cos(-rotate) - y * Math.sin(-rotate);
+	double ny = py+x * Math.sin(-rotate) + y * Math.cos(-rotate);
+	
+	canvas.getContext2d().translate(nx,ny);	
+	canvas.getContext2d().setGlobalAlpha(alpha);
+	canvas.getContext2d().drawImage(canvasImage, 0,0);
+	canvas.getContext2d().restore();
+}
+
 
 /*
  * if you need use ImageElementLoader
@@ -430,10 +466,16 @@ public static void setSize(Canvas canvas, int w, int h) {
 }
 
 /*
- * bugs;remove all style
+ * 
  */
 public static void clearBackgroundImage(Canvas canvas){
-	canvas.getElement().removeAttribute("style");//for remove background-image not so good?
+	//better to keep w & h
+	String w=canvas.getElement().getStyle().getWidth();
+	String h=canvas.getElement().getStyle().getHeight();
+	
+	//canvas.getElement().removeAttribute("style");//for remove background-image not so good?
+
+	canvas.getElement().setAttribute("style", "width:"+w+";height:"+h+";");
 }
 public static void setBackgroundImage(Canvas canvas,String imageUrl){
 	//LogUtils.log(canvas.getElement().getStyle());

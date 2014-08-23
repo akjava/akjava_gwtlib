@@ -23,6 +23,9 @@ public static String toNLineSeparator(String text){
 
 
 public static List<String> splitLinesWithGuava(String text){
+	if(text.isEmpty()){
+		//return Lists.newArrayList();//return empty;
+	}
     text=toNLineSeparator(text);
     return Lists.newArrayList(NLinerSplitter.split(text));
 }

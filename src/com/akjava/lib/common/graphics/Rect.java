@@ -18,6 +18,10 @@ public boolean contains(int px,int py){
 	return px>=x && px<=x+width && py>=y && py<=y+height;
 }
 
+public boolean contains(Rect r){
+	return contains(r.x,r.y) && contains(r.x+r.getWidth(),r.y+r.getHeight());
+}
+
 public Rect(int x, int y, int width, int height) {
 	super();
 	this.x = x;
@@ -34,6 +38,18 @@ public int getRightPos(){
 public int getBottomPos(){
 	return y+height;
 }
+
+public boolean collision(Rect targetRect){
+	if (this.x < targetRect.x + targetRect.width &&
+			this.x + this.width > targetRect.x &&
+			this.y < targetRect.y + targetRect.height &&
+			this.height + this.y > targetRect.y) {
+			    // collision detected!
+		return true;
+			}
+	return false;
+}
+
 public static Rect fromString(String kanmaValues){
 	checkNotNull(kanmaValues);
 	String[] vs=kanmaValues.split(",");

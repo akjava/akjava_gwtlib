@@ -24,6 +24,24 @@ public class RectListEditor extends VerticalPanel implements LeafValueEditor<Lis
 	public HorizontalPanel getOptionButtonContainer() {
 		return optionButtonContainer;
 	}
+	
+	public Canvas getCanvas(){
+		return areaControler.getCanvas();
+	}
+	
+	public void doPlus(){
+		if(!areaControler.getSelectionRect().hasWidthAndHeight()){
+			return;
+		}
+		
+		if(!rectangles.contains(areaControler.getSelectionRect())){
+			rectangles.add(areaControler.getSelectionRect().copy());
+		}
+		areaControler.getSelectionRect().clear();
+		
+		areaControler.updateRect();
+	}
+	
 	public RectListEditor(){
 		HorizontalPanel buttons=new HorizontalPanel();
 		buttons.setSpacing(4);
@@ -31,18 +49,10 @@ public class RectListEditor extends VerticalPanel implements LeafValueEditor<Lis
 		Button plusBt=new Button("+",new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+				doPlus();
 				//bugs it's gone if exist same rect
 				//need size
-				if(!areaControler.getSelectionRect().hasWidthAndHeight()){
-					return;
-				}
 				
-				if(!rectangles.contains(areaControler.getSelectionRect())){
-					rectangles.add(areaControler.getSelectionRect().copy());
-				}
-				areaControler.getSelectionRect().clear();
-				
-				areaControler.updateRect();
 			}
 		});
 		buttons.add(plusBt);
@@ -112,6 +122,10 @@ public class RectListEditor extends VerticalPanel implements LeafValueEditor<Lis
 			CanvasUtils.setBackgroundImage(areaControler.getCanvas(), imageElement.getSrc());
 			areaControler.updateRect();
 		
+	}
+	
+	public void clearBackgroundImage(){
+		CanvasUtils.clearBackgroundImage(areaControler.getCanvas());
 	}
 	
 	@Override
