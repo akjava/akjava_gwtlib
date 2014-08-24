@@ -23,6 +23,7 @@ public abstract class ExecuteButton extends Button{
 			return;
 		}
 		setEnabled(false);
+		beforeExecute();
 		Timer timer=new Timer(){
 			@Override
 			public void run() {
@@ -40,5 +41,6 @@ public abstract class ExecuteButton extends Button{
 		};
 		timer.schedule(20);
 	}
+	public void beforeExecute(){}
 	public abstract void executeOnClick();
 }

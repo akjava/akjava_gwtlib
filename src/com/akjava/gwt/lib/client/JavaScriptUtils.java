@@ -19,4 +19,12 @@ public class JavaScriptUtils {
 	}
 	return list;
 	}
+	
+	public static <T>  List<T> toList(JsArray array){
+	List list=new ArrayList();
+	for(int i=0;i<array.length();i++){
+		list.add(array.get(i));
+	}
+	return list;
+	}
 }
