@@ -79,8 +79,11 @@ public static int toColor(int[] rgb){
 
 public static int toColor(int r,int g,int b){
 	return (r<<16) | (g<<8) | b;
-}	
+}
 
+public static int toGrayscale(int r,int g,int b){
+	return (int) (0.299*r + 0.587*g + 0.114*b);
+}	
 
 public static String toCssColor(int rgb){
 	String ret=Integer.toHexString(rgb);
@@ -88,5 +91,8 @@ public static String toCssColor(int rgb){
 		ret="0"+ret;
 	}
 	return "#"+ret;
+}
+public static String toCssColor(int r,int g,int b,double alpha){
+	return "rgba("+r+","+g+","+b+","+alpha+")";
 }	
 }

@@ -3,10 +3,8 @@ package com.akjava.lib.common.functions;
 import com.akjava.lib.common.graphics.RGBA;
 import com.akjava.lib.common.param.Parameter;
 import com.akjava.lib.common.param.ParameterUtils;
+import com.akjava.lib.common.utils.ValuesUtils;
 import com.google.common.base.Function;
-import com.google.common.base.Objects;
-import com.google.common.primitives.Doubles;
-import com.google.common.primitives.Ints;
 
 public class ColorFunctions {
 private ColorFunctions(){}
@@ -53,18 +51,23 @@ public enum  StringToRGBAFunction implements Function<String,RGBA >{
 			Parameter param=ParameterUtils.parse(value,',');
 			if(param.getName().equals("rgb")){
 				if(param.getAttributes().size()==3){
+					/*sadly GWT not support tryParse
 					return new RGBA(Objects.firstNonNull(Ints.tryParse(param.get(0)),0),
 							Objects.firstNonNull(Ints.tryParse(param.get(1)),0),
 							Objects.firstNonNull(Ints.tryParse(param.get(2)),0)
 							);
+							*/
+					return new RGBA(ValuesUtils.toInt(param.get(0), 0),ValuesUtils.toInt(param.get(1), 0),ValuesUtils.toInt(param.get(2), 0));
 				}
 			}else if(param.getName().equals("rgba")){
 				if(param.getAttributes().size()==4){
+					/*sadly GWT not support tryParse
 					return new RGBA(Objects.firstNonNull(Ints.tryParse(param.get(0)),0),
 							Objects.firstNonNull(Ints.tryParse(param.get(1)),0),
 							Objects.firstNonNull(Ints.tryParse(param.get(2)),0),
 							Objects.firstNonNull(Doubles.tryParse(param.get(3)),1.0)
-							);
+							);*/
+					return new RGBA(ValuesUtils.toInt(param.get(0), 0),ValuesUtils.toInt(param.get(1), 0),ValuesUtils.toInt(param.get(2), 0),ValuesUtils.toDouble(param.get(3), 1.0));
 				}
 			}
 		}

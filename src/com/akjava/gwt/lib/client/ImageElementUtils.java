@@ -54,6 +54,8 @@ public static Canvas copytoCanvas(String dataUrl,Canvas canvas){
 }
 
 
+
+
 public static Canvas copytoCanvas(ImageElement element,Canvas canvas){
 	return copytoCanvas(element, canvas,true);
 }

@@ -5,7 +5,10 @@ import java.util.List;
 import com.akjava.lib.common.graphics.Rect;
 import com.google.common.collect.Lists;
 
-public  class PositiveData{
+/*
+ * for contain OpenCV Positive data,however if rects is empty ,should detect rect is same as image-size
+ */
+public  class CVImageeData{
 	private String fileName;
 	public String getFileName() {
 		return fileName;

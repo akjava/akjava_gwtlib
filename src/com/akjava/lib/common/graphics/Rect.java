@@ -29,6 +29,9 @@ public Rect(int x, int y, int width, int height) {
 	this.width = width;
 	this.height = height;
 }
+public Rect(Rect rect) {
+	this(rect.x,rect.y,rect.width,rect.height);
+}
 public void clear(){
 	set(0,0,0,0);
 }
@@ -70,6 +73,12 @@ public void set(int x,int y,int width,int height){
 	this.height=height;
 }
 
+/**
+ * create expaded rect
+ * @param w
+ * @param h
+ * @return
+ */
 public Rect expand(int w,int h){
 	return new Rect(x-w/2,y-h/2,width+w,height+h);
 }

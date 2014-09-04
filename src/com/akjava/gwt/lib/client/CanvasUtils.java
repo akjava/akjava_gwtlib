@@ -1,8 +1,11 @@
 package com.akjava.gwt.lib.client;
 
+import javax.annotation.Nullable;
+
 import com.akjava.gwt.html5.client.download.HTML5Download;
 import com.akjava.gwt.html5.client.file.Uint8Array;
 import com.akjava.lib.common.graphics.Rect;
+import com.akjava.lib.common.utils.ColorUtils;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.ImageData;
@@ -498,6 +501,50 @@ public static void setBackgroundImage(Canvas canvas,String imageUrl,int iw,int i
 	canvas.getElement().setAttribute("style", "width:"+w+";height:"+h+";background-image:"+"url(\""+imageUrl+"\");background-size:"+iw+"px "+ih+"px;");
 	
 }
+
+public static Canvas convertToGrayScale(Canvas canvas,Canvas target) {
+	ImageData data=canvas.getContext2d().getImageData(0, 0, canvas.getCoordinateSpaceWidth(), canvas.getCoordinateSpaceHeight());
+	for(int y=0;y<data.getHeight();y++){
+		for(int x=0;x<data.getWidth();x++){
+			int value=(int) (0.299*data.getRedAt(x, y) + 0.587*data.getGreenAt(x, y) + 0.114*data.getBlueAt(x, y));
+			data.setRedAt(value, x, y);
+			data.setGreenAt(value, x, y);
+			data.setBlueAt(value, x, y);
+		}
+	}
+	if(target==null){
+		target=Canvas.createIfSupported();
+	}
+	CanvasUtils.copyTo(data, target);
+	return target;
+}
+
+public static Canvas createCanvas(ImageElement element) {
+	return ImageElementUtils.copytoCanvas(element, null);
+}
+
+/*
+public static Canvas toGrayscale(Canvas canvas,@Nullable Canvas graycanvas) {
+	if(graycanvas==null){
+		graycanvas=Canvas.createIfSupported();
+	}
+	//TODO create ImageData Method
+	ImageData data=canvas.getContext2d().getImageData(0, 0, canvas.getCoordinateSpaceWidth(), canvas.getCoordinateSpaceHeight());
+	for(int x=0;x<data.getWidth();x++){
+		for(int y=0;y<data.getHeight();y++){
+			int gray=ColorUtils.toGrayscale(data.getRedAt(x, y), data.getGreenAt(x, y), data.getBlueAt(x, y));
+			data.setRedAt(gray, x, y);
+			data.setGreenAt(gray, x, y);
+			data.setBlueAt(gray, x, y);
+		}
+	}
+	
+	CanvasUtils.createCanvas(graycanvas, canvas.getCoordinateSpaceWidth(), canvas.getCoordinateSpaceHeight());
+	graycanvas.getContext2d().putImageData(data, 0, 0);
+	
+	return graycanvas;
+}
+*/
 
 
 

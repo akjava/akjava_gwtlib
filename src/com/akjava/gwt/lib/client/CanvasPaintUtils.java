@@ -3,6 +3,11 @@ package com.akjava.gwt.lib.client;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 
+/**
+ * @deprecated move to rectcanvas
+ * @author aki
+ *
+ */
 public class CanvasPaintUtils {
 
 	public static void drawCircleInRect(Canvas canvas,int x,int y,int width,int height,boolean inbox,boolean fill){

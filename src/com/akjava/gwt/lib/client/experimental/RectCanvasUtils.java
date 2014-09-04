@@ -8,6 +8,7 @@ import com.akjava.gwt.lib.client.CanvasUtils;
 import com.akjava.gwt.lib.client.ImageElementUtils;
 import com.akjava.lib.common.graphics.Rect;
 import com.google.gwt.canvas.client.Canvas;
+import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.dom.client.ImageElement;
 
 public class RectCanvasUtils {
@@ -23,6 +24,20 @@ private static Canvas sharedCanvas=Canvas.createIfSupported();//TODO delay
 		retCanvas.getContext2d().drawImage(imageCanvas.getCanvasElement(), -rect.getX(), -rect.getY());
 		return retCanvas;
 	}
+	
+	public static Canvas crop(Canvas canvas,Rect rect,@Nullable Canvas retCanvas){
+		checkNotNull(canvas);
+		checkNotNull(rect);
+		
+		if(retCanvas==null){
+			retCanvas=Canvas.createIfSupported();
+		}
+		//use imagedata style can't crop over pos
+		CanvasUtils.createCanvas(retCanvas, rect.getWidth(),rect.getHeight());
+		retCanvas.getContext2d().drawImage(canvas.getCanvasElement(), -rect.getX(), -rect.getY());
+		return retCanvas;
+	}
+	
 	
 	public static Canvas crop(ImageElement image,Rect rect,@Nullable Canvas retCanvas){
 		checkNotNull(image);
@@ -46,5 +61,33 @@ private static Canvas sharedCanvas=Canvas.createIfSupported();//TODO delay
 			canvas.getContext2d().setStrokeStyle(style);
 		}
 		canvas.getContext2d().strokeRect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+	}
+
+	public static void strokeCircle(Rect rect,Canvas canvas,boolean inbox){
+		strokeCircle(canvas,rect.getX(),rect.getY(),rect.getWidth(),rect.getHeight(),inbox);
+	}
+	
+	public static void strokeCircle(Canvas canvas,int x,int y,int width,int height,boolean inbox){
+		int cx=x+width/2;
+		int cy=y+height/2;
+		
+		
+		double rad;
+		
+		if(inbox){
+			rad=width>height?height/2:width/2;
+		}else{
+			double longer=width>height?width/2:height/2;
+			rad=Math.sqrt(Math.pow(longer, 2)*2);
+		}
+		
+		Context2d context=canvas.getContext2d();
+		context.beginPath();
+		
+		canvas.getContext2d().arc(cx, cy, rad, 0, Math.PI*2);
+		
+		context.closePath();
+		
+		context.stroke();
 	}
 }

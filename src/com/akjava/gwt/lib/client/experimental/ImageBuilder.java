@@ -152,6 +152,10 @@ protected FileType fileType=FileType.PNG;
 		this.fileType=FileType.JPEG;
 		return this;
 	}
+	public ImageBuilder on(FileType fileType){
+		this.fileType=fileType;
+		return this;
+	}
 	
 	//for write FileSystem API
 	public Blob toBlob(){

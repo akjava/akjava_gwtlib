@@ -48,9 +48,10 @@ public class ListUtils {
 				}
 			}
 	}
+	//TODO find way to uncheck
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static void shuffle(List list){
-		new ArrayTool().shuffle(list);
+	public static List shuffle(List list){
+		return new ArrayTool().shuffle(list);
 	}
 	
 }

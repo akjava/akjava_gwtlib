@@ -40,6 +40,7 @@ public class RectListEditor extends VerticalPanel implements LeafValueEditor<Lis
 		areaControler.getSelectionRect().clear();
 		
 		areaControler.updateRect();
+		getCanvas().setFocus(true);
 	}
 	
 	public RectListEditor(){
@@ -69,6 +70,7 @@ public class RectListEditor extends VerticalPanel implements LeafValueEditor<Lis
 					areaControler.getSelectionRect().clear();
 				}
 				areaControler.updateRect();
+				getCanvas().setFocus(true);
 			}
 		});
 		buttons.add(minusBt);
