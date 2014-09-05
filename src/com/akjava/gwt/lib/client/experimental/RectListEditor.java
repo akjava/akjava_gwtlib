@@ -29,6 +29,19 @@ public class RectListEditor extends VerticalPanel implements LeafValueEditor<Lis
 		return areaControler.getCanvas();
 	}
 	
+	private boolean readOnly;
+
+	private HorizontalPanel plusMinusButtons;
+	
+	public boolean isReadOnly() {
+		return readOnly;
+	}
+
+	public void setReadOnly(boolean readOnly) {
+		this.readOnly = readOnly;
+		plusMinusButtons.setVisible(!readOnly);
+	}
+
 	public void doPlus(){
 		if(!areaControler.getSelectionRect().hasWidthAndHeight()){
 			return;
@@ -44,9 +57,9 @@ public class RectListEditor extends VerticalPanel implements LeafValueEditor<Lis
 	}
 	
 	public RectListEditor(){
-		HorizontalPanel buttons=new HorizontalPanel();
-		buttons.setSpacing(4);
-		add(buttons);
+		plusMinusButtons = new HorizontalPanel();
+		plusMinusButtons.setSpacing(4);
+		add(plusMinusButtons);
 		Button plusBt=new Button("+",new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -56,7 +69,7 @@ public class RectListEditor extends VerticalPanel implements LeafValueEditor<Lis
 				
 			}
 		});
-		buttons.add(plusBt);
+		plusMinusButtons.add(plusBt);
 		plusBt.setWidth("80px");
 		Button minusBt=new Button("-",new ClickHandler() {
 			@Override
@@ -73,10 +86,10 @@ public class RectListEditor extends VerticalPanel implements LeafValueEditor<Lis
 				getCanvas().setFocus(true);
 			}
 		});
-		buttons.add(minusBt);
+		plusMinusButtons.add(minusBt);
 		minusBt.setWidth("80px");
 		optionButtonContainer=new HorizontalPanel();
-		buttons.add(optionButtonContainer);
+		plusMinusButtons.add(optionButtonContainer);
 		areaControler = new AreaSelectionControler(){
 			@Override
 			public void drawExtra(Canvas canvas){
@@ -105,6 +118,10 @@ public class RectListEditor extends VerticalPanel implements LeafValueEditor<Lis
 						updateRect();
 						return false;
 					}
+				}
+				
+				if(readOnly){//can't edit
+					return false;
 				}
 				
 				return true;
