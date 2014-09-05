@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="lib/guava-16.0.1.jar" sourcepath="C:/java/lib/guava-16.0.1-sources.jar"/>
 	<classpathentry kind="lib" path="lib/guava-gwt-16.0.1.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/html5gwt"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GWTJSZip"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

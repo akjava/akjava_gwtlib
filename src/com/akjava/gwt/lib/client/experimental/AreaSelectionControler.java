@@ -169,6 +169,10 @@ canvasControler = new CanvasDragMoveControler(canvas,new CanvasMoveListener() {
 			
 			@Override
 			public void dragged(int startX, int startY, int endX, int endY, int vectorX, int vectorY) {
+				if(ignoredOnStart){
+					return;
+				}
+				
 				if(mode==MOVE){
 					selectionRect.setX(selectionRect.getX()+vectorX);
 					selectionRect.setY(selectionRect.getY()+vectorY);

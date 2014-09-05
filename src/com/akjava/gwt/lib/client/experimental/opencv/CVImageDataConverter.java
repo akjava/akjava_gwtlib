@@ -10,19 +10,19 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 
-public  class CVImageDataConverter extends Converter<String, CVImageeData>{
+public  class CVImageDataConverter extends Converter<String, CVImageData>{
 		private static Splitter splitter=Splitter.on(CharMatcher.WHITESPACE);
 		private static Joiner joiner=Joiner.on(" ");
 		@Override
-		protected CVImageeData doForward(String a) {
+		protected CVImageData doForward(String a) {
 			if(a.isEmpty()){
-				CVImageeData data=new CVImageeData();
+				CVImageData data=new CVImageData();
 				data.setFileName("");
 				return data;
 			}
 			List<String> values=splitter.omitEmptyStrings().splitToList(a);
 			
-			CVImageeData data=new CVImageeData();
+			CVImageData data=new CVImageData();
 			data.setFileName(values.get(0));
 			if(values.size()>1){
 			//int rectNumber=Objects.firstNonNull(Ints.tryParse(values.get(1)), 0);
@@ -52,7 +52,7 @@ public  class CVImageDataConverter extends Converter<String, CVImageeData>{
 		}
 
 		@Override
-		protected String doBackward(CVImageeData data) {
+		protected String doBackward(CVImageData data) {
 			List<String> vs=Lists.newArrayList();
 			vs.add(data.getFileName());
 			
