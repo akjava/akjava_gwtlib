@@ -416,6 +416,32 @@ public static Canvas copyTo(ImageData imageData,Canvas canvas) {
 	return canvas;
 }
 
+public static Canvas copyTo(Canvas imageCanvas,Canvas canvas){
+	return copyTo(imageCanvas,canvas,true);
+}
+
+
+public static Canvas copyToSizeOnly(Canvas imageCanvas,Canvas canvas){
+	return copyTo(imageCanvas,canvas,false);
+}
+
+public static Canvas copyToFlipHorizontal(Canvas imageCanvas,Canvas canvas){
+	if(canvas==null){
+		canvas=Canvas.createIfSupported();
+	}
+	canvas.setWidth(imageCanvas.getCoordinateSpaceWidth()+"px");
+	canvas.setHeight(imageCanvas.getCoordinateSpaceHeight()+"px");
+	canvas.setCoordinateSpaceWidth(imageCanvas.getCoordinateSpaceWidth());
+	canvas.setCoordinateSpaceHeight(imageCanvas.getCoordinateSpaceHeight());
+	
+	canvas.getContext2d().save();
+	canvas.getContext2d().translate(imageCanvas.getCoordinateSpaceWidth(), 0);
+	canvas.getContext2d().scale(-1, 1);
+	canvas.getContext2d().drawImage(imageCanvas.getCanvasElement(), 0, 0);
+	canvas.getContext2d().restore();
+	return canvas;
+}
+
 public static Canvas copyTo(Canvas imageCanvas,Canvas canvas,boolean drawImage){
 	if(canvas==null){
 		canvas=Canvas.createIfSupported();

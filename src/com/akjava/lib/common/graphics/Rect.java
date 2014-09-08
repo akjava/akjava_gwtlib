@@ -159,6 +159,8 @@ public void setHeight(int height) {
 	this.height = height;
 }
 private int height;
+
+/* stop ,maybe some problem would happen
 @Override
 public int hashCode() {
 	final int prime = 31;
@@ -188,6 +190,7 @@ public boolean equals(Object obj) {
 		return false;
 	return true;
 }
+*/
 public Rect copy(){
 	return new Rect(x,y,width,height);
 }

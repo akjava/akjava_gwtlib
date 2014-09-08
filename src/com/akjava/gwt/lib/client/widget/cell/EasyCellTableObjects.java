@@ -3,6 +3,7 @@ package com.akjava.gwt.lib.client.widget.cell;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.base.Optional;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
@@ -113,6 +114,64 @@ public abstract class EasyCellTableObjects<T> {
 		update(true);
 		}
 	}
+	
+	
+	
+	
+	
+	public Optional<T> getNext(T data) {
+		if(data==null){
+			return Optional.absent();
+		}
+		int index=datas.indexOf(data);
+		if(index==-1){
+			return Optional.absent();
+		}
+		
+		if(index<datas.size()-1){
+			return Optional.of(datas.get(index+1));
+		}else{
+			return Optional.absent();
+		}
+	}
+
+	
+	public Optional<T> getPrev(T data) {
+		if(data==null){
+			return Optional.absent();
+		}
+		int index=datas.indexOf(data);
+		if(index==-1){
+			return Optional.absent();
+		}
+		if(index>0){
+			return Optional.of(datas.get(index-1));
+		}else{
+			return Optional.absent();
+		}
+	}
+
+	
+	public Optional<T> getFirst() {
+		if(datas.size()>0){
+			return Optional.of(datas.get(0));
+		}else{
+			return Optional.absent();
+		}
+	}
+
+	
+	public Optional<T> getLast() {
+		if(datas.size()>0){
+			return Optional.of(datas.get(datas.size()-1));
+		}else{
+			return Optional.absent();
+		}
+	}
+	
+	
+	
+	
 
 	public void unselect() {
 		T selection=getSelection();

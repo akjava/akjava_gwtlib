@@ -131,7 +131,7 @@ canvasControler = new CanvasDragMoveControler(canvas,new CanvasMoveListener() {
 							mode=RESIZE_BOTTOM;
 							initialStartY=sy-selectionRect.getHeight();
 						}else{
-							CursorUtils.setCursor(AreaSelectionControler.this.canvas, "pointer");
+							setCursor("pointer");
 						}
 						
 						
@@ -344,31 +344,47 @@ canvasControler = new CanvasDragMoveControler(canvas,new CanvasMoveListener() {
 		
 		if(selectionRect.contains(x, y)){
 			if(selectionRect.rightTop(boxSize).contains(x, y)){
-				CursorUtils.setCursor(AreaSelectionControler.this.canvas, "ne-resize");
+				setCursor("ne-resize");
 				//LogUtils.log("ne-resize");
 			}else if(selectionRect.rightBottom(boxSize).contains(x, y)){
-				CursorUtils.setCursor(AreaSelectionControler.this.canvas, "se-resize");
+				setCursor("se-resize");
 			}else if(selectionRect.leftTop(boxSize).contains(x, y)){
-				CursorUtils.setCursor(AreaSelectionControler.this.canvas, "nw-resize");
+				setCursor("nw-resize");
 			}else if(selectionRect.leftBottom(boxSize).contains(x, y)){
-				CursorUtils.setCursor(AreaSelectionControler.this.canvas, "sw-resize");
+				setCursor("sw-resize");
 			}else if(selectionRect.right(boxSize).contains(x, y)){
-				CursorUtils.setCursor(AreaSelectionControler.this.canvas, "e-resize");
+				setCursor("e-resize");
 			}else if(selectionRect.left(boxSize).contains(x, y)){
-				CursorUtils.setCursor(AreaSelectionControler.this.canvas, "w-resize");
+				setCursor("w-resize");
 			}else if(selectionRect.top(boxSize).contains(x, y)){
-				CursorUtils.setCursor(AreaSelectionControler.this.canvas, "n-resize");
+				setCursor("n-resize");
 			}else if(selectionRect.bottom(boxSize).contains(x, y)){
-				CursorUtils.setCursor(AreaSelectionControler.this.canvas, "s-resize");
+				setCursor("s-resize");
 			}else{
-				CursorUtils.setCursor(AreaSelectionControler.this.canvas, "pointer");
+				setCursor("pointer");
 			}
 		}else{
-				CursorUtils.setCursor(AreaSelectionControler.this.canvas, "default");	
+			setCursor("default");	
 		}
 		
 	}
 });
+	}
+	
+	private boolean noNeedChangeCursor;
+	public boolean isNoNeedChangeCursor() {
+		return noNeedChangeCursor;
+	}
+
+	public void setNoNeedChangeCursor(boolean noNeedChangeCursor) {
+		this.noNeedChangeCursor = noNeedChangeCursor;
+	}
+
+	private void setCursor(String cursor){
+		if(noNeedChangeCursor){
+			return;
+		}
+		CursorUtils.setCursor(AreaSelectionControler.this.canvas, cursor);	
 	}
 	
 	public void updateRect() {
