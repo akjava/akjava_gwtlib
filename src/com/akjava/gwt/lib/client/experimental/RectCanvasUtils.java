@@ -67,6 +67,9 @@ private static Canvas sharedCanvas=Canvas.createIfSupported();//TODO delay
 		strokeCircle(canvas,rect.getX(),rect.getY(),rect.getWidth(),rect.getHeight(),inbox);
 	}
 	
+	/*
+	 * this draw circle not oval
+	 */
 	public static void strokeCircle(Canvas canvas,int x,int y,int width,int height,boolean inbox){
 		int cx=x+width/2;
 		int cy=y+height/2;
@@ -88,6 +91,53 @@ private static Canvas sharedCanvas=Canvas.createIfSupported();//TODO delay
 		
 		context.closePath();
 		
+		context.stroke();
+	}
+	
+	
+	public static void strokeOval(Rect rect,Canvas canvas,boolean inbox){
+		strokeOval(canvas,rect.getX(),rect.getY(),rect.getWidth(),rect.getHeight(),inbox);
+	}
+	public static void strokeOval(Canvas canvas,int x,int y,int width,int height,boolean inbox){
+		int cx=x+width/2;
+		int cy=y+height/2;
+		
+		
+		double rad;
+		double wscale=1;
+		double hscale=1;
+		if(inbox){
+			if(width>height){
+				rad=height/2;
+				wscale=(double)width/height;
+			}else{
+				rad=width/2;;
+				hscale=(double)height/width;
+			}
+		}else{
+			double longer;
+			if(width>height){
+				longer=height/2;
+				wscale=(double)width/height;
+			}else{
+				longer=width/2;;
+				hscale=(double)height/width;
+			}
+			
+			rad=Math.sqrt(Math.pow(longer, 2)*2);
+		}
+		
+		
+		Context2d context=canvas.getContext2d();
+		context.save();
+		context.translate(cx, cy);
+		context.scale(wscale, hscale);
+		context.beginPath();
+		
+		canvas.getContext2d().arc(0, 0, rad, 0, Math.PI*2);
+		
+		context.closePath();
+		context.restore();
 		context.stroke();
 	}
 }
