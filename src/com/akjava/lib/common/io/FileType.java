@@ -2,8 +2,9 @@ package com.akjava.lib.common.io;
 
 import java.util.List;
 
+import com.akjava.lib.common.utils.FileNames;
+import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
-import com.google.gwt.logging.client.DefaultLevel.Warning;
 
 /**
  * has extension
@@ -53,6 +54,17 @@ public class FileType {
 	
 	public static final List<FileType> fileTypes=Lists.newArrayList(WEBP,PNG,JPEG,GIF,BMP);
 	
+	/**
+	 * 
+	 * @param extension
+	 * @return Warning possible null if not exist ,right now only some image file type supported
+	 */
+	
+	public static Optional<FileType> getFileTypeFromFileName(String fileName){
+		String extension=FileNames.getExtension(fileName);
+		FileType type=FileType.getFileTypeByExtension(extension);
+		return Optional.of(type);
+	}
 	/**
 	 * 
 	 * @param extension

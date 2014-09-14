@@ -1,5 +1,7 @@
 package com.akjava.gwt.lib.client;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import javax.annotation.Nullable;
 
 import com.akjava.gwt.html5.client.download.HTML5Download;
@@ -416,6 +418,36 @@ public static Canvas copyTo(ImageData imageData,Canvas canvas) {
 	return canvas;
 }
 
+/**
+ * draw to not change dest canvas size,but need dest-canvas exist
+ * @param imageCanvas
+ * @param canvas
+ * @return
+ */
+public static Canvas drawTo(Canvas imageCanvas,Canvas canvas){
+	checkNotNull(canvas,"drawTo need canvas exist");
+	canvas.getContext2d().drawImage(imageCanvas.getCanvasElement(), 0, 0,imageCanvas.getCoordinateSpaceWidth(),imageCanvas.getCoordinateSpaceHeight(),
+			0,0,canvas.getCoordinateSpaceWidth(),canvas.getCoordinateSpaceHeight());
+	return canvas;
+}
+
+public static Canvas drawToFlipHorizontal(Canvas imageCanvas,Canvas canvas){
+	checkNotNull(canvas,"drawTo need canvas exist");
+	canvas.getContext2d().save();
+	canvas.getContext2d().translate(canvas.getCoordinateSpaceWidth(), 0);
+	canvas.getContext2d().scale(-1, 1);
+	canvas.getContext2d().drawImage(imageCanvas.getCanvasElement(), 0, 0,imageCanvas.getCoordinateSpaceWidth(),imageCanvas.getCoordinateSpaceHeight(),
+			0,0,canvas.getCoordinateSpaceWidth(),canvas.getCoordinateSpaceHeight());
+	canvas.getContext2d().restore();
+	return canvas;
+}
+
+/**
+ * copy to force change dest canvas size,but no need to canvas exist
+ * @param imageCanvas
+ * @param canvas
+ * @return
+ */
 public static Canvas copyTo(Canvas imageCanvas,Canvas canvas){
 	return copyTo(imageCanvas,canvas,true);
 }

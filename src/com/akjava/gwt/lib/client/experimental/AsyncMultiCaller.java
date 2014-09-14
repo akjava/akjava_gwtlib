@@ -36,7 +36,7 @@ public  abstract class AsyncMultiCaller<T>{
 			executing=false;
 		}
 		public void startCall(){
-			startCall(100);
+			startCall(50);//so so slow
 		}
 		public void startCall(int wait){
 			onStart();

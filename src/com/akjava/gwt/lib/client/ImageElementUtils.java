@@ -27,6 +27,11 @@ public static ImageElement create(String url){
 	element.setSrc(url);
 	return element;
 }
+public static ImageElementLoader createWithLoader(String url,ImageElementListener listener){
+	ImageElementLoader loader=new ImageElementLoader();
+	loader.load(url, listener);
+	return loader;
+}
 
 
 

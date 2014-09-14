@@ -26,15 +26,18 @@ private static Canvas sharedCanvas=Canvas.createIfSupported();//TODO delay
 	}
 	
 	public static Canvas crop(Canvas canvas,Rect rect,@Nullable Canvas retCanvas){
-		checkNotNull(canvas);
 		checkNotNull(rect);
+		return crop(canvas,rect.getX(),rect.getY(),rect.getWidth(),rect.getHeight(),retCanvas);
+	}
+	public static Canvas crop(Canvas canvas,int x,int y,int w,int h,@Nullable Canvas retCanvas){
+		checkNotNull(canvas);
 		
 		if(retCanvas==null){
 			retCanvas=Canvas.createIfSupported();
 		}
 		//use imagedata style can't crop over pos
-		CanvasUtils.createCanvas(retCanvas, rect.getWidth(),rect.getHeight());
-		retCanvas.getContext2d().drawImage(canvas.getCanvasElement(), -rect.getX(), -rect.getY());
+		CanvasUtils.createCanvas(retCanvas, w,h);
+		retCanvas.getContext2d().drawImage(canvas.getCanvasElement(), -x, -y);
 		return retCanvas;
 	}
 	
