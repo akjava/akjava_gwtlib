@@ -2,6 +2,7 @@ package com.akjava.gwt.lib.client.experimental.lbp;
 
 import com.akjava.lib.common.utils.ColorUtils;
 import com.google.common.base.Converter;
+import com.google.common.base.Function;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.ImageData;
 
@@ -66,4 +67,36 @@ public class ByteImageDataIntConverter extends Converter<ImageData,int[][]>{
 		return data;
 	}
 	
+	public static class ImageDataToByteFunction implements Function<ImageData,int[][]>{
+		private boolean color;
+		
+		public ImageDataToByteFunction(boolean color) {
+			super();
+			this.color = color;
+		}
+
+		@Override
+		public int[][] apply(ImageData data) {
+			int[][] bytes=new int[data.getWidth()][data.getHeight()];
+			
+			for(int x=0;x<data.getWidth();x++){
+				for(int y=0;y<data.getHeight();y++){
+					int value=0;
+					if(color){
+						//value=(int) (0.299*data.getRedAt(x, y) + 0.587*data.getGreenAt(x, y) + 0.114*data.getBlueAt(x, y));
+						value=ColorUtils.toColor(data.getRedAt(x, y), data.getGreenAt(x, y), data.getBlueAt(x, y));
+					}else{
+						//throw new RuntimeException("not support yet");
+						value=data.getRedAt(x, y);//from grayscale imagedata
+					}
+					bytes[x][y]=value;
+					
+					
+						
+				}
+			}
+			return bytes;
+		}
+		
+	}
 }

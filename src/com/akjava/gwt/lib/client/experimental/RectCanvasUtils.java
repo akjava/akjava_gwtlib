@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 
 import com.akjava.gwt.lib.client.CanvasUtils;
 import com.akjava.gwt.lib.client.ImageElementUtils;
+import com.akjava.gwt.lib.client.LogUtils;
 import com.akjava.lib.common.graphics.Rect;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
@@ -37,7 +38,8 @@ private static Canvas sharedCanvas=Canvas.createIfSupported();//TODO delay
 		}
 		//use imagedata style can't crop over pos
 		CanvasUtils.createCanvas(retCanvas, w,h);
-		retCanvas.getContext2d().drawImage(canvas.getCanvasElement(), -x, -y);
+		//retCanvas.getContext2d().drawImage(canvas.getCanvasElement(), -x, -y);
+		retCanvas.getContext2d().drawImage(canvas.getCanvasElement(), x,y,w,h,0,0,w,h);
 		return retCanvas;
 	}
 	
