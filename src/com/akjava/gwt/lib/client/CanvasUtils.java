@@ -424,7 +424,7 @@ public static Canvas copyTo(ImageData imageData,Canvas canvas) {
  * @param canvas
  * @return
  */
-public static Canvas drawTo(Canvas imageCanvas,Canvas canvas){
+public static Canvas drawToWithDestSameSize(Canvas imageCanvas,Canvas canvas){
 	checkNotNull(canvas,"drawTo need canvas exist");
 	canvas.getContext2d().drawImage(imageCanvas.getCanvasElement(), 0, 0,imageCanvas.getCoordinateSpaceWidth(),imageCanvas.getCoordinateSpaceHeight(),
 			0,0,canvas.getCoordinateSpaceWidth(),canvas.getCoordinateSpaceHeight());

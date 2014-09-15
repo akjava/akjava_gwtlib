@@ -16,11 +16,30 @@ private static Canvas getSharedCanvas(){
 	}
 	return sharedCanvas;
 }
-public static ImageData create(int w,int h){
-	return create(null,w,h);
+
+public static ImageData convertToGrayScale(ImageData data,boolean firstChannelOnly) {
+	for(int y=0;y<data.getHeight();y++){
+		for(int x=0;x<data.getWidth();x++){
+			int value=(int) (0.299*data.getRedAt(x, y) + 0.587*data.getGreenAt(x, y) + 0.114*data.getBlueAt(x, y));
+			data.setRedAt(value, x, y);
+			if(firstChannelOnly){
+			data.setGreenAt(value, x, y);
+			data.setBlueAt(value, x, y);
+			}
+		}
+	}
+	return data;
+}
+
+public static ImageData createWithSharedCanvas(int w,int h){
+	return createNoCopyWith(null,w,h);
 	}
 
-	public static ImageData create(Canvas canvas,int w,int h){
+public static ImageData copyFrom(Canvas canvas){
+	return canvas.getContext2d().getImageData(0, 0, canvas.getCoordinateSpaceWidth(), canvas.getCoordinateSpaceHeight());
+	}
+
+	public static ImageData createNoCopyWith(Canvas canvas,int w,int h){
 		if(canvas==null){
 			canvas=getSharedCanvas();
 		}
@@ -65,9 +84,15 @@ public static ImageData setGrayscale(ImageData imageData,Uint8ArrayNative native
 		int x=i%w;
 		int y=i/w;
 		imageData.setRedAt(nativeArray.get(i), x, y);
+		if(setRGBA){
+			imageData.setGreenAt(nativeArray.get(i), x, y);
+			imageData.setBlueAt(nativeArray.get(i), x, y);
+			imageData.setAlphaAt(255, x, y);
+		}
 	}
 	return imageData;
 	}
+
 
 /**
  *  var dst = ctx.createImageData(src.width, src.height);
