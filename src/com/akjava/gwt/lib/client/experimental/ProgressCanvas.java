@@ -41,9 +41,10 @@ public  class ProgressCanvas{
 		}
 		
 		public void show(){
+			popup.center();
 			popup.show();
 			
-			popup.center();
+			
 		}
 		public void hide(){
 			popup.hide();

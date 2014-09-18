@@ -5,11 +5,12 @@ import java.util.List;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
+import com.google.gwt.core.client.JsArrayNumber;
 import com.google.gwt.core.client.JsArrayString;
 
 public class JavaScriptUtils {
 	//much compatible
-	public static native final JsArray createJSArray()/*-{
+	public static native final JsArray<JavaScriptObject> createJSArray()/*-{
 	return $wnd.eval("new Array()");
 	}-*/;
 	
@@ -21,8 +22,8 @@ public class JavaScriptUtils {
 	return list;
 	}
 	
-	public static <T>  List<T> toList(JsArray array){
-	List list=new ArrayList();
+	public static <T extends JavaScriptObject>  List<T> toList(JsArray<T> array){
+	List<T> list=new ArrayList<T>();
 	for(int i=0;i<array.length();i++){
 		list.add(array.get(i));
 	}
@@ -33,6 +34,14 @@ public class JavaScriptUtils {
 		JsArray<E> array=JsArray.createArray().cast();
 		for(E data:list){
 			array.push(data);
+		}
+		return array;
+		}
+	
+	public static  JsArrayNumber toArray(int[] ints){
+		JsArrayNumber array=JsArrayNumber.createArray().cast();
+		for(int i=0;i<ints.length;i++){
+			array.push(ints[i]);
 		}
 		return array;
 		}

@@ -48,7 +48,7 @@ public class SimpleLBP {
 	public int[][] convert(int[][] arrays){
 		int result[][]=new int[arrays.length][arrays[0].length];
 		for(int x=0;x<arrays.length;x++){
-			for(int y=0;y<arrays.length;y++){
+			for(int y=0;y<arrays[0].length;y++){
 				String value="";
 				int number=0;
 				int[][] centers=getAroundValues(x,y,arrays);
@@ -79,6 +79,65 @@ public class SimpleLBP {
 			}
 		}
 		return result;
+	}
+	
+	//split is fixed;
+	public  int[] dataToBinaryPattern(int[][] arrays,int edgeX,int edgeY){
+
+		int split=2;
+		
+		int resultW=(arrays.length-edgeX)/split;
+		int resultH=(arrays[0].length-edgeY)/split;
+		
+		int[] retInt=new int[8*split*split];
+		
+		
+		
+		int halfEdgeX=edgeX/2;
+		int helfEdgeY=edgeY/2;
+		
+		int w=arrays.length;
+		int h=arrays[0].length;
+		//ignore edge
+		for(int x=halfEdgeX;x<w-halfEdgeX;x++){
+			for(int y=helfEdgeY;y<h-helfEdgeY;y++){
+				
+				int[][] centers=getAroundValues(x,y,arrays);
+				int center=getCenterValue(centers);
+				int retX=(x-halfEdgeX)/resultW;
+				int retY=(y-helfEdgeY)/resultH;
+				
+				int retIndexOffset=8*(retY*2+retX);
+				
+				//System.out.println("x="+x+",y="+y+",retX="+retX+",retY="+retY);
+				
+				//check
+				for(int i=0;i<atx.length;i++){
+					int offx=1+atx[i];
+					int offy=1+aty[i];
+					int otherValue=0;
+					if(neighbor==1){
+						otherValue=centers[offx][offy];
+					}else{
+						otherValue=getOtherValue(arrays, x+atx[i]*neighbor,y+ aty[i]*neighbor);
+					}
+					
+					
+					
+					
+					
+					if(otherValue>center){
+						int v=7-i;//need swap
+						retInt[v+retIndexOffset]++;
+					}
+					
+					
+				}
+				
+			}
+		}
+		
+		return retInt;
 	}
 	
 	private int getOtherValue(int[][] arrays, int offx, int offy) {

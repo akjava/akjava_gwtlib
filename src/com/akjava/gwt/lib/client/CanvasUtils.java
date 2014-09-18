@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 
 import com.akjava.gwt.html5.client.download.HTML5Download;
 import com.akjava.gwt.html5.client.file.Uint8Array;
+import com.akjava.gwt.lib.client.experimental.ImageDataUtils;
 import com.akjava.lib.common.graphics.Rect;
 import com.akjava.lib.common.utils.ColorUtils;
 import com.google.gwt.canvas.client.Canvas;
@@ -408,7 +409,7 @@ public static ImageData getImageData(Canvas canvas,boolean copy) {
 	}
 }
 
-public static Canvas copyTo(ImageData imageData,Canvas canvas) {
+public static Canvas copyTo(ImageData imageData,@Nullable Canvas canvas) {
 	if(canvas==null){
 		canvas=Canvas.createIfSupported();
 	}
@@ -572,6 +573,7 @@ public static Canvas convertToGrayScale(Canvas canvas,Canvas target) {
 	}
 	if(target==null){
 		target=Canvas.createIfSupported();
+		ImageDataUtils.setAlphaAll(data, 255);//set alpha
 	}
 	CanvasUtils.copyTo(data, target);
 	return target;

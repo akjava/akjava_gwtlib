@@ -32,7 +32,7 @@ public class BinaryPattern {
 					
 					String binary=Integer.toBinaryString(data[x+offx][y+offy]);
 					int length=binary.length()-1;
-					System.out.println((x+offx)+","+(y+offy)+"="+binary);
+					//System.out.println((x+offx)+","+(y+offy)+"="+binary);
 					for(int j=0;j<8;j++){
 						int at=length-j;
 						if(at>=0){

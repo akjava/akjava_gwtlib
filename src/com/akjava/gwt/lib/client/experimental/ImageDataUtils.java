@@ -2,6 +2,7 @@ package com.akjava.gwt.lib.client.experimental;
 
 import com.akjava.gwt.lib.client.CanvasUtils;
 import com.akjava.gwt.lib.client.ImageElementUtils;
+import com.akjava.gwt.lib.client.LogUtils;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.ImageData;
@@ -46,6 +47,11 @@ public static ImageData copyFrom(Canvas canvas){
 		return canvas.getContext2d().createImageData(w, h);
 		}
 	
+	public static ImageData copySizeOnly(Canvas canvas){
+		
+		return canvas.getContext2d().createImageData(canvas.getCoordinateSpaceWidth(), canvas.getCoordinateSpaceHeight());
+		}
+	
 
 public static ImageData create(Canvas canvas,ImageElement element){
 	if(canvas==null){
@@ -55,6 +61,120 @@ public static ImageData create(Canvas canvas,ImageElement element){
 	return CanvasUtils.getImageData(canvas, true);
 	}
 
+public static void setAlphaAll(ImageData imageData,int alpha){
+	for(int x=0;x<imageData.getWidth();x++){
+		for(int y=0;y<imageData.getHeight();y++){
+			imageData.setAlphaAt(alpha, x, y);
+		}
+	}
+}
+
+	public static Uint8ArrayNative crop(ImageData data,int x,int y,int width,int height){
+		// array=Uint8ArrayNative.create(width*height*4);
+		int values[]=new int[width*height*4];
+		//LogUtils.log(values.length);
+		for(int i=x;i<x+width;i++){
+			for(int j=y;j<y+height;j++){
+				
+				
+				
+				int red=data.getRedAt(i, j);
+				int green=data.getGreenAt(i, j);
+				int blue=data.getBlueAt(i, j);
+				int alpha=data.getAlphaAt(i, j);
+				
+				int offset=((j-y)*width+(i-x))*4;
+				
+				values[offset]=red;
+				values[offset+1]=green;
+				values[offset+2]=blue;
+				values[offset+3]=alpha;
+				
+				/*
+				LogUtils.log(i+"x"+j+"="+red+","+green+","+blue+","+alpha);
+				array.set(offset,red);
+				array.set(offset+1,green);
+				array.set(offset+2,blue);
+				array.set(offset+3,alpha);
+				*/
+			}
+		}
+		
+		return Uint8ArrayNative.create(values);
+		//return values;
+	}
+	
+	public static Uint8ArrayNative cropRedOnly(ImageData data,int x,int y,int width,int height){
+		// array=Uint8ArrayNative.create(width*height*4);
+		int values[]=new int[width*height*4];
+		//LogUtils.log(values.length);
+		for(int i=x;i<x+width;i++){
+			for(int j=y;j<y+height;j++){
+				
+				
+				
+				int red=data.getRedAt(i, j);
+				//int green=data.getGreenAt(i, j);
+				//int blue=data.getBlueAt(i, j);
+				//int alpha=data.getAlphaAt(i, j);
+				
+				int offset=((j-y)*width+(i-x))*4;
+				
+				values[offset]=red;
+				//values[offset+1]=green;
+				//values[offset+2]=blue;
+				//values[offset+3]=alpha;
+				
+				/*
+				LogUtils.log(i+"x"+j+"="+red+","+green+","+blue+","+alpha);
+				array.set(offset,red);
+				array.set(offset+1,green);
+				array.set(offset+2,blue);
+				array.set(offset+3,alpha);
+				*/
+			}
+		}
+		
+		return Uint8ArrayNative.create(values);
+		//return values;
+	}
+	
+	public static Uint8ArrayNative cropRedOnlyPacked(ImageData data,int x,int y,int width,int height){
+		// array=Uint8ArrayNative.create(width*height*4);
+		int values[]=new int[width*height];
+		//LogUtils.log(values.length);
+		for(int i=x;i<x+width;i++){
+			for(int j=y;j<y+height;j++){
+				
+				
+				
+				int red=data.getRedAt(i, j);
+				//int green=data.getGreenAt(i, j);
+				//int blue=data.getBlueAt(i, j);
+				//int alpha=data.getAlphaAt(i, j);
+				
+				int offset=((j-y)*width+(i-x));
+				
+				values[offset]=red;
+				//values[offset+1]=green;
+				//values[offset+2]=blue;
+				//values[offset+3]=alpha;
+				
+				/*
+				LogUtils.log(i+"x"+j+"="+red+","+green+","+blue+","+alpha);
+				array.set(offset,red);
+				array.set(offset+1,green);
+				array.set(offset+2,blue);
+				array.set(offset+3,alpha);
+				*/
+			}
+		}
+		
+		return Uint8ArrayNative.create(values);
+		//return values;
+	}
+	
+	
 
 public static ImageData copy(Canvas canvas,ImageData data){
 	return copy(canvas.getContext2d(),data);
