@@ -1,11 +1,18 @@
 package com.akjava.gwt.lib.client.experimental.lbp;
 
+import static com.google.common.base.Preconditions.checkState;
+
+import java.util.List;
+
+import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
+
 
 public class SimpleLBP {
 
-	
-	private static int[] atx={-1,0,1,1,1,0,-1,-1};
-	private static int[] aty={-1,-1,-1,0,1,1,1,0};
+	private static final String[] direction={"NW","N","NE","E","SE","S","SW","W"};
+	private static int[] atx={-1,0,1,  1,1,0, -1,-1};
+	private static int[] aty={-1,-1,-1,0,1,1, 1,0};
 	/**
 	 * maybe 8samples 1 neighbors
 	 * 
@@ -44,7 +51,7 @@ public class SimpleLBP {
 	boolean useNumber;//return 0-9 value.
 	//i think default 0-256 color is for human eye
 	
-	//x,y
+	//x,y watch out
 	public int[][] convert(int[][] arrays){
 		int result[][]=new int[arrays.length][arrays[0].length];
 		for(int x=0;x<arrays.length;x++){
@@ -64,6 +71,7 @@ public class SimpleLBP {
 						otherValue=getOtherValue(arrays, x+atx[i]*neighbor,y+ aty[i]*neighbor);
 					}
 					if(otherValue>center){
+						System.out.println("at "+x+","+y+","+otherValue+">"+center+" add "+direction[i]);
 						value+="1";
 						number++;
 					}else{
@@ -80,6 +88,87 @@ public class SimpleLBP {
 		}
 		return result;
 	}
+	
+	public int[][] convertAverageValueForImprovedLBPTest(int[][] arrays){
+		int result[][]=new int[arrays.length][arrays[0].length];
+		for(int x=0;x<arrays.length;x++){
+			for(int y=0;y<arrays[0].length;y++){
+				int[][] centers=getAroundValues(x,y,arrays);
+				int center=getCenterValue(centers);
+				result[x][y]=center;
+			}
+		}
+		return result;
+	}
+	
+	public static String toBinaryPatternToDebug(int[] pattern,int splitX,int splitY){
+		List<String> lines=Lists.newArrayList();
+		checkState(pattern.length==splitX*splitY*8);
+		
+		for(int x=0;x<splitX;x++){
+			for(int y=0;y<splitY;y++){
+				List<String> result=Lists.newArrayList();
+				int offset=(x+y*splitX)*8;
+				for(int i=0;i<8;i++){
+					int v=pattern[offset+i];
+					if(v>0){
+						result.add(direction[7-i]+"="+v);
+					}
+				}
+				lines.add(x+":"+y+" "+Joiner.on(",").join(result));
+			}
+		}
+		return Joiner.on("\r\n").join(lines);
+	}
+	public static String toDirectionLabelForDebug(int value){
+		List<String> result=Lists.newArrayList();
+		String v=Integer.toBinaryString(value);
+		while(v.length()<8){
+			v="0"+v;
+		}
+		
+		for(int i=0;i<8;i++){
+			char ch=v.charAt(i);
+			if(ch=='1'){
+				result.add(direction[i]);
+					
+					
+			}
+		}
+		
+		if(result.isEmpty()){
+			result.add("0");
+		}
+		
+		return Joiner.on(":").join(result);
+	}
+	
+	public static String toBinaryForDebug(int value){
+		String v=Integer.toBinaryString(value);
+		while(v.length()<8){
+			v="0"+v;
+		}
+		return v;
+	}
+	
+	/**
+	 * binary pattern
+	 * 
+	 *  has int[8] x splitX x splitY
+	 *  Y first,first 8 byte is X:Y 0:0,second is 0:1,third is 1:0,forth is 1:1
+	 *  
+	 *  8byte[] is first one[0] is W ,last[7] is NW
+	 *  
+	 *  I'm not sure why this is.
+	 *  
+	 *  maybe should change TODO
+	 *  X first ,NW to W
+	 * 
+	 * @param arrays
+	 * @param edgeX
+	 * @param edgeY
+	 * @return
+	 */
 	
 	//split is fixed;
 	public  int[] dataToBinaryPattern(int[][] arrays,int edgeX,int edgeY){
@@ -206,6 +295,11 @@ public class SimpleLBP {
 		}
 		return container;
 		
+	}
+	
+	//at first solve problems
+	public int[] flipHorizontal(int[] binaryPattern){
+		return null;
 	}
 	
 }
