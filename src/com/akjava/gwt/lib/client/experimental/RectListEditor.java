@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.akjava.gwt.lib.client.CanvasUtils;
+import com.akjava.gwt.lib.client.LogUtils;
 import com.akjava.lib.common.graphics.Rect;
 import com.google.common.collect.Lists;
 import com.google.gwt.canvas.client.Canvas;
@@ -220,19 +221,32 @@ public class RectListEditor extends VerticalPanel implements LeafValueEditor<Lis
 			}
 			@Override
 			public boolean canContinueStart(int x,int y){
-				for(Rect rect:rectangles){
+				Rect closest=null;
+				int length=0;
+				for(Rect rect:rectangles){//check all rect and find 
 					if(rect!=selectionRect && rect.contains(x, y)){
 						/*I'm not sure sync only this situation
 						if(areaControler.getSelectionRect().hasWidthAndHeight()){
 							//sync selection
 						}*/
-						syncSelectionFromAreaControler();
 						
-						setAndCopyToSelection(rect);//switch to rect
 						
-						updateRect();
-						return false;
+						int leng=Math.abs(rect.getX()+rect.getWidth()/2-x)+Math.abs(rect.getY()+rect.getHeight()/2-y);
+						if(closest==null || leng<length){
+							closest=rect;
+							length=leng;
+						}
+						
 					}
+					
+				}
+				if(closest!=null){
+					syncSelectionFromAreaControler();
+					
+					setAndCopyToSelection(closest);//switch to rect
+					
+					updateRect();
+					return false;
 				}
 				
 				if(readOnly){//can't edit

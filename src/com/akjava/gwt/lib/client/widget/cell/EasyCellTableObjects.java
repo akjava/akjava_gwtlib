@@ -3,7 +3,9 @@ package com.akjava.gwt.lib.client.widget.cell;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.base.Function;
 import com.google.common.base.Optional;
+import com.google.common.collect.FluentIterable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
@@ -75,6 +77,11 @@ public abstract class EasyCellTableObjects<T> {
 
 	public void addItem(T data){
 		datas.add(data);
+		update();
+	}
+	public void clearAllItems(){
+		unselect();
+		datas.clear();
 		update();
 	}
 	
@@ -170,7 +177,9 @@ public abstract class EasyCellTableObjects<T> {
 	}
 	
 	
-	
+	public <E> List<E> convertToList(Function<T,E> function){
+		return FluentIterable.from(datas).transform(function).toList();
+	}
 	
 
 	public void unselect() {

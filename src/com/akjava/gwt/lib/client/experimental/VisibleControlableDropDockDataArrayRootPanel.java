@@ -2,10 +2,11 @@ package com.akjava.gwt.lib.client.experimental;
 
 import com.akjava.gwt.html5.client.file.ui.DropDockDataArrayRootPanel;
 import com.google.gwt.user.client.ui.Panel;
+import com.google.gwt.user.client.ui.Widget;
 
 public  abstract class VisibleControlableDropDockDataArrayRootPanel extends DropDockDataArrayRootPanel{
 	private Panel topPanel;
-	private Panel rightPanel;
+	private Widget rightPanel;
 	private Panel leftPanel;
 	private Panel bottomPanel;
 	private Panel centerPanel;
@@ -59,7 +60,7 @@ public  abstract class VisibleControlableDropDockDataArrayRootPanel extends Drop
 		this.bottomPanel=bottomPanel;
 		this.bottomSize=bottomSize;
 	}
-	public void setRight(Panel rightPanel,int rightSize){
+	public void setRight(Widget rightPanel,int rightSize){
 		this.rightPanel=rightPanel;
 		this.rightSize=rightSize;
 	}

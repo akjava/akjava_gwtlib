@@ -60,11 +60,30 @@ public  class CVImageDataConverter extends Converter<String, CVImageData>{
 			vs.add(String.valueOf(data.getRects().size()));
 			}
 			for(Rect r:data.getRects()){
-				//right now no check invalid rect.
-				vs.add(String.valueOf(r.getX()));
-				vs.add(String.valueOf(r.getY()));
-				vs.add(String.valueOf(r.getWidth()));
-				vs.add(String.valueOf(r.getHeight()));
+				
+				//sadly some case throw double value
+				String x=String.valueOf(r.getX());
+				if(x.indexOf(".")!=-1){
+					x=x.substring(0,(x.indexOf(".")));
+				}
+				String y=String.valueOf(r.getY());
+				if(y.indexOf(".")!=-1){
+					y=y.substring(0,(y.indexOf(".")));
+				}
+				String w=String.valueOf(r.getWidth());
+				if(w.indexOf(".")!=-1){
+					w=w.substring(0,(w.indexOf(".")));
+				}
+				String h=String.valueOf(r.getHeight());
+				if(h.indexOf(".")!=-1){
+					h=h.substring(0,(h.indexOf(".")));
+				}
+				
+				
+				vs.add(x);
+				vs.add(y);
+				vs.add(w);
+				vs.add(h);
 			}
 			return joiner.join(vs);
 		}

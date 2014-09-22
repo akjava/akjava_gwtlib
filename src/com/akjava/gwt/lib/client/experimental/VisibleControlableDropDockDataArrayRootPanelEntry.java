@@ -9,6 +9,7 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.DeckLayoutPanel;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 public abstract class VisibleControlableDropDockDataArrayRootPanelEntry implements EntryPoint {
 	protected DeckLayoutPanel rootDeck;
@@ -49,7 +50,7 @@ public abstract class VisibleControlableDropDockDataArrayRootPanelEntry implemen
 		};
 		
 			final Panel top=createTopPanel();
-			final Panel rightPanel=createRightPanel();
+			final Widget rightPanel=createRightPanel();
 			final Panel centerPanel=createCenterPanel();
 			//TODO support left and bottom
 			
@@ -63,19 +64,19 @@ public abstract class VisibleControlableDropDockDataArrayRootPanelEntry implemen
 			return mainPanel;
 	}
 	public abstract void doUploadFile(File file, Uint8Array array);
-	public abstract Panel createTopPanel();
+	protected abstract Panel createTopPanel();
 	/**
 	 * use mainPanel.switchRight(); to show/hide right
 	 * @return
 	 */
-	public abstract Panel createRightPanel();
-	public abstract Panel createCenterPanel();
-	public abstract int getTopSize();
-	public abstract int getRightSize();
+	protected abstract Widget createRightPanel();
+	protected abstract Panel createCenterPanel();
+	protected abstract int getTopSize();
+	protected abstract int getRightSize();
 	
-	public abstract void initialize();
-	public abstract void doBeforeShowMainPanel();
-	public abstract List<Panel> createExtraPanels();
+	protected abstract void initialize();
+	protected abstract void doBeforeShowMainPanel();
+	protected abstract List<Panel> createExtraPanels();
 	public void showMainPanel(){
 		rootDeck.showWidget(0);
 	}

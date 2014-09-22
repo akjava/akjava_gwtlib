@@ -9,17 +9,21 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public  class ProgressCanvas{
 		private PopupPanel popup;
 		private int currentStep;
+		public int getCurrentStep() {
+			return currentStep;
+		}
 		private int maxStep;
 		private String bgColor="#fff";
 		private String barColor="#f00";
 		private static Canvas canvas=Canvas.createIfSupported();//share
 		private int canvasWidth=200;
 		private int canvasHeight=16;
+		protected VerticalPanel mainPanel;
 		public ProgressCanvas(String title,int maxStep){
 			this.maxStep=maxStep;
 			popup = new PopupPanel(false,true);
 			popup.setGlassEnabled(true);//need call here,TODO support as option
-			VerticalPanel mainPanel = new VerticalPanel();//need on initial
+			mainPanel = new VerticalPanel();
 			Label titleLabel=new Label(title);
 			mainPanel.add(titleLabel);
 			popup.add(mainPanel);
@@ -52,6 +56,10 @@ public  class ProgressCanvas{
 		public void progress(int step){
 			currentStep+=step;
 			updateCanvas();
+		}
+		
+		public boolean isCompleted(){
+			return currentStep>=maxStep;
 		}
 		
 	}

@@ -8,7 +8,7 @@ import com.google.common.collect.Lists;
 /*
  * for contain OpenCV Positive data,however if rects is empty ,should detect rect is same as image-size
  */
-public  class CVImageData{
+public  class CVImageData implements HasRects{
 	private String fileName;
 	public String getFileName() {
 		return fileName;

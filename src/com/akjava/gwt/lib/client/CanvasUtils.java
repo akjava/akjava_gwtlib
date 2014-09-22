@@ -579,6 +579,10 @@ public static Canvas convertToGrayScale(Canvas canvas,Canvas target) {
 	return target;
 }
 
+public static Canvas createCanvas(String dataUrl,Canvas canvas) {
+	return ImageElementUtils.copytoCanvas(dataUrl, canvas);
+}
+
 public static Canvas createCanvas(ImageElement element) {
 	return ImageElementUtils.copytoCanvas(element, null);
 }

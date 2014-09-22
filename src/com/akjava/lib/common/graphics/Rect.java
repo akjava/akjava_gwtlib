@@ -2,6 +2,7 @@ package com.akjava.lib.common.graphics;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.akjava.gwt.lib.client.LogUtils;
 import com.akjava.lib.common.utils.ValuesUtils;
 
 public class Rect {
@@ -40,6 +41,25 @@ public int getRightPos(){
 }
 public int getBottomPos(){
 	return y+height;
+}
+
+public Rect collisionRect(Rect targetRect){
+	if(!collision(targetRect)){
+		return new Rect();
+	}else{
+		int sx=Math.max(x, targetRect.x);
+		int sy=Math.max(y, targetRect.y);
+		
+		int ex=Math.min(x+width, targetRect.x+targetRect.width);
+		int ey=Math.min(y+height, targetRect.y+targetRect.height);
+		
+		int w=ex-sx;
+		int h=ey-sy;
+		if(w<0 || h<0){
+			//LogUtils.log("invalid-size:"+toString()+","+targetRect.toString());
+		}
+		return new Rect(sx,sy,w,h);
+	}
 }
 
 public boolean collision(Rect targetRect){
