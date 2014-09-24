@@ -1,6 +1,8 @@
 package com.akjava.gwt.lib.client.experimental;
 
+import com.akjava.gwt.lib.client.CanvasUtils;
 import com.akjava.gwt.lib.client.LogUtils;
+import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.ImageData;
 import com.google.gwt.typedarrays.client.Uint8ArrayNative;
 
@@ -41,6 +43,59 @@ public static Uint8ArrayNative resizeBilinear(Uint8ArrayNative array, int w, int
     return result;
 }
 
+/*
+ * to create data url
+private String toDataUrl(Uint8ArrayNative array,int w,int h){
+	
+	Canvas resizedCanvas=CanvasUtils.createCanvas(w, h);
+	ImageData data=ImageDataUtils.copySizeOnly(resizedCanvas);//they must have rgba
+	ResizeUtils.setUint8Array(data, array);
+	
+	CanvasUtils.copyTo(data, resizedCanvas);
+	return resizedCanvas.toDataUrl();
+	
+}
+*/
+public static Uint8ArrayNative resizeBilinear(ImageData  imageData,int ax,int ay, int w, int h, int w2, int h2) {
+	Uint8ArrayNative array=ImageDataUtils.getUint8(imageData);
+	Uint8ArrayNative result = Uint8ArrayNative.create(w2*h2*4) ;
+    int a, b, c, d, x, y, index ;
+    float x_ratio = ((float)(w-1))/w2 ;
+    float y_ratio = ((float)(h-1))/h2 ;
+    float x_diff, y_diff, value ;
+    int offset = 0 ;
+    int iw=imageData.getWidth();
+    
+    for (int i=0;i<h2;i++) {
+        for (int j=0;j<w2;j++) {
+            x = (int)(x_ratio * j) ;
+            y = (int)(y_ratio * i) ;
+            x_diff = (x_ratio * j) - x ;
+            y_diff = (y_ratio * i) - y ;
+            //index = (y*w+x) ;
+            index = ((ay+y)*iw+x+ax) ;
+            
+            
+            for(int k=0;k<4;k++){
+            	a = array.get((index)*4+k) ;
+  	            b =array.get((index+1)*4+k) ;
+  	            c = array.get((index+iw)*4+k) ;
+  	            d = array.get((index+iw+1)*4+k) ;
+  	            
+  	          value = (a&0xff)*(1-x_diff)*(1-y_diff) + (b&0xff)*(x_diff)*(1-y_diff) +
+	                   (c&0xff)*(y_diff)*(1-x_diff)   + (d&0xff)*(x_diff*y_diff);
+  	          
+  	        result.set(offset*4+k,(int) value); 
+            }
+          
+            offset++;
+            
+        }
+    }
+    return result;
+}
+
+
 public static Uint8ArrayNative resizeBilinearRedOnly(Uint8ArrayNative array, int w, int h, int w2, int h2) {
 	Uint8ArrayNative result = Uint8ArrayNative.create(w2*h2*4) ;
     int a, b, c, d, x, y, index ;
@@ -65,6 +120,41 @@ public static Uint8ArrayNative resizeBilinearRedOnly(Uint8ArrayNative array, int
                    (c&0xff)*(y_diff)*(1-x_diff)   + (d&0xff)*(x_diff*y_diff);
 	          
 	        result.set(offset*4,(int) value); 
+          
+            offset++;
+            
+        }
+    }
+    return result;
+}
+
+
+public static Uint8ArrayNative resizeBilinearRedOnly(ImageData  imageData,int ax,int ay, int w, int h, int w2, int h2) {
+	Uint8ArrayNative array=ImageDataUtils.getUint8(imageData);
+	Uint8ArrayNative result = Uint8ArrayNative.create(w2*h2) ;
+    int a, b, c, d, x, y, index ;
+    float x_ratio = ((float)(w-1))/w2 ;
+    float y_ratio = ((float)(h-1))/h2 ;
+    float x_diff, y_diff, value ;
+    int offset = 0 ;
+    int iw=imageData.getWidth();
+    for (int i=0;i<h2;i++) {
+        for (int j=0;j<w2;j++) {
+            x = (int)(x_ratio * j) ;
+            y = (int)(y_ratio * i) ;
+            x_diff = (x_ratio * j) - x ;
+            y_diff = (y_ratio * i) - y ;
+            index = ((ay+y)*iw+x+ax) ;
+            
+            	a = array.get((index)*4) ;
+	            b =array.get((index+1)*4) ;
+	            c = array.get((index+iw)*4) ;
+	            d = array.get((index+iw+1)*4) ;
+	            
+	          value = (a&0xff)*(1-x_diff)*(1-y_diff) + (b&0xff)*(x_diff)*(1-y_diff) +
+                   (c&0xff)*(y_diff)*(1-x_diff)   + (d&0xff)*(x_diff*y_diff);
+	          
+	        result.set(offset,(int) value); 
           
             offset++;
             

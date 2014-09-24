@@ -5,6 +5,7 @@ import static com.google.common.base.Preconditions.checkState;
 import java.util.List;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 
 
@@ -71,7 +72,7 @@ public class SimpleLBP {
 						otherValue=getOtherValue(arrays, x+atx[i]*neighbor,y+ aty[i]*neighbor);
 					}
 					if(otherValue>center){
-						System.out.println("at "+x+","+y+","+otherValue+">"+center+" add "+direction[i]);
+						//System.out.println("at "+x+","+y+","+otherValue+">"+center+" add "+direction[i]);
 						value+="1";
 						number++;
 					}else{
@@ -148,6 +149,7 @@ public class SimpleLBP {
 		while(v.length()<8){
 			v="0"+v;
 		}
+		Strings.padStart(v, 8, '0');
 		return v;
 	}
 	

@@ -198,6 +198,10 @@ dst.data.set(src.data);
 return dst;
 }-*/;
 
+public  static  native final Uint8ArrayNative getUint8(ImageData data)/*-{
+return data.data;
+}-*/;
+
 public static ImageData setGrayscale(ImageData imageData,Uint8ArrayNative nativeArray,boolean setRGBA){
 	int w=imageData.getWidth();
 	for(int i=0;i<nativeArray.length();i++){
@@ -213,6 +217,38 @@ public static ImageData setGrayscale(ImageData imageData,Uint8ArrayNative native
 	return imageData;
 	}
 
+public static boolean isSameData(ImageData data1,ImageData data2){
+	if(data1==data2){
+		return true;
+	}
+	if(data1.getWidth()!=data2.getWidth() || data1.getHeight()!=data2.getHeight()){
+		return false;
+	}
+	for(int x=0;x<data1.getWidth();x++){
+		for(int y=0;y<data1.getHeight();y++){
+			
+			if(data1.getRedAt(x, y)!=data2.getRedAt(x, y)){
+				return false;
+			}
+			
+			if(data1.getGreenAt(x, y)!=data2.getGreenAt(x, y)){
+				return false;
+			}
+			
+			if(data1.getBlueAt(x, y)!=data2.getBlueAt(x, y)){
+				return false;
+			}
+			
+			if(data1.getAlphaAt(x, y)!=data2.getAlphaAt(x, y)){
+				return false;
+			}
+			
+			
+		}
+	}
+	
+	return true;
+}
 
 /**
  *  var dst = ctx.createImageData(src.width, src.height);
