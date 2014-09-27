@@ -68,8 +68,69 @@ public class TurnTest extends TestCase {
 		assertTrue(Iterables.elementsEqual(Ints.asList(binaryPattern), Ints.asList(result)));
 	}*/
 	
+	public void test3x3Random1(){
+		int[][] ints=new int[28][28];
+		for(int i=0;i<28;i++){
+			for(int j=0;j<28;j++){
+				int v=(int) (Math.random()*256);
+				ints[i][j]=v;
+			}
+		}
+		
+		SimpleLBP lbp=new SimpleLBP(true,2);
+		int[] binaryPattern=lbp.dataToBinaryPattern(ints,3,3,4,4);
+		
+		int[] first=SimpleLBP.turn3x3(binaryPattern, 45);
+		int[] second=SimpleLBP.turn3x3(first, 315);
+		
+		assertTrue(Iterables.elementsEqual(Ints.asList(binaryPattern),Ints.asList( second)));
+		
+	}
+	
+	public void test3x3Random2(){
+		int[][] ints=new int[28][28];
+		for(int i=0;i<28;i++){
+			for(int j=0;j<28;j++){
+				int v=(int) (Math.random()*256);
+				ints[i][j]=v;
+			}
+		}
+		
+		SimpleLBP lbp=new SimpleLBP(true,2);
+		int[] binaryPattern=lbp.dataToBinaryPattern(ints,3,3,4,4);
+		
+		int[] first=SimpleLBP.turn3x3(binaryPattern, 90);
+		int[] second=SimpleLBP.turn3x3(first, 270);
+		
+		assertTrue(Iterables.elementsEqual(Ints.asList(binaryPattern),Ints.asList( second)));
+		
+	}
+	
+	
+	public void test3x3Turndegree(){
+		int[][] ints=new int[3][3];
+		ints[0][1]=128;
+		
+		
+		SimpleLBP lbp=new SimpleLBP(true,1);
+		int[] binaryPattern=lbp.dataToBinaryPattern(ints,3,3,0,0);
+		String result=(SimpleLBP.toBinaryPatternToDebug(binaryPattern,3,3));
+		
+		String correct=Joiner.on("\n").join(ImmutableList.of(
+				"1 block:0x0 E=1",
+				"2 block:1x0 ",
+				"3 block:2x0 W=1",
+				"4 block:0x1 NE=1",
+				"5 block:1x1 N=1",
+				"6 block:2x1 NW=1",
+				"7 block:0x2 ",
+				"8 block:1x2 ",
+				"9 block:2x2 "));
+				
+		assertEquals(correct,result);
+	}
 	public void test3x3Turn45degree(){
-		int[][] ints=new int[4][4];
+		int[][] ints=new int[3][3];
 		ints[0][1]=128;
 		
 		
@@ -92,15 +153,15 @@ public class TurnTest extends TestCase {
 		
 		
 		String correct=Joiner.on("\n").join(ImmutableList.of(
-				"1 block:0x0 NE=1",
+				"1 block:0x0 E=1",
 				"2 block:1x0 SE=1",
 				"3 block:2x0 ",
 				"4 block:0x1 ",
-				"5 block:1x1 N=1",
-				"6 block:2x1 NW=1,E=1",
+				"5 block:1x1 NE=1",
+				"6 block:2x1 NW=1",
 				"7 block:0x2 ",
 				"8 block:1x2 ",
-				"9 block:2x2 "));
+				"9 block:2x2 N=1"));
 		assertEquals(correct,SimpleLBP.toBinaryPatternToDebug(result,3,3));
 		
 		
@@ -126,20 +187,20 @@ public class TurnTest extends TestCase {
 		System.out.println("before");
 		System.out.println(SimpleLBP.toBinaryPatternToDebug(binaryPattern,3,3));
 		
-		System.out.println("turn 45");
+		System.out.println("turn 90");
 		System.out.println(SimpleLBP.toBinaryPatternToDebug(result,3,3));
 		
 		
 		String correct=Joiner.on("\n").join(ImmutableList.of(
 				"1 block:0x0 ",
-				"2 block:1x0 E=1",
+				"2 block:1x0 SE=1",
 				"3 block:2x0 S=1",
 				"4 block:0x1 ",
-				"5 block:1x1 NE=1",
+				"5 block:1x1 E=1",
 				"6 block:2x1 ",
 				"7 block:0x2 ",
-				"8 block:1x2 ",
-				"9 block:2x2 N=1,SE=1"));
+				"8 block:1x2 NE=1",
+				"9 block:2x2 N=1"));
 		assertEquals(correct,SimpleLBP.toBinaryPatternToDebug(result,3,3));
 		
 		
