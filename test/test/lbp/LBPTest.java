@@ -9,6 +9,7 @@ import com.akjava.gwt.lib.client.experimental.lbp.BinaryPattern;
 import com.akjava.gwt.lib.client.experimental.lbp.SimpleLBP;
 import com.google.common.base.Joiner;
 import com.google.common.base.Stopwatch;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.primitives.Ints;
 
@@ -47,6 +48,9 @@ public class LBPTest extends TestCase {
 		
 	}
 	
+	/*
+	 * test step by step and direct same
+	 */
 	public void testSame1(){
 		int[][] ints=new int[4][4];
 		ints[1][1]=128;
@@ -123,6 +127,53 @@ public class LBPTest extends TestCase {
 		String direct=Joiner.on(",").join(Ints.asList(lbp.dataToBinaryPattern(ints, 4, 4)));
 		
 		assertEquals(lbpPlutBinaryPattern, direct);
+		
+		
+	}
+	
+	public void testBinary3x3(){
+		int[][] ints=new int[3][3];
+		ints[1][1]=128;
+		SimpleLBP lbp=new SimpleLBP(true,1);
+		int[][] converted=lbp.convert(ints);
+		int[] retInt=BinaryPattern.dataToBinaryPattern(converted,3,0,0);
+		
+		assertEquals(9*8, retInt.length);
+		
+		String result=SimpleLBP.toBinaryPatternToDebug(retInt,3,3);
+		System.out.println(result);
+		
+		List<Integer> lists=Ints.asList(retInt);
+	}
+	
+	/*
+	 * not changed
+	 */
+	public void testBinary3x3Horizontal(){
+		int[][] ints=new int[3][3];
+		ints[0][1]=128;
+		SimpleLBP lbp=new SimpleLBP(true,1);
+		int[][] converted=lbp.convert(ints);
+		int[] retInt=BinaryPattern.dataToBinaryPattern(converted,3,0,0);
+		
+		assertEquals(9*8, retInt.length);
+		
+		String correct=Joiner.on("\n").join(ImmutableList.of(
+				"1 block:0x0 E=1",
+				"2 block:1x0 ",
+				"3 block:2x0 W=1",
+				"4 block:0x1 NE=1",
+				"5 block:1x1 N=1",
+				"6 block:2x1 NW=1",
+				"7 block:0x2 ",
+				"8 block:1x2 ",
+				"9 block:2x2 "));
+		
+		int[] flipped=SimpleLBP.flipHorizontal(retInt, 3, 3);
+		
+		String result=SimpleLBP.toBinaryPatternToDebug(flipped,3,3);
+		
+		assertEquals(correct, result);
 		
 		
 	}

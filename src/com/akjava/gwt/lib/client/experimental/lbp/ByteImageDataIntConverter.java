@@ -75,9 +75,12 @@ public class ByteImageDataIntConverter extends Converter<ImageData,int[][]>{
 			this.color = color;
 		}
 
+		/**
+		 * return [y][w] pixels
+		 */
 		@Override
 		public int[][] apply(ImageData data) {
-			int[][] bytes=new int[data.getWidth()][data.getHeight()];
+			int[][] bytes=new int[data.getHeight()][data.getWidth()];
 			
 			for(int x=0;x<data.getWidth();x++){
 				for(int y=0;y<data.getHeight();y++){
@@ -89,8 +92,8 @@ public class ByteImageDataIntConverter extends Converter<ImageData,int[][]>{
 						//throw new RuntimeException("not support yet");
 						value=data.getRedAt(x, y);//from grayscale imagedata
 					}
-					bytes[x][y]=value;
-					
+					//bytes[x][y]=value;
+					bytes[y][x]=value;
 					
 						
 				}
