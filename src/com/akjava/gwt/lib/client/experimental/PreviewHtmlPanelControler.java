@@ -1,5 +1,6 @@
 package com.akjava.gwt.lib.client.experimental;
 
+import com.akjava.gwt.lib.client.LogUtils;
 import com.akjava.gwt.lib.client.experimental.CellBaseEntryPoint.PreviewControler;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.Window;
@@ -22,6 +23,7 @@ public class PreviewHtmlPanelControler<T> implements PreviewControler<T>{
 		this.w=w;
 		this.h=h;
 		containerPanel = new VerticalPanel();
+		containerPanel.setWidth("100%");
 	}
 	public PreviewHtmlPanelControler(){
 		this(230,800);
@@ -31,6 +33,7 @@ public class PreviewHtmlPanelControler<T> implements PreviewControler<T>{
 		if(popup==null){
 			createPreviewPanel();
 		}
+		moveToAroundRightTop(popup);
 		popup.show();
 	}
 	public void hide(){
@@ -40,9 +43,9 @@ public class PreviewHtmlPanelControler<T> implements PreviewControler<T>{
 	}
 	
 	public void setPreviewHtml(SafeHtml html){
-		show();
-		previewHTML.setHTML(html);
 		
+		previewHTML.setHTML(html);
+		show();
 	}
 	
 	private void createPreviewPanel() {
@@ -54,8 +57,9 @@ public class PreviewHtmlPanelControler<T> implements PreviewControler<T>{
 		mainPanel.add(previewHTML);
 		
 		mainPanel.add(containerPanel);
-		popup.show();
-		moveToAroundRightTop(popup);
+		
+		//popup.show();
+		//moveToAroundRightTop(popup);
 		
 		
 	}
@@ -63,12 +67,21 @@ public class PreviewHtmlPanelControler<T> implements PreviewControler<T>{
 	public VerticalPanel getContainer() {
 		return containerPanel;
 	}
+	
 	private void moveToAroundRightTop(PopupPanel dialog){
-		int w=Window.getClientWidth();
-		int h=Window.getScrollTop();
+		int clientWidth=Window.getClientWidth();
+		int scrollTopPos=Window.getScrollTop();
 		int dw=dialog.getOffsetWidth();
 		
-		dialog.setPopupPosition(w-dw, h+marginTop);
+		
+		
+		//LogUtils.log(clientWidth+","+scrollTopPos+","+dw);
+		if(dw==0){
+			//this is bug,some how first time return 0;maybe set html is async?
+			dw=w+12;
+		}
+		
+		dialog.setPopupPosition(clientWidth-dw, scrollTopPos+marginTop);
 	}
 	@Override
 	public void setData(T data) {

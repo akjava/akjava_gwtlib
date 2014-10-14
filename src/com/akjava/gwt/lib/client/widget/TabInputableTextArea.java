@@ -16,7 +16,7 @@ public class TabInputableTextArea extends TextArea{
 	    public final void onKeyDown(KeyDownEvent event) {
 	      if (event.getNativeKeyCode() == 9) {
 	        event.preventDefault();
-	        event.stopPropagation();
+	        event.stopPropagation();//really need this?
 	        final TextArea ta = (TextArea) event.getSource();
 	        final int index = ta.getCursorPos();
 	        final String text = ta.getText();

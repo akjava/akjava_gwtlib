@@ -245,6 +245,52 @@ public class SimpleLBP {
 		return converted;
 	}
 	
+	public static double[] flipHorizontal(double[] binaryPattern,int splitW,int splitH){
+		checkState(binaryPattern.length==8*splitW*splitH);
+		
+		double[] converted=new double[binaryPattern.length];
+		
+		for(int y=0;y<splitH;y++){
+			for(int x=0;x<splitW;x++){
+				int srcOffset=(y*splitW+x)*8;
+				int destOffset=(y*splitW+(splitW-1-x))*8;
+				for(int i=0;i<8;i++){
+					int nindex=0;
+					switch(i){
+					case SimpleLBP.NORTH_WEST:
+						nindex=SimpleLBP.NORTH_EAST;
+						break;
+					case SimpleLBP.NORTH:
+						nindex=SimpleLBP.NORTH;
+						break;
+					case SimpleLBP.NORTH_EAST:
+						nindex=SimpleLBP.NORTH_WEST;
+						break;
+					case SimpleLBP.EAST:
+						nindex=SimpleLBP.WEST;
+						break;
+					case SimpleLBP.SOUTH_EAST:
+						nindex=SimpleLBP.SOUTH_WEST;
+						break;
+					case SimpleLBP.SOUTH:
+						nindex=SimpleLBP.SOUTH;
+						break;
+					case SimpleLBP.SOUTH_WEST:
+						nindex=SimpleLBP.SOUTH_EAST;
+						break;
+					case SimpleLBP.WEST:
+						nindex=SimpleLBP.EAST;
+						break;
+					}
+				converted[destOffset+nindex]=binaryPattern[srcOffset+i];		
+				}
+			}
+		}
+		
+		
+		return converted;
+	}
+	
 	public static String toBinaryForDebug(int value){
 		String v=Integer.toBinaryString(value);
 		while(v.length()<8){
