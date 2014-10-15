@@ -147,7 +147,7 @@ public class LBPTest extends TestCase {
 	}
 	
 	/*
-	 * not changed
+	 * put center not changed
 	 */
 	public void testBinary3x3Horizontal(){
 		int[][] ints=new int[3][3];
@@ -156,7 +156,9 @@ public class LBPTest extends TestCase {
 		int[][] converted=lbp.convert(ints);
 		int[] retInt=BinaryPattern.dataToBinaryPattern(converted,3,0,0);
 		
-		assertEquals(9*8, retInt.length);
+		//System.out.println("#before");
+		//System.out.println(SimpleLBP.toBinaryPatternToDebug(retInt,3,3));
+		
 		
 		String correct=Joiner.on("\n").join(ImmutableList.of(
 				"1 block:0x0 E=1",
@@ -165,6 +167,50 @@ public class LBPTest extends TestCase {
 				"4 block:0x1 NE=1",
 				"5 block:1x1 N=1",
 				"6 block:2x1 NW=1",
+				"7 block:0x2 ",
+				"8 block:1x2 ",
+				"9 block:2x2 "));
+		
+		int[] flipped=SimpleLBP.flipHorizontal(retInt, 3, 3);
+		
+		String result=SimpleLBP.toBinaryPatternToDebug(flipped,3,3);
+		
+		assertEquals(correct, result);
+		
+		
+	}
+	
+	/*
+	 * put center not changed
+	 */
+	public void testBinary3x3Horizontal2(){
+		int[][] ints=new int[3][3];
+		ints[0][0]=128;
+		SimpleLBP lbp=new SimpleLBP(true,1);
+		int[][] converted=lbp.convert(ints);
+		int[] retInt=BinaryPattern.dataToBinaryPattern(converted,3,0,0);
+		
+		System.out.println("#before");
+		//System.out.println(SimpleLBP.toBinaryPatternToDebug(retInt,3,3));
+		/*
+ 	1 block:0x0 
+	2 block:1x0 W=1
+	3 block:2x0 
+	4 block:0x1 N=1
+	5 block:1x1 NW=1
+	6 block:2x1 
+	7 block:0x2 
+	8 block:1x2 
+	9 block:2x2 
+		 */
+		
+		String correct=Joiner.on("\n").join(ImmutableList.of(
+				"1 block:0x0 ",
+				"2 block:1x0 E=1",
+				"3 block:2x0 ",
+				"4 block:0x1 ",
+				"5 block:1x1 NE=1",
+				"6 block:2x1 N=1",
 				"7 block:0x2 ",
 				"8 block:1x2 ",
 				"9 block:2x2 "));
