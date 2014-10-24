@@ -79,8 +79,8 @@ public class FileSystemTextDataControler{
 		FileIOUtils.removeFile(true, rootDirectory+"/"+time, callback);
 	}
 	public void removeData(String fileName,RemoveCallback callback){
-		checkNotNull(callback);
-		checkNotNull(fileName);
+		checkNotNull(callback,"callback is null");
+		checkNotNull(fileName,"filename is null");
 		FileIOUtils.removeFile(true, rootDirectory+"/"+fileName, callback);
 	}
 	
