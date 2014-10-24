@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.akjava.gwt.html5.client.file.File;
 import com.akjava.gwt.html5.client.file.Uint8Array;
+import com.akjava.gwt.lib.client.LogUtils;
 import com.google.common.base.Optional;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.DeckLayoutPanel;
@@ -49,16 +50,23 @@ public abstract class VisibleControlableDropDockDataArrayRootPanelEntry implemen
 			
 		};
 		
-			final Panel top=createTopPanel();
+			final Panel topPanel=createTopPanel();
 			final Widget rightPanel=createRightPanel();
 			final Panel centerPanel=createCenterPanel();
 			//TODO support left and bottom
 			
 			
-			mainPanel.setTop(top,getTopSize());
-			mainPanel.setRight(rightPanel, getRightSize());
-			mainPanel.setCenterPanel(centerPanel);
-			
+			if(topPanel!=null){
+				mainPanel.setTop(topPanel,getTopSize());
+			}
+			if(rightPanel!=null){
+				mainPanel.setRight(rightPanel, getRightSize());
+			}
+			if(centerPanel!=null){
+				mainPanel.setCenterPanel(centerPanel);
+			}else{
+				LogUtils.log("center panel usually needed");
+			}
 			mainPanel.setVisiblePanels(true, true, true, true);
 			
 			return mainPanel;
