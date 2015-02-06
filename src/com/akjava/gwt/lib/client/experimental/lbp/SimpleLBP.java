@@ -393,7 +393,8 @@ public class SimpleLBP {
 	}
 	
 	private int getOtherValue(int[][] arrays, int offx, int offy) {
-		if(offx<0 || offx>=arrays.length || offy<0 || offy>=arrays[0].length){
+		if(offy<0 || offy>=arrays.length || offx<0 || offx>=arrays[0].length){
+		//if(offx<0 || offx>=arrays.length || offy<0 || offy>=arrays[0].length){
 			return -1;
 		}
 		return  arrays[offy][offx];

@@ -1,5 +1,7 @@
 package com.akjava.gwt.lib.client.experimental;
 
+import javax.annotation.Nullable;
+
 import com.akjava.gwt.lib.client.CanvasUtils;
 import com.akjava.gwt.lib.client.ImageElementUtils;
 import com.akjava.gwt.lib.client.LogUtils;
@@ -53,7 +55,7 @@ public static ImageData copyFrom(Canvas canvas){
 		}
 	
 
-public static ImageData create(Canvas canvas,ImageElement element){
+public static ImageData create(@Nullable Canvas canvas,ImageElement element){
 	if(canvas==null){
 		canvas=Canvas.createIfSupported();
 	}

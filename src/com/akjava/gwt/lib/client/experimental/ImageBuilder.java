@@ -5,6 +5,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import com.akjava.gwt.html5.client.file.Blob;
 import com.akjava.gwt.lib.client.CanvasUtils;
 import com.akjava.gwt.lib.client.ImageElementUtils;
+import com.akjava.gwt.lib.client.LogUtils;
 import com.akjava.lib.common.io.FileType;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.ImageData;
@@ -14,6 +15,7 @@ public class ImageBuilder {
 public static Canvas sharedCanvas;
 	public static Canvas getSharedCanvas() {
 	if(sharedCanvas==null){
+		LogUtils.log("initialized-shared-canvas");
 		sharedCanvas=Canvas.createIfSupported();
 	}
 	return sharedCanvas;
@@ -167,6 +169,7 @@ protected FileType fileType=FileType.PNG;
 		//need resize?
 		Canvas shareCanvas=getSharedCanvas();
 		if(shareCanvas==null){
+			LogUtils.log("invalidlly create-shared-canvas");
 			shareCanvas=Canvas.createIfSupported();
 			setSharedCanvas(shareCanvas);
 		}

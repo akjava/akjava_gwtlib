@@ -1,7 +1,9 @@
 package com.akjava.gwt.lib.client.experimental;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class ArrayTool<T> {
 
@@ -23,4 +25,16 @@ public class ArrayTool<T> {
 		}
 		return newList;
 	}
+	
+	//come from http://stackoverflow.com/questions/10052718/collection-shuffle-not-working-gwt
+	public  List<T> shuffle2(List<T> list){
+		Random random = new Random(list.size());  
+
+		for(int index = 0; index < list.size(); index += 1) {  
+		    Collections.swap(list, index, index + random.nextInt(list.size() - index));  
+		}
+		return list;
+	}
+	
+	
 }
