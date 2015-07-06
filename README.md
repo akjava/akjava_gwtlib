@@ -96,5 +96,5 @@ Project
 -------
 - src - sourcecode
 - lib - dependency libs
-- build - released lib
-- build.xml - ant build file (need GWT 2.5.1)
+- build - released jar
+- build.xml - ant build file (need GWT 2.6.1)

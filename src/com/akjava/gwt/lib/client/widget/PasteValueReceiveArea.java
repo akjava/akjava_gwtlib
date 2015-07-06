@@ -32,8 +32,6 @@ public class PasteValueReceiveArea extends TextArea{
 		    super.onBrowserEvent(event);
 		    switch (event.getTypeInt()) {
 		        case Event.ONPASTE: {
-		        	LogUtils.log(event);
-		        	
 		        	ValueChangeEvent.fire(this, getPastedText(event));
 		            break;
 		        }
