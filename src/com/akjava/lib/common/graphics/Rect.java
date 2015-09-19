@@ -73,6 +73,9 @@ public boolean collision(Rect targetRect){
 	return false;
 }
 
+public static Rect fromCenterPoint(int cx,int cy,int hw,int hh){
+	return new Rect(cx-hw,cy-hh,hw*2,hh*2);
+}
 public static Rect fromString(String kanmaValues){
 	checkNotNull(kanmaValues);
 	String[] vs=kanmaValues.split(",");

@@ -3,6 +3,7 @@ package com.akjava.gwt.lib.client.widget.cell;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.akjava.lib.common.utils.ListUtils;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.FluentIterable;
@@ -120,6 +121,20 @@ public abstract class EasyCellTableObjects<T> {
 		datas.add(Math.max(0, index-1),object);
 		update(true);
 		}
+	}
+	public void topItem(T object){
+		if(datas.size()<=1){//no need
+			return;
+		}
+		ListUtils.top(datas, object);
+		update();
+	}
+	public void bottomItem(T object){
+		if(datas.size()<=1){//no need
+			return;
+		}
+		ListUtils.bottom(datas, object);
+		update();
 	}
 	
 	

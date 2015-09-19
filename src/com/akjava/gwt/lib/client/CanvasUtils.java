@@ -2,13 +2,15 @@ package com.akjava.gwt.lib.client;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.util.Iterator;
+
 import javax.annotation.Nullable;
 
 import com.akjava.gwt.html5.client.download.HTML5Download;
 import com.akjava.gwt.html5.client.file.Uint8Array;
 import com.akjava.gwt.lib.client.experimental.ImageDataUtils;
+import com.akjava.gwt.lib.client.game.PointXY;
 import com.akjava.lib.common.graphics.Rect;
-import com.akjava.lib.common.utils.ColorUtils;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.ImageData;
@@ -26,6 +28,8 @@ public class CanvasUtils {
 			canvas.setCoordinateSpaceHeight(h);
 			canvas.setWidth(w+"px");
 			canvas.setHeight(h+"px");
+		}else{
+			return createCanvas(w,h);
 		}
 		return canvas;
 	}
@@ -87,6 +91,7 @@ public static void disableSelection(Canvas canvas){
 
 
 public static void drawCenter(Canvas canvas,ImageElement image,int offsetX,int offsetY,double scaleX,double scaleY,double angle,double alpha){
+	
 	canvas.getContext2d().save();
 	double rx=(canvas.getCoordinateSpaceWidth())/2;
 	double ry=(canvas.getCoordinateSpaceHeight())/2;
@@ -458,7 +463,28 @@ public static Canvas copyToSizeOnly(Canvas imageCanvas,Canvas canvas){
 	return copyTo(imageCanvas,canvas,false);
 }
 
-public static Canvas copyToFlipHorizontal(Canvas imageCanvas,Canvas canvas){
+public static Canvas flip(Canvas imageCanvas,boolean horizontal,boolean vertical,@Nullable Canvas workingCanvas){
+	if(workingCanvas==null){
+		workingCanvas=Canvas.createIfSupported();
+	}
+	int w=imageCanvas.getCoordinateSpaceWidth();
+	int h=imageCanvas.getCoordinateSpaceHeight();
+	//set size
+	setSize(workingCanvas, w,h);
+	
+	int x=horizontal?w:0;
+	int y=vertical?h:0;
+	int scaleX=horizontal?-1:1;
+	int scaleY=horizontal?-1:1;
+	workingCanvas.getContext2d().save();
+	workingCanvas.getContext2d().translate(x, y);
+	workingCanvas.getContext2d().scale(scaleX, scaleY);
+	workingCanvas.getContext2d().drawImage(imageCanvas.getCanvasElement(), 0, 0);
+	workingCanvas.getContext2d().restore();
+	return workingCanvas;
+}
+
+public static Canvas copyToFlipHorizontal(@Nullable Canvas imageCanvas,Canvas canvas){
 	if(canvas==null){
 		canvas=Canvas.createIfSupported();
 	}
@@ -516,6 +542,9 @@ public static void drawLine(Canvas canvas, double x1, double y1, double x2, doub
 	c2d.lineTo(x2,y2);
 	c2d.closePath();
 	c2d.stroke();
+}
+public static void fillPoint(Canvas canvas, double x1, double y1) {
+	canvas.getContext2d().fillRect(x1, y1, 1, 1);
 }
 
 public static void setSize(Canvas canvas, int w, int h) {
@@ -585,6 +614,26 @@ public static Canvas createCanvas(String dataUrl,Canvas canvas) {
 
 public static Canvas createCanvas(ImageElement element) {
 	return ImageElementUtils.copytoCanvas(element, null);
+}
+
+public static void draw(Canvas canvas, PointXY[] points,boolean stroke,@Nullable String style) {
+	if(style!=null){
+		canvas.getContext2d().setStrokeStyle(style);
+	}
+	canvas.getContext2d().beginPath();
+	PointXY pt=points[points.length-1];
+	canvas.getContext2d().moveTo(pt.x, pt.y);
+	for(int i=0;i<points.length;i++){
+		pt=points[i];
+		canvas.getContext2d().lineTo(pt.x, pt.y);
+	}
+	canvas.getContext2d().closePath();
+	if(stroke){
+		canvas.getContext2d().stroke();
+	}else{
+		canvas.getContext2d().fill();
+	}
+	
 }
 
 /*

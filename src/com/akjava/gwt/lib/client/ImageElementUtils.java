@@ -2,6 +2,8 @@ package com.akjava.gwt.lib.client;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import javax.annotation.Nullable;
+
 import com.akjava.gwt.html5.client.download.DownloadURL;
 import com.akjava.gwt.html5.client.file.Blob;
 import com.akjava.gwt.html5.client.file.File;
@@ -58,7 +60,29 @@ public static Canvas copytoCanvas(String dataUrl,Canvas canvas){
 	return copytoCanvas(create(dataUrl), canvas,true);
 }
 
-
+public static Canvas flip(ImageElement image,boolean horizontal,boolean vertical,@Nullable Canvas workingCanvas){
+	
+	if(workingCanvas==null){
+		workingCanvas=Canvas.createIfSupported();
+	}
+	
+	int w=image.getWidth();
+	int h=image.getHeight();
+	//set size
+	CanvasUtils.setSize(workingCanvas, w,h);
+	workingCanvas.getContext2d().save();
+	int x=horizontal?w:0;
+	int y=vertical?h:0;
+	int scaleX=horizontal?-1:1;
+	int scaleY=vertical?-1:1;
+	workingCanvas.getContext2d().save();
+	workingCanvas.getContext2d().translate(x, y);
+	workingCanvas.getContext2d().scale(scaleX, scaleY);
+	workingCanvas.getContext2d().drawImage(image, 0, 0);
+	workingCanvas.getContext2d().restore();
+	workingCanvas.getContext2d().restore();
+	return workingCanvas;
+}
 
 
 public static Canvas copytoCanvas(ImageElement element,Canvas canvas){

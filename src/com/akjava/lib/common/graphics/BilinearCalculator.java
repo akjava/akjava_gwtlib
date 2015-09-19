@@ -22,7 +22,7 @@ public BilinearCalculator(int width, int height) {
  */
 public double calculateValue(double x,double y,double value,double rightValue,double bottomValue,double rightBottomValue){
 	
-	if(x>width){
+	if(x>width){ //means getValue only
 		x=width;
 	}
 	if(y>height){
@@ -33,7 +33,7 @@ public double calculateValue(double x,double y,double value,double rightValue,do
     double valueRatioX=1.0-rightRatio;
 	
     double bottomRatio=y%1;
-    double valueRatioY=1.0-rightRatio;
+    double valueRatioY=1.0-bottomRatio;
     
     double upSide=valueRatioX*value+rightRatio*rightValue;
     double downSide=valueRatioX*bottomValue+rightRatio*rightBottomValue;
@@ -54,18 +54,16 @@ public static interface BilinearValueGetter{
 	public double getRightBottomValue(int x,int y);
 }
 
-public static  class SizeLimitBilinearValueGetter implements BilinearValueGetter{
-	private int width;
-	private int height;
-	public SizeLimitBilinearValueGetter(int width, int height) {
+public static  abstract class AbstractSizeLimitBilinearValueGetter implements BilinearValueGetter{
+	protected int width;
+	protected int height;
+	public AbstractSizeLimitBilinearValueGetter(int width, int height) {
 		super();
 		this.width = width;
 		this.height = height;
 	}
 
-	public double getValueAt(int x,int y){
-		return 0;
-	}
+	public abstract double getValueAt(int x,int y);
 	
 	@Override
 	public double getValue(int x, int y) {
@@ -74,7 +72,7 @@ public static  class SizeLimitBilinearValueGetter implements BilinearValueGetter
 
 	@Override
 	public double getRightValue(int x, int y) {
-		if(x+1>width){
+		if(x+1>=width){
 			return getValueAt(x,y);
 		}
 		return getValueAt(x+1,y);
@@ -82,7 +80,7 @@ public static  class SizeLimitBilinearValueGetter implements BilinearValueGetter
 
 	@Override
 	public double getBottomValue(int x, int y) {
-		if(y+1>height){
+		if(y+1>=height){
 			return getValueAt(x,y);
 		}
 		return getValueAt(x,y+1);
@@ -90,7 +88,7 @@ public static  class SizeLimitBilinearValueGetter implements BilinearValueGetter
 
 	@Override
 	public double getRightBottomValue(int x, int y) {
-		if(x+1>width|| y+1>height){
+		if(x+1>=width|| y+1>=height){
 			return getValueAt(x,y);
 		}
 		return getValueAt(x+1,y+1);

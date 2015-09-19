@@ -68,14 +68,22 @@ private static Canvas sharedCanvas=Canvas.createIfSupported();//TODO delay
 		canvas.getContext2d().strokeRect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
 	}
 
+	public static void fillCircle(Rect rect,Canvas canvas,boolean inbox){
+		fillCircle(canvas,rect.getX(),rect.getY(),rect.getWidth(),rect.getHeight(),inbox);
+	}
+	
+	public static void fillCircle(Canvas canvas,int x,int y,int width,int height,boolean inbox){
+		drawCircle(canvas,x,y,width,height,inbox,false);
+	}
+	
 	public static void strokeCircle(Rect rect,Canvas canvas,boolean inbox){
 		strokeCircle(canvas,rect.getX(),rect.getY(),rect.getWidth(),rect.getHeight(),inbox);
 	}
 	
-	/*
-	 * this draw circle not oval
-	 */
 	public static void strokeCircle(Canvas canvas,int x,int y,int width,int height,boolean inbox){
+		drawCircle(canvas,x,y,width,height,inbox,true);
+	}
+	private static void drawCircle(Canvas canvas,int x,int y,int width,int height,boolean inbox,boolean stroke){
 		int cx=x+width/2;
 		int cy=y+height/2;
 		
@@ -96,7 +104,12 @@ private static Canvas sharedCanvas=Canvas.createIfSupported();//TODO delay
 		
 		context.closePath();
 		
-		context.stroke();
+		if(stroke){
+			context.stroke();
+		}else{
+			context.fill();
+		}
+		
 	}
 	
 	

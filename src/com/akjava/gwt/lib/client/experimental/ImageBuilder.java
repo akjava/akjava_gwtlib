@@ -7,15 +7,15 @@ import com.akjava.gwt.lib.client.CanvasUtils;
 import com.akjava.gwt.lib.client.ImageElementUtils;
 import com.akjava.gwt.lib.client.LogUtils;
 import com.akjava.lib.common.io.FileType;
+import com.google.common.base.Optional;
 import com.google.gwt.canvas.client.Canvas;
-import com.google.gwt.canvas.dom.client.ImageData;
 import com.google.gwt.dom.client.ImageElement;
 
 public class ImageBuilder {
 public static Canvas sharedCanvas;
 	public static Canvas getSharedCanvas() {
 	if(sharedCanvas==null){
-		LogUtils.log("initialized-shared-canvas");
+		//LogUtils.log("initialized-shared-canvas");
 		sharedCanvas=Canvas.createIfSupported();
 	}
 	return sharedCanvas;
@@ -157,6 +157,17 @@ protected FileType fileType=FileType.PNG;
 	public ImageBuilder on(FileType fileType){
 		this.fileType=fileType;
 		return this;
+	}
+	
+	public ImageBuilder onFileName(String fileName){
+		Optional<FileType> type=FileType.getFileTypeFromFileName(fileName);
+		FileType fileType;
+		if(type.isPresent()){
+			fileType=type.get();
+		}else{
+			fileType=FileType.PNG;
+		}
+		return this.on(fileType);
 	}
 	
 	//for write FileSystem API

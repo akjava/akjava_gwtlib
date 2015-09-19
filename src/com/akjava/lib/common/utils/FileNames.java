@@ -1,6 +1,11 @@
 package com.akjava.lib.common.utils;
 
-import com.google.common.base.Ascii;
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.google.common.base.Strings;
 
 
@@ -92,6 +97,7 @@ public class FileNames {
 	 * @return
 	 */
 	public  static String getExtension(String name){
+		checkNotNull(name,"getExtension():name must not be null");
 		String ext;
 		if(name.lastIndexOf(".")==-1){
 			ext="";
@@ -109,7 +115,7 @@ public class FileNames {
 	 * @return
 	 */
 	public  static String getRemovedExtensionName(String name){
-		
+		checkNotNull(name,"getRemovedExtensionName():name must not be null");
 		String baseName;
 		if(name.lastIndexOf(".")==-1){
 			baseName=name;
@@ -119,6 +125,42 @@ public class FileNames {
 			baseName=name.substring(0,index);
 		}
 		return baseName;
+	}
+	
+	/*
+	 * try name03 > name , name1 > name
+	 */
+	public  static String getRemovedLastNumbers(String name){
+		if(name==null || name.isEmpty()){
+			return name;
+		}
+		int index=name.length()-1;
+		for(int i=name.length()-1;i>=0;i--){
+			if(!Character.isDigit(name.charAt(i))){
+				index=i;
+				break;
+			}
+		}
+		
+		return name.substring(0,index+1);
+	}
+	
+	//TODO support pattern?
+	/*
+	 * for creating uniq name
+	 */
+	public  static String createotExistNumberName(List<String> exists,String name,int start){
+		Map<String,String> map=new HashMap<String, String>();
+		for(String ex:exists){
+			map.put(ex, "");
+		}
+		String fileName=null;
+		do{
+			fileName=name+start;
+			start++;
+		}while(map.get(fileName)!=null);
+		
+		return fileName;
 	}
 	
 	public   String getChangedExtensionName(String path,String extension){

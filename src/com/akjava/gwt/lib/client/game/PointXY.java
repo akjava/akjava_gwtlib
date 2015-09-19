@@ -26,6 +26,18 @@ public int length(int x,int y){
 	return dx+dy;
 }
 
+public void incrementX(int x){
+	this.x+=x;
+}
+
+public void incrementY(int y){
+	this.y+=y;
+}
+
+public void incrementXY(int x,int y){
+	this.x+=x;
+	this.y+=y;
+}
 
 public PointD toPointD(){
 	return new PointD(x,y);

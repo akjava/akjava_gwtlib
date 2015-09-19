@@ -109,9 +109,20 @@ public class GWTHTMLUtils {
 	element.onselectstart = function () { return false; }
 
 	}-*/;
+	public native final static void disableSelectionEnd(Element element)/*-{
+	element.onselectend = function () { return false; }
+
+	}-*/;
 	public native final static void disableOnDragAndDrop(Element element)/*-{
 		element.ondrag = function (){return false;};
 	element.ondragstart = function (){return false;};
 	element.ondragend = function (){return false;};
+	}-*/;
+	
+	public native final static void disableContextMenu(Element element)/*-{
+	element.oncontextmenu = function (e) {
+    e.preventDefault();
+	};
+
 	}-*/;
 }

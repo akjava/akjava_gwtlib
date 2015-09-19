@@ -2,6 +2,7 @@ package com.akjava.gwt.lib.client.experimental;
 
 import com.akjava.gwt.lib.client.LogUtils;
 import com.google.gwt.canvas.client.Canvas;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
@@ -20,7 +21,16 @@ public  class CanvasDragMoveControler{
 	}
 	
 	private boolean isShiftKeyDown;
+	private boolean rightMouse;
 	
+	public boolean isRightMouse() {
+		return rightMouse;
+	}
+
+	public void setRightMouse(boolean rightMouse) {
+		this.rightMouse = rightMouse;
+	}
+
 	public boolean isShiftKeyDown() {
 		return isShiftKeyDown;
 	}
@@ -42,6 +52,11 @@ public  class CanvasDragMoveControler{
 
 			@Override
 			public void onMouseUp(MouseUpEvent event) {
+				if(event.getNativeButton()==NativeEvent.BUTTON_RIGHT){
+					rightMouse=true;
+				}else{
+					rightMouse=false;
+				}
 				isShiftKeyDown=event.isShiftKeyDown();
 				end(event.getX(), event.getY());
 			}
@@ -51,6 +66,11 @@ public  class CanvasDragMoveControler{
 			
 			@Override
 			public void onMouseDown(MouseDownEvent event) {
+				if(event.getNativeButton()==NativeEvent.BUTTON_RIGHT){
+					rightMouse=true;
+				}else{
+					rightMouse=false;
+				}
 				isShiftKeyDown=event.isShiftKeyDown();
 				start(event.getX(), event.getY());
 			}
@@ -61,6 +81,11 @@ public  class CanvasDragMoveControler{
 			@Override
 			public void onMouseOut(MouseOutEvent event) {
 				isShiftKeyDown=event.isShiftKeyDown();
+				if(event.getNativeButton()==NativeEvent.BUTTON_RIGHT){
+					rightMouse=true;
+				}else{
+					rightMouse=false;
+				}
 				end(event.getX(), event.getY());
 			}
 		});
@@ -95,11 +120,13 @@ public  class CanvasDragMoveControler{
 		int dy=y-startY;
 		
 		
-		
+		movedX=x;
+		movedY=y;
 		
 		if(moveListener!=null && (dx!=0 || dy!=0)){
 			moveListener.dragged(startX, startY,x,y, dx, dy);
 		}
+		
 		
 		
 		

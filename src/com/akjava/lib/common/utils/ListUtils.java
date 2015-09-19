@@ -50,13 +50,24 @@ public class ListUtils {
 	}
 	
 	private static ArrayTool<?> arrayTool=null;
-	//TODO find way to uncheck
+	//TODO find way to 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static  List shuffle(List list){
 		if(arrayTool==null){
 			arrayTool=new ArrayTool();
 		}
 		return arrayTool.shuffle2(list);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static  boolean isTop(List list,Object object){
+		return list.indexOf(object) ==0 ;
+		
+	}
+	@SuppressWarnings("rawtypes")
+	public static  boolean isBottom(List list,Object object){
+		return list.indexOf(object) == list.size()-1 ;
+		
 	}
 	
 }
