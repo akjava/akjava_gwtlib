@@ -1,5 +1,7 @@
 package com.akjava.gwt.lib.client.game;
 
+import com.akjava.lib.common.utils.ValuesUtils;
+
 /*
  * Simple Point
  */
@@ -33,10 +35,14 @@ public void incrementX(int x){
 public void incrementY(int y){
 	this.y+=y;
 }
+public PointXY copy(){
+	return new PointXY(x,y);
+}
 
-public void incrementXY(int x,int y){
+public PointXY incrementXY(int x,int y){
 	this.x+=x;
 	this.y+=y;
+	return this;
 }
 
 public PointD toPointD(){
@@ -46,6 +52,21 @@ public PointXY between(PointXY pt){
 	int diffX=pt.x-x;
 	int diffY=pt.y-y;
 	return new PointXY(x+diffX/2,y+diffY/2);
+}
+
+public static PointXY fromString(String text){
+	if(text==null || text.isEmpty()){
+		return new PointXY(0, 0);
+	}
+	
+	int index=text.indexOf("x");
+	if(index==-1){
+		return new PointXY(0, 0);
+	}
+	int x=ValuesUtils.toInt(text.substring(0,index), 0);
+	int y=ValuesUtils.toInt(text.substring(index+1), 0);
+	
+	return new PointXY(x,y);
 }
 
 public int y ;

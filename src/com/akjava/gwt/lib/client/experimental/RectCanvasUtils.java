@@ -43,6 +43,10 @@ private static Canvas sharedCanvas=Canvas.createIfSupported();//TODO delay
 		return retCanvas;
 	}
 	
+	public static Rect createRectFromCanvasSize(Canvas canvas){
+		return new Rect(0, 0, canvas.getCoordinateSpaceWidth(), canvas.getCoordinateSpaceHeight());
+	}
+	
 	
 	public static Canvas crop(ImageElement image,Rect rect,@Nullable Canvas retCanvas){
 		checkNotNull(image);

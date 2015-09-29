@@ -2,7 +2,10 @@ package com.akjava.lib.common.graphics;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import com.akjava.gwt.lib.client.LogUtils;
+import java.util.List;
+
+import com.akjava.gwt.lib.client.game.PointD;
+import com.akjava.gwt.lib.client.game.PointXY;
 import com.akjava.lib.common.utils.ValuesUtils;
 
 public class Rect {
@@ -106,6 +109,10 @@ public Rect expand(int w,int h){
 	return new Rect(x-w/2,y-h/2,width+w,height+h);
 }
 
+public void expandSelf(int w,int h){
+	set(x-w/2,y-h/2,width+w,height+h);
+}
+
 public Rect expandIn(int w,int h,int maxW,int maxH){
 	Rect r= expand(w,h);
 	if(r.getX()<0){
@@ -126,6 +133,30 @@ public Rect expandIn(int w,int h,int maxW,int maxH){
 	return r;
 }
 
+public static Rect fromPoints(List<PointXY> points){
+	Rect rect=new Rect();
+	int minX=Integer.MAX_VALUE;int minY=Integer.MAX_VALUE;int maxX=Integer.MIN_VALUE;int maxY=Integer.MIN_VALUE;
+	
+	for(PointXY pt:points){
+		if(pt.getX()<minX){
+			minX=pt.getX();
+		}
+		if(pt.getY()<minY){
+			minY=pt.getY();
+		}
+		if(pt.getX()>maxX){
+			maxX=pt.getX();
+		}
+		if(pt.getY()>maxY){
+			maxY=pt.getY();
+		}
+	}
+	int w=maxX-minX;
+	int h= maxY-minY;
+	
+	rect.set(minX, minY, w,h);
+	return rect;
+}
 
 
 public Rect rightTop(int size){
@@ -245,6 +276,9 @@ public void expandBottom(int vector) {
 }
 public void expandRight(int vectorX) {
 	width+=vectorX;
+}
+public PointD getCenterPoint() {
+	return new PointD(x+(double)width/2,y+(double)height/2);
 }
 
 }

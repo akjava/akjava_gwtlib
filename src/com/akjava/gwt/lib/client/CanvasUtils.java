@@ -2,7 +2,7 @@ package com.akjava.gwt.lib.client;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.util.Iterator;
+import java.util.List;
 
 import javax.annotation.Nullable;
 
@@ -544,8 +544,11 @@ public static void drawLine(Canvas canvas, double x1, double y1, double x2, doub
 	c2d.stroke();
 }
 public static void fillPoint(Canvas canvas, double x1, double y1) {
-	canvas.getContext2d().fillRect(x1, y1, 1, 1);
+	Context2d c2d=canvas.getContext2d();
+	double v=c2d.getLineWidth();
+	c2d.fillRect(x1, y1, v, v);
 }
+
 
 public static void setSize(Canvas canvas, int w, int h) {
 	if(canvas!=null){
@@ -616,6 +619,26 @@ public static Canvas createCanvas(ImageElement element) {
 	return ImageElementUtils.copytoCanvas(element, null);
 }
 
+public static void draw(Canvas canvas, List<PointXY> points,boolean stroke,@Nullable String style) {
+	if(style!=null){
+		canvas.getContext2d().setStrokeStyle(style);
+	}
+	canvas.getContext2d().beginPath();
+	PointXY pt=points.get(points.size()-1);
+	canvas.getContext2d().moveTo(pt.x, pt.y);
+	for(int i=0;i<points.size();i++){
+		pt=points.get(i);
+		canvas.getContext2d().lineTo(pt.x, pt.y);
+	}
+	canvas.getContext2d().closePath();
+	if(stroke){
+		canvas.getContext2d().stroke();
+	}else{
+		canvas.getContext2d().fill();
+	}
+	
+}
+
 public static void draw(Canvas canvas, PointXY[] points,boolean stroke,@Nullable String style) {
 	if(style!=null){
 		canvas.getContext2d().setStrokeStyle(style);
@@ -634,6 +657,24 @@ public static void draw(Canvas canvas, PointXY[] points,boolean stroke,@Nullable
 		canvas.getContext2d().fill();
 	}
 	
+}
+
+public static Canvas copyTo(ImageElement image, @Nullable Canvas canvas) {
+	return ImageElementUtils.copytoCanvas(image, canvas);
+}
+
+public static void drawDataUrl(Canvas canvas, String dataUrl) {
+	checkNotNull(dataUrl,"drawDataUrl:dataUrl must not null");
+	drawImage(canvas, ImageElementUtils.create(dataUrl));
+}
+
+public static void scaleViewerSize(Canvas canvas, double value) {
+	canvas.setWidth((canvas.getCoordinateSpaceWidth()*value)+"px");
+	canvas.setHeight((canvas.getCoordinateSpaceHeight()*value)+"px");
+}
+
+public static void resizeCanvasFrom(ImageElement imageElement, Canvas canvas) {
+	ImageElementUtils.copytoCanvas(imageElement, canvas,false);
 }
 
 /*

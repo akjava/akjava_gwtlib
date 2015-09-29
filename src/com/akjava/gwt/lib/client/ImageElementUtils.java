@@ -25,6 +25,7 @@ private ImageElementUtils(){}
  * @return
  */
 public static ImageElement create(String url){
+	checkNotNull(url,"ImageElementUtils:imageElement need url");
 	ImageElement element=Document.get().createImageElement();
 	element.setSrc(url);
 	return element;
@@ -215,6 +216,26 @@ public static void copyImageData(ImageData data,int x1,int y1,int x2,int y2,int 
 	data.setRedAt((data.getRedAt(x1, y1)+data.getRedAt(x2, y2))/2, x3, y3);
 	data.setGreenAt((data.getGreenAt(x1, y1)+data.getGreenAt(x2, y2))/2, x3, y3);
 	data.setBlueAt((data.getBlueAt(x1, y1)+data.getBlueAt(x2, y2))/2, x3, y3);
+}
+
+public static boolean isSameSize(ImageElement image, @Nullable ImageElement image2) {
+	checkNotNull(image,"isSameSize:image is null");
+	if(image2==null){
+		return false;
+	}
+	
+	return image.getWidth()==image2.getWidth() && image.getHeight()==image2.getHeight();
+}
+/**
+ * 
+ * @param imageElement
+ * @return possible null if input is null
+ */
+public static ImageElement copy(@Nullable ImageElement imageElement) {
+	if(imageElement==null){
+		return null;
+	}
+	return create(imageElement.getSrc());
 }
 
 

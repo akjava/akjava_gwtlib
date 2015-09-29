@@ -63,7 +63,8 @@ public class FileType {
 	public static Optional<FileType> getFileTypeFromFileName(String fileName){
 		String extension=FileNames.getExtension(fileName);
 		FileType type=FileType.getFileTypeByExtension(extension);
-		return Optional.of(type);
+		
+		return Optional.fromNullable(type);
 	}
 	/**
 	 * 

@@ -26,6 +26,19 @@ public double length(double x,double y){
 	return dx+dy;
 }
 
+public static PointD turnedAngle(PointD center,PointD point,double angle){
+	return turnedAngle(center.x,center.y,point.x,point.y,angle);
+}
+
+public static PointD turnedAngle(double centerx,double centery,double px,double py,double angle){
+	double x=px-centerx;
+	double y=py-centery;
+	double radian=Math.toRadians(angle);
+	double turnedX=Math.cos(radian)*x-Math.sin(radian)*y;
+	double turnedY=Math.cos(radian)*y+Math.sin(radian)*x;
+	return new PointD(turnedX+centerx, turnedY+centery);
+}
+
 public PointD createOffsetedPoint(double offx,double offy){
 	return new PointD(x+offx,y+offy);
 }
