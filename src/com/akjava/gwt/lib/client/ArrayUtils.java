@@ -2,15 +2,37 @@ package com.akjava.gwt.lib.client;
 
 import java.util.Collection;
 
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
 
 
+/**
+ * 
+ *  * http://docs.oracle.com/javase/6/docs/api/java/util/Arrays.html
+	* https://github.com/google/guava/wiki/PrimitivesExplained
+ * 
+ * should use com.google.common.collect.Table
+ * but toArray not support on GWT,so still need these old style class
+ * @author aki
+ *
+ */
 public class ArrayUtils {
 
+	/**
+	 * see
+	 *
+	
+	 * 
+	 * sadly FluentIterable.from(vs).toArray(String.class) not work on GWT
+	 * @param vs
+	 * @return
+	 */
 	public static String[] iterableToArray(Iterable<String> vs){
+		
 		Collection<String> collection =  Lists.newArrayList(vs);
 	    String[] array = new String[collection.size()];
 	    return collection.toArray(array);
+	   
 	}
 	
 	public static int[][] createIntYXArray(int x,int y,int defaultValue){
@@ -70,6 +92,9 @@ public class ArrayUtils {
 		return ret;
 	}
 	
+	/*
+	 * 
+	 */
 	public static class ArrayIntGrid{
 		private int[][] data;
 		private int rows;
