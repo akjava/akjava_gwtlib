@@ -19,7 +19,7 @@ add this line at your module.xml
 <inherits name='com.akjava.gwt.common.Common'/>
 ```
 
-package summary
+Package summary
 -------
 
 basically something chaos..
