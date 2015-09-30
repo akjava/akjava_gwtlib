@@ -7,5 +7,9 @@
 	<classpathentry kind="lib" path="lib/jsr305.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/html5gwt"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER/gwt-2.6.1"/>
+	<classpathentry kind="lib" path="lib/akjavahtml5gwt_150706.jar"/>
+	<classpathentry kind="lib" path="lib/guava-gwt.jar"/>
+	<classpathentry kind="lib" path="lib/guava-sources.jar"/>
+	<classpathentry kind="lib" path="lib/guava.jar" sourcepath="lib/guava-sources.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
