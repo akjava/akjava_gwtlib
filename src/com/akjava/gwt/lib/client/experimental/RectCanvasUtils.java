@@ -6,7 +6,7 @@ import javax.annotation.Nullable;
 
 import com.akjava.gwt.lib.client.CanvasUtils;
 import com.akjava.gwt.lib.client.ImageElementUtils;
-import com.akjava.gwt.lib.client.LogUtils;
+import com.akjava.lib.common.graphics.IntRect;
 import com.akjava.lib.common.graphics.Rect;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
@@ -14,7 +14,7 @@ import com.google.gwt.dom.client.ImageElement;
 
 public class RectCanvasUtils {
 private static Canvas sharedCanvas=Canvas.createIfSupported();//TODO delay
-	public static Canvas crop(String dataUrl,Rect rect,@Nullable Canvas retCanvas){
+	public static Canvas crop(String dataUrl,IntRect rect,@Nullable Canvas retCanvas){
 		checkNotNull(dataUrl);
 		checkNotNull(rect);
 		Canvas imageCanvas=ImageElementUtils.copytoCanvas(dataUrl, sharedCanvas);
@@ -26,7 +26,7 @@ private static Canvas sharedCanvas=Canvas.createIfSupported();//TODO delay
 		return retCanvas;
 	}
 	
-	public static Canvas crop(Canvas canvas,Rect rect,@Nullable Canvas retCanvas){
+	public static Canvas crop(Canvas canvas,IntRect rect,@Nullable Canvas retCanvas){
 		checkNotNull(rect);
 		return crop(canvas,rect.getX(),rect.getY(),rect.getWidth(),rect.getHeight(),retCanvas);
 	}
@@ -43,12 +43,12 @@ private static Canvas sharedCanvas=Canvas.createIfSupported();//TODO delay
 		return retCanvas;
 	}
 	
-	public static Rect createRectFromCanvasSize(Canvas canvas){
-		return new Rect(0, 0, canvas.getCoordinateSpaceWidth(), canvas.getCoordinateSpaceHeight());
+	public static IntRect createRectFromCanvasSize(Canvas canvas){
+		return new IntRect(0, 0, canvas.getCoordinateSpaceWidth(), canvas.getCoordinateSpaceHeight());
 	}
 	
 	
-	public static Canvas crop(ImageElement image,Rect rect,@Nullable Canvas retCanvas){
+	public static Canvas crop(ImageElement image,IntRect rect,@Nullable Canvas retCanvas){
 		checkNotNull(image);
 		checkNotNull(rect);
 		
@@ -61,9 +61,15 @@ private static Canvas sharedCanvas=Canvas.createIfSupported();//TODO delay
 		return retCanvas;
 	}
 
-	public static void fill(Rect r, Canvas canvas, String style) {
+	public static void fill(IntRect r, Canvas canvas, String style) {
 		canvas.getContext2d().setFillStyle(style);
 		canvas.getContext2d().fillRect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+	}
+	public static void stroke(IntRect r, Canvas canvas, @Nullable String style) {
+		if(style!=null){
+			canvas.getContext2d().setStrokeStyle(style);
+		}
+		canvas.getContext2d().strokeRect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
 	}
 	public static void stroke(Rect r, Canvas canvas, @Nullable String style) {
 		if(style!=null){
@@ -72,7 +78,7 @@ private static Canvas sharedCanvas=Canvas.createIfSupported();//TODO delay
 		canvas.getContext2d().strokeRect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
 	}
 
-	public static void fillCircle(Rect rect,Canvas canvas,boolean inbox){
+	public static void fillCircle(IntRect rect,Canvas canvas,boolean inbox){
 		fillCircle(canvas,rect.getX(),rect.getY(),rect.getWidth(),rect.getHeight(),inbox);
 	}
 	
@@ -80,7 +86,7 @@ private static Canvas sharedCanvas=Canvas.createIfSupported();//TODO delay
 		drawCircle(canvas,x,y,width,height,inbox,false);
 	}
 	
-	public static void strokeCircle(Rect rect,Canvas canvas,boolean inbox){
+	public static void strokeCircle(IntRect rect,Canvas canvas,boolean inbox){
 		strokeCircle(canvas,rect.getX(),rect.getY(),rect.getWidth(),rect.getHeight(),inbox);
 	}
 	
@@ -117,7 +123,7 @@ private static Canvas sharedCanvas=Canvas.createIfSupported();//TODO delay
 	}
 	
 	
-	public static void strokeOval(Rect rect,Canvas canvas,boolean inbox){
+	public static void strokeOval(IntRect rect,Canvas canvas,boolean inbox){
 		strokeOval(canvas,rect.getX(),rect.getY(),rect.getWidth(),rect.getHeight(),inbox);
 	}
 	public static void strokeOval(Canvas canvas,int x,int y,int width,int height,boolean inbox){

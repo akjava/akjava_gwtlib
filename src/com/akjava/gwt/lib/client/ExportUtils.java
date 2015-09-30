@@ -4,6 +4,10 @@ import com.google.gwt.user.client.Window;
 
 public class ExportUtils {
 
+	/*
+	 * trying export data with tab.
+	 * Html5Download is nice way
+	 */
 	public static native final void openTabTextChrome(String text,String wname)/*-{
 	win = $wnd.open("", wname)
 	win.document.body.innerText =""+text+"";

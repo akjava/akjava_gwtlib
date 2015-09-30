@@ -2,7 +2,7 @@ package com.akjava.gwt.lib.client.experimental.opencv;
 
 import java.util.List;
 
-import com.akjava.lib.common.graphics.Rect;
+import com.akjava.lib.common.graphics.IntRect;
 import com.akjava.lib.common.utils.ValuesUtils;
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Converter;
@@ -37,7 +37,7 @@ public  class CVImageDataConverter extends Converter<String, CVImageData>{
 						int w=ValuesUtils.toInt(values.get(findex+2), 0);
 						int h=ValuesUtils.toInt(values.get(findex+3), 0);
 						if(x>=0 && y>=0 && w>0 && h>0){
-							data.getRects().add(new Rect(x,y,w,h));
+							data.getRects().add(new IntRect(x,y,w,h));
 						}
 					}
 				}
@@ -59,7 +59,7 @@ public  class CVImageDataConverter extends Converter<String, CVImageData>{
 			if(data.getRects().size()>0){
 			vs.add(String.valueOf(data.getRects().size()));
 			}
-			for(Rect r:data.getRects()){
+			for(IntRect r:data.getRects()){
 				
 				//sadly some case throw double value
 				String x=String.valueOf(r.getX());

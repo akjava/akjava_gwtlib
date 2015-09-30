@@ -1,6 +1,7 @@
 package com.akjava.gwt.lib.client;
 
 import com.akjava.gwt.lib.client.MultiImageElementLoader.MultiImageElementListener;
+import com.google.common.base.Ascii;
 import com.google.common.collect.Lists;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
@@ -8,6 +9,8 @@ import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.typedarrays.shared.ArrayBuffer;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.xhr.client.ReadyStateChangeHandler;
 import com.google.gwt.xhr.client.XMLHttpRequest;
 import com.google.gwt.xhr.client.XMLHttpRequest.ResponseType;
@@ -22,6 +25,23 @@ public class BrowserUtils {
 	}
 	public static boolean isFirefox(){
 		return getUserAgent().indexOf("firefox")!=-1;
+	}
+	public final native static boolean isIOS()/*-{
+	return navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false ;
+	}-*/;
+
+	public static boolean isIE(){
+		String agent=Window.Navigator.getUserAgent().toLowerCase();
+		return agent.indexOf("msie")!=-1 || agent.indexOf("trident")!=-1;
+	}
+
+	public static boolean isIAndroid(){
+		String agent=Navigator.getUserAgent();
+		if(Ascii.toLowerCase(agent).indexOf("android")!=-1){
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
 	public interface LoadBinaryListener{

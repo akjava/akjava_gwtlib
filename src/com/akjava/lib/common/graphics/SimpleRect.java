@@ -5,7 +5,7 @@ package com.akjava.lib.common.graphics;
  * @author aki
  *
  */
-public class IntegerRect {
+public class SimpleRect {
 	 private int x,y,width,height;
 	 public int getX() {
 		return x;
@@ -31,10 +31,10 @@ public class IntegerRect {
 	public void setHeight(int height) {
 		this.height = height;
 	}
-	public IntegerRect(){
+	public SimpleRect(){
 		 super();
 	 }
-	public IntegerRect(int x, int y, int width, int height) {
+	public SimpleRect(int x, int y, int width, int height) {
 		super();
 		this.x = x;
 		this.y = y;

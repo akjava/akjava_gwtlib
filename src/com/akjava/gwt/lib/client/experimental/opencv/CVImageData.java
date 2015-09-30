@@ -2,7 +2,7 @@ package com.akjava.gwt.lib.client.experimental.opencv;
 
 import java.util.List;
 
-import com.akjava.lib.common.graphics.Rect;
+import com.akjava.lib.common.graphics.IntRect;
 import com.google.common.collect.Lists;
 
 /*
@@ -16,12 +16,12 @@ public  class CVImageData implements HasRects{
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-	public List<Rect> getRects() {
+	public List<IntRect> getRects() {
 		return rects;
 	}
-	public void setRects(List<Rect> rects) {
+	public void setRects(List<IntRect> rects) {
 		this.rects = rects;
 	}
-	private List<Rect> rects=Lists.newArrayList();
+	private List<IntRect> rects=Lists.newArrayList();
 }
 

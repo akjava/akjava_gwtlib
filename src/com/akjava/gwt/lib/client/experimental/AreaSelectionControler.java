@@ -7,7 +7,7 @@ import com.akjava.gwt.lib.client.LogUtils;
 import com.akjava.gwt.lib.client.experimental.CanvasDragMoveControler;
 import com.akjava.gwt.lib.client.experimental.CanvasMoveListener;
 import com.akjava.gwt.lib.client.experimental.CursorUtils;
-import com.akjava.lib.common.graphics.Rect;
+import com.akjava.lib.common.graphics.IntRect;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
@@ -19,8 +19,8 @@ import com.google.gwt.event.dom.client.MouseMoveHandler;
  */
 public class AreaSelectionControler {
 	private CanvasDragMoveControler canvasControler;
-	private Rect selectionRect=new Rect();
-	public Rect getSelectionRect() {
+	private IntRect selectionRect=new IntRect();
+	public IntRect getSelectionRect() {
 		return selectionRect;
 	}
 	
@@ -66,7 +66,7 @@ canvasControler = new CanvasDragMoveControler(canvas,new CanvasMoveListener() {
 			int initialStartX;
 			int initialStartY;
 			int mode;
-			Rect lastRect;
+			IntRect lastRect;
 			
 		
 			/**

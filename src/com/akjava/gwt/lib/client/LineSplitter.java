@@ -6,7 +6,11 @@ import java.util.List;
 import com.google.gwt.core.client.Scheduler.RepeatingCommand;
 
 
-
+/**
+ * for large data?
+ * @author aki
+ *
+ */
 public class LineSplitter implements RepeatingCommand{
 private List<String> lines=new ArrayList<String>();
 private int consumeTime;

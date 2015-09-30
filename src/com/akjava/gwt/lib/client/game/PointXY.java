@@ -5,6 +5,11 @@ import com.akjava.lib.common.utils.ValuesUtils;
 /*
  * Simple Point
  */
+/**
+ * @deprecated use Point
+ * @author aki
+ *
+ */
 public class PointXY {
 public int x;
 public int getX() {

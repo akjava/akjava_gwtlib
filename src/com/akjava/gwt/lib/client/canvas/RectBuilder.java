@@ -1,7 +1,7 @@
 package com.akjava.gwt.lib.client.canvas;
 
 import com.akjava.gwt.lib.client.LogUtils;
-import com.akjava.lib.common.graphics.Rect;
+import com.akjava.lib.common.graphics.IntRect;
 
 public class RectBuilder {
 	private int width;
@@ -44,7 +44,7 @@ public class RectBuilder {
 		return this;
 	}
 	
-	public Rect toRect(){
+	public IntRect toRect(){
 		int perX=width/sliceX;
 		int perY=height/sliceY;
 		
@@ -66,7 +66,7 @@ public class RectBuilder {
 			
 		}
 		
-		return new Rect(perX*currentX+ox, perY*currentY+oy, w, h);
+		return new IntRect(perX*currentX+ox, perY*currentY+oy, w, h);
 	}
 	
 	public RectBuilder topLeft(){

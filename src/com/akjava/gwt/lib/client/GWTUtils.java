@@ -18,15 +18,25 @@ public static String getSimpleName(Class clazz){
  * via http://stackoverflow.com/questions/9038625/detect-if-device-is-ios
  * @return
  */
+/**
+ * @deprecated use BrowserUtils.
+ * @return
+ */
 public final native static boolean isIOS()/*-{
 return navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false ;
 }-*/;
-
+/**
+ * @deprecated use BrowserUtils.
+ * @return
+ */
 public static boolean isIE(){
 	String agent=Window.Navigator.getUserAgent().toLowerCase();
 	return agent.indexOf("msie")!=-1 || agent.indexOf("trident")!=-1;
 }
-
+/**
+ * @deprecated use BrowserUtils.
+ * @return
+ */
 public static boolean isIAndroid(){
 	String agent=Navigator.getUserAgent();
 	if(Ascii.toLowerCase(agent).indexOf("android")!=-1){

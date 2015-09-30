@@ -4,6 +4,14 @@ import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.ImageData;
 import com.google.gwt.dom.client.ImageElement;
 
+/**
+ * @deprecated
+ * 
+ * do resize canvas with CanvasUtils
+ * on converting image use ImageBuilder.
+ * @author aki
+ *
+ */
 public class CanvasResizer {
 	private CanvasResizer(Canvas canvas) {
 		super();

@@ -10,7 +10,8 @@ import com.akjava.gwt.html5.client.download.HTML5Download;
 import com.akjava.gwt.html5.client.file.Uint8Array;
 import com.akjava.gwt.lib.client.experimental.ImageDataUtils;
 import com.akjava.gwt.lib.client.game.PointXY;
-import com.akjava.lib.common.graphics.Rect;
+import com.akjava.lib.common.graphics.IntRect;
+import com.akjava.lib.common.graphics.Point;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.ImageData;
@@ -126,8 +127,44 @@ public static void drawCenter(Canvas canvas,ImageElement image,int offsetX,int o
 	canvas.getContext2d().drawImage(image, 0,0);
 	canvas.getContext2d().restore();
 }
+public static void drawCenter(Canvas canvas,ImageElement image,double offsetX,double offsetY,double scaleX,double scaleY,double angle,double alpha){
+	
+	canvas.getContext2d().save();
+	double rx=(canvas.getCoordinateSpaceWidth())/2;
+	double ry=(canvas.getCoordinateSpaceHeight())/2;
+	
+	canvas.getContext2d().translate(rx,ry);//rotate center
+	double rotate=(Math.PI / 180)*angle;
+	canvas.getContext2d().rotate(rotate);
+	canvas.getContext2d().translate(-rx,-ry);//and back
+	
+	canvas.getContext2d().scale(scaleX,scaleY);
+	
+	double px=(canvas.getCoordinateSpaceWidth()/scaleX-image.getWidth())/2;
+	double py=(canvas.getCoordinateSpaceHeight()/scaleY-image.getHeight())/2;
+	
+	//LogUtils.log("w="+canvas.getCoordinateSpaceWidth()+",scaled="+(element.getWidth()*scale));
+	
+	//LogUtils.log("scale:"+scale+",x="+px+",y="+py);
+	
+	int ox=(int) (offsetX/scaleX);
+	int oy=(int) (offsetY/scaleY);
+	//canvas.getContext2d().rotate(-rotate);
+	
+	double x=ox;
+	double y=oy;
+	
+	//offset is effect on angle,but scroll no need do it
+	double nx = px+x * Math.cos(-rotate) - y * Math.sin(-rotate);
+	double ny = py+x * Math.sin(-rotate) + y * Math.cos(-rotate);
+	
+	canvas.getContext2d().translate(nx,ny);	
+	canvas.getContext2d().setGlobalAlpha(alpha);
+	canvas.getContext2d().drawImage(image, 0,0);
+	canvas.getContext2d().restore();
+}
 
-public static void drawCenter(Canvas canvas,CanvasElement canvasImage,int offsetX,int offsetY,double scaleX,double scaleY,double angle,double alpha){
+public static void drawCenter(Canvas canvas,CanvasElement canvasImage,double offsetX,double offsetY,double scaleX,double scaleY,double angle,double alpha){
 	canvas.getContext2d().save();
 	double rx=(canvas.getCoordinateSpaceWidth())/2;
 	double ry=(canvas.getCoordinateSpaceHeight())/2;
@@ -287,7 +324,7 @@ public static void drawFitImage(Canvas canvas,ImageElement img,int align,int val
 		}
 
 
-public static void drawFitImage(Canvas canvas,ImageElement img,Rect rect,int align,int valign){
+public static void drawFitImage(Canvas canvas,ImageElement img,IntRect rect,int align,int valign){
 	int cw=rect.getWidth();
 	int ch=rect.getHeight();
 	
@@ -618,8 +655,14 @@ public static Canvas createCanvas(String dataUrl,Canvas canvas) {
 public static Canvas createCanvas(ImageElement element) {
 	return ImageElementUtils.copytoCanvas(element, null);
 }
-
-public static void draw(Canvas canvas, List<PointXY> points,boolean stroke,@Nullable String style) {
+/**
+ * @deprecated use Point
+ * @param canvas
+ * @param points
+ * @param stroke
+ * @param style
+ */
+public static void drawPoint(Canvas canvas, List<PointXY> points,boolean stroke,@Nullable String style) {
 	if(style!=null){
 		canvas.getContext2d().setStrokeStyle(style);
 	}
@@ -638,6 +681,47 @@ public static void draw(Canvas canvas, List<PointXY> points,boolean stroke,@Null
 	}
 	
 }
+public static void draw(Canvas canvas, Point[]  points,boolean stroke,@Nullable String style) {
+	if(style!=null){
+		canvas.getContext2d().setStrokeStyle(style);
+	}
+	canvas.getContext2d().beginPath();
+	Point pt=points[points.length-1];
+	canvas.getContext2d().moveTo(pt.x, pt.y);
+	for(int i=0;i<points.length;i++){
+		pt=points[i];
+		canvas.getContext2d().lineTo(pt.x, pt.y);
+	}
+	canvas.getContext2d().closePath();
+	if(stroke){
+		canvas.getContext2d().stroke();
+	}else{
+		canvas.getContext2d().fill();
+	}
+	
+}
+
+public static void draw(Canvas canvas, List<Point> points,boolean stroke,@Nullable String style) {
+	if(style!=null){
+		canvas.getContext2d().setStrokeStyle(style);
+	}
+	canvas.getContext2d().beginPath();
+	Point pt=points.get(points.size()-1);
+	canvas.getContext2d().moveTo(pt.x, pt.y);
+	for(int i=0;i<points.size();i++){
+		pt=points.get(i);
+		canvas.getContext2d().lineTo(pt.x, pt.y);
+	}
+	canvas.getContext2d().closePath();
+	if(stroke){
+		canvas.getContext2d().stroke();
+	}else{
+		canvas.getContext2d().fill();
+	}
+	
+}
+
+
 
 public static void draw(Canvas canvas, PointXY[] points,boolean stroke,@Nullable String style) {
 	if(style!=null){

@@ -2,7 +2,7 @@ package com.akjava.gwt.lib.client.canvas;
 
 import com.akjava.gwt.lib.client.CanvasUtils;
 import com.akjava.gwt.lib.client.LogUtils;
-import com.akjava.lib.common.graphics.Rect;
+import com.akjava.lib.common.graphics.IntRect;
 import com.akjava.lib.common.utils.ValuesUtils;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.TextMetrics;
@@ -12,7 +12,7 @@ import com.google.gwt.regexp.shared.RegExp;
 public class CanvasTextUtils {
 
 	//TODO Test
-	public static void drawCenterInRect(Canvas canvas,String text,Rect rect){
+	public static void drawCenterInRect(Canvas canvas,String text,IntRect rect){
 		canvas.getContext2d().save();
 		TextMetrics metrix=canvas.getContext2d().measureText(text);
 		
@@ -38,7 +38,7 @@ public class CanvasTextUtils {
 		return 0;
 	}
 	
-	public static Rect getAlignRect(Canvas canvas,int cw,int ch,String text,int align,int valign){
+	public static IntRect getAlignRect(Canvas canvas,int cw,int ch,String text,int align,int valign){
 		TextMetrics metrix=canvas.getContext2d().measureText(text);
 		
 		double width=metrix.getWidth();
@@ -60,9 +60,9 @@ public class CanvasTextUtils {
 		dy=ch-height;	
 		}
 		
-		return new Rect((int)dx,(int)dy,(int)width,size);
+		return new IntRect((int)dx,(int)dy,(int)width,size);
 	}
-	public static Rect getAlignRect(Canvas canvas,String text,int align,int valign){
+	public static IntRect getAlignRect(Canvas canvas,String text,int align,int valign){
 		int cw=canvas.getCoordinateSpaceWidth();
 		int ch=canvas.getCoordinateSpaceHeight();
 		return getAlignRect(canvas,cw,ch,text,align,valign);

@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.akjava.gwt.lib.client.CanvasUtils;
 import com.akjava.gwt.lib.client.LogUtils;
-import com.akjava.lib.common.graphics.Rect;
+import com.akjava.lib.common.graphics.IntRect;
 import com.google.common.collect.Lists;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.dom.client.ImageElement;
@@ -16,11 +16,11 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class RectListEditor extends VerticalPanel implements LeafValueEditor<List<Rect>>{
+public class RectListEditor extends VerticalPanel implements LeafValueEditor<List<IntRect>>{
 	
 	public interface RectListListener{
-		public void onRectRemoved(Rect rect);
-		public void onRectSelected(Rect rect);
+		public void onRectRemoved(IntRect rect);
+		public void onRectSelected(IntRect rect);
 		//public void onRectAdded(Rect rect);
 	}
 	private List<RectListListener> listeners=Lists.newArrayList();
@@ -30,12 +30,12 @@ public class RectListEditor extends VerticalPanel implements LeafValueEditor<Lis
 	public void removeListener(RectListListener listener){
 		listeners.remove(listener);
 	}
-	private void fireOnRectRemoved(Rect rect){
+	private void fireOnRectRemoved(IntRect rect){
 		for(RectListListener listener:listeners){
 			listener.onRectRemoved(rect);
 		}
 	}
-	private void fireOnRectSelected(Rect rect){
+	private void fireOnRectSelected(IntRect rect){
 		for(RectListListener listener:listeners){
 			listener.onRectSelected(rect);
 		}
@@ -44,9 +44,9 @@ public class RectListEditor extends VerticalPanel implements LeafValueEditor<Lis
 	
 	private AreaSelectionControler areaControler;
 
-	private List<Rect> rectangles=new ArrayList<Rect>();
-	private Rect selectionRect;
-	public Rect getSelectionRect() {
+	private List<IntRect> rectangles=new ArrayList<IntRect>();
+	private IntRect selectionRect;
+	public IntRect getSelectionRect() {
 		return selectionRect;
 	}
 
@@ -81,7 +81,7 @@ public class RectListEditor extends VerticalPanel implements LeafValueEditor<Lis
 		//update current selection
 		syncSelectionFromAreaControler();
 		
-		Rect rect=new Rect();
+		IntRect rect=new IntRect();
 		rectangles.add(rect);
 		
 		setAndCopyToSelection(rect);
@@ -99,7 +99,7 @@ public class RectListEditor extends VerticalPanel implements LeafValueEditor<Lis
 			setAndCopyToSelection(rectangles.get(rectangles.size()-1));//last one
 			
 		}else{
-			Rect rect=new Rect();
+			IntRect rect=new IntRect();
 			rectangles.add(rect);
 			
 			setAndCopyToSelection(rect);
@@ -158,7 +158,7 @@ public class RectListEditor extends VerticalPanel implements LeafValueEditor<Lis
 	}
 	
 	
-	private void setAndCopyToSelection(Rect rect){
+	private void setAndCopyToSelection(IntRect rect){
 		selectionRect=rect;
 		selectionRect.copyTo(areaControler.getSelectionRect());
 		fireOnRectSelected(selectionRect);
@@ -169,7 +169,7 @@ public class RectListEditor extends VerticalPanel implements LeafValueEditor<Lis
 	}
 	protected List<String> whiteColor=Lists.newArrayList("#fff");
 	protected List<String> grayColor=Lists.newArrayList("#888");
-	public List<String> getRectColors(Rect rect){
+	public List<String> getRectColors(IntRect rect){
 		if(isAreaControlerSelectionRectHashWidthAndHeight()){
 			return whiteColor;
 		}else{
@@ -206,7 +206,7 @@ public class RectListEditor extends VerticalPanel implements LeafValueEditor<Lis
 			public void drawExtra(Canvas canvas){
 				int csize=4;
 				
-				for(Rect rect:rectangles){
+				for(IntRect rect:rectangles){
 					if(!readOnly && selectionRect==rect){
 						continue;
 					}
@@ -221,9 +221,9 @@ public class RectListEditor extends VerticalPanel implements LeafValueEditor<Lis
 			}
 			@Override
 			public boolean canContinueStart(int x,int y){
-				Rect closest=null;
+				IntRect closest=null;
 				int length=0;
-				for(Rect rect:rectangles){//check all rect and find 
+				for(IntRect rect:rectangles){//check all rect and find 
 					if(rect!=selectionRect && rect.contains(x, y)){
 						/*I'm not sure sync only this situation
 						if(areaControler.getSelectionRect().hasWidthAndHeight()){
@@ -277,21 +277,21 @@ public class RectListEditor extends VerticalPanel implements LeafValueEditor<Lis
 	}
 	
 	@Override
-	public void setValue(List<Rect> value) {
+	public void setValue(List<IntRect> value) {
 		rectangles.clear();
 		selectionRect=null;
 		
 		if(value==null){
-			value=new ArrayList<Rect>();
+			value=new ArrayList<IntRect>();
 		}
-		for(Rect rect:value){
+		for(IntRect rect:value){
 			if(rect.hasWidthAndHeight()){
 				rectangles.add(rect);
 			}
 		}
 		
 		if(rectangles.size()==0){
-			Rect rect=new Rect();//same as clear rect
+			IntRect rect=new IntRect();//same as clear rect
 			rectangles.add(rect);
 		}
 		
@@ -301,13 +301,13 @@ public class RectListEditor extends VerticalPanel implements LeafValueEditor<Lis
 	}
 
 	@Override
-	public List<Rect> getValue() {
-		List<Rect> rects=new ArrayList<Rect>();
+	public List<IntRect> getValue() {
+		List<IntRect> rects=new ArrayList<IntRect>();
 		
 		syncSelectionFromAreaControler();
 		
 		//only return valid rect
-		for(Rect r:rectangles){
+		for(IntRect r:rectangles){
 			if(r.hasWidthAndHeight()){
 				//rects.add(r.copy());//stop copying reduce construct time and for mapping
 				rects.add(r);
