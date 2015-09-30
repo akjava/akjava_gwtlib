@@ -10,7 +10,7 @@ Developing Concept
 
 as possible as replace with Guava
 
-How to use 
+How to use
 -----------
 
 add newest libraly name ends with -dep(dep contain stable Guava)  
