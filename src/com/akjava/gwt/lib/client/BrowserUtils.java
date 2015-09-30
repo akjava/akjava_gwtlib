@@ -1,5 +1,7 @@
 package com.akjava.gwt.lib.client;
 
+import com.akjava.gwt.lib.client.MultiImageElementLoader.MultiImageElementListener;
+import com.google.common.collect.Lists;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
@@ -53,6 +55,14 @@ public class BrowserUtils {
 		});
 		request.open("GET",url);
 		request.send();
+	}
+	
+	public static void loadImageFile(String url,final ImageElementListener listener){
+		new ImageElementLoader().load(url, listener);
+	}
+	
+	public static void loadImageFiles(Iterable<String> urls,final MultiImageElementListener listener){
+		new MultiImageElementLoader().loadImages(Lists.newArrayList(urls), listener);
 	}
 	
 	public static void loadTextFile(String url,final LoadTextListener listener){
