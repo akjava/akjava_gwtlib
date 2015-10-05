@@ -1,5 +1,8 @@
 package com.akjava.gwt.lib.client.experimental;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import com.akjava.gwt.lib.client.CanvasUtils;
 import com.akjava.gwt.lib.client.LogUtils;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.dom.client.NativeEvent;
@@ -20,8 +23,41 @@ public  class CanvasDragMoveControler{
 		this.moveListener = moveListener;
 	}
 	
-	private boolean isShiftKeyDown;
+	//private boolean isShiftKeyDown;
+	private KeyDownState keyDownState=new KeyDownState();
+	public KeyDownState getKeyDownState() {
+		return keyDownState;
+	}
+
+	public void setKeyDownState(KeyDownState keyDownState) {
+		this.keyDownState = keyDownState;
+	}
+
 	private boolean rightMouse;
+	
+	public static class KeyDownState{
+		private boolean shiftKeyDown;
+		private boolean  altKeyDown;
+		private boolean ctrlKeyDown;
+		public boolean isShiftKeyDown() {
+			return shiftKeyDown;
+		}
+		public void setShiftKeyDown(boolean shiftKeyDown) {
+			this.shiftKeyDown = shiftKeyDown;
+		}
+		public boolean isAltKeyDown() {
+			return altKeyDown;
+		}
+		public void setAltKeyDown(boolean altKeyDown) {
+			this.altKeyDown = altKeyDown;
+		}
+		public boolean isControlKeyDown() {
+			return ctrlKeyDown;
+		}
+		public void setControlKeyDown(boolean ctrlKeyDown) {
+			this.ctrlKeyDown = ctrlKeyDown;
+		}
+		}
 	
 	public boolean isRightMouse() {
 		return rightMouse;
@@ -31,19 +67,34 @@ public  class CanvasDragMoveControler{
 		this.rightMouse = rightMouse;
 	}
 
+	/**
+	 * @deprecated use getKeyDownState
+	 * @return
+	 */
 	public boolean isShiftKeyDown() {
-		return isShiftKeyDown;
+		return keyDownState.isShiftKeyDown();
 	}
 
+	private Canvas canvas;
 	public CanvasDragMoveControler(Canvas canvas,CanvasMoveListener moveListener) {
 		this(moveListener);
+		this.canvas=checkNotNull(canvas,"CanvasDragMoveControler:need canvas");
 		
 		canvas.addMouseMoveHandler(new MouseMoveHandler() {
 			@Override
 			public void onMouseMove(MouseMoveEvent event) {
 				if(isStarted()){
-					isShiftKeyDown=event.isShiftKeyDown();
-					move(event.getX(), event.getY());
+					keyDownState.setAltKeyDown(event.isAltKeyDown());
+					keyDownState.setShiftKeyDown(event.isShiftKeyDown());
+					keyDownState.setControlKeyDown(event.isControlKeyDown());
+					
+					if(scaleX==1 && scaleY==1){
+						move(event.getX(), event.getY());
+					}else{
+						int x=(int)(event.getX()/scaleX);
+						int y=(int)(event.getY()/scaleY);
+						move(x,y);
+					}
 				}
 			}
 		});
@@ -57,8 +108,19 @@ public  class CanvasDragMoveControler{
 				}else{
 					rightMouse=false;
 				}
-				isShiftKeyDown=event.isShiftKeyDown();
-				end(event.getX(), event.getY());
+				keyDownState.setAltKeyDown(event.isAltKeyDown());
+				keyDownState.setShiftKeyDown(event.isShiftKeyDown());
+				keyDownState.setControlKeyDown(event.isControlKeyDown());
+				
+				
+				if(scaleX==1 && scaleY==1){
+					end(event.getX(), event.getY());
+				}else{
+					int x=(int)(event.getX()/scaleX);
+					int y=(int)(event.getY()/scaleY);
+					end(x,y);
+				}
+				
 			}
 		});
 		
@@ -71,8 +133,17 @@ public  class CanvasDragMoveControler{
 				}else{
 					rightMouse=false;
 				}
-				isShiftKeyDown=event.isShiftKeyDown();
-				start(event.getX(), event.getY());
+				keyDownState.setAltKeyDown(event.isAltKeyDown());
+				keyDownState.setShiftKeyDown(event.isShiftKeyDown());
+				keyDownState.setControlKeyDown(event.isControlKeyDown());
+				
+				if(scaleX==1 && scaleY==1){
+					start(event.getX(), event.getY());
+				}else{
+					int x=(int)(event.getX()/scaleX);
+					int y=(int)(event.getY()/scaleY);
+					start(x,y);
+				}
 			}
 		});
 		
@@ -80,15 +151,33 @@ public  class CanvasDragMoveControler{
 			
 			@Override
 			public void onMouseOut(MouseOutEvent event) {
-				isShiftKeyDown=event.isShiftKeyDown();
+				keyDownState.setAltKeyDown(event.isAltKeyDown());
+				keyDownState.setShiftKeyDown(event.isShiftKeyDown());
+				keyDownState.setControlKeyDown(event.isControlKeyDown());
 				if(event.getNativeButton()==NativeEvent.BUTTON_RIGHT){
 					rightMouse=true;
 				}else{
 					rightMouse=false;
 				}
-				end(event.getX(), event.getY());
+				if(scaleX==1 && scaleY==1){
+					end(event.getX(), event.getY());
+				}else{
+					int x=(int)(event.getX()/scaleX);
+					int y=(int)(event.getY()/scaleY);
+					end(x,y);
+				}
 			}
 		});
+	}
+	
+	private double scaleX=1;
+	private double scaleY=1;
+	
+	
+	public void setScale(double scale){
+		scaleX=scale;
+		scaleY=scale;
+		CanvasUtils.scaleViewerSize(canvas, scale);
 	}
 	
 	private int startX;
@@ -135,6 +224,7 @@ public  class CanvasDragMoveControler{
 	}
 	
 	private int clickStartX;
+	//click start
 	public int getClickStartX() {
 		return clickStartX;
 	}
@@ -150,6 +240,9 @@ public  class CanvasDragMoveControler{
 		started=false;
 		moveListener.end(x,y);
 	}
+	
+	
+	//drag start
 	public int getStartX() {
 		return startX;
 	}

@@ -41,9 +41,14 @@ private static volatile Supplier<Equivalence<String>> colorMemoize = Suppliers.m
 /*
  * not so good
  */
-public static double getColorLength(int r1,int g1,int b1,int r2,int g2,int b2){
+public static double getColorLength(double r1,double g1,double b1,double r2,double g2,double b2){
 	return Math.sqrt(Math.pow(r2-r1,2)+Math.pow(g2-g1,2)+Math.pow(b2-b1,2));
 }
+/* use-less
+public static double getColorLength(double r1,double g1,double b1){
+	return Math.sqrt(Math.pow(r1,2)+Math.pow(g1,2)+Math.pow(b1,2));
+}
+*/
 
 public static int[] toRGB(String hexString){
 	if(hexString.startsWith("0x")){

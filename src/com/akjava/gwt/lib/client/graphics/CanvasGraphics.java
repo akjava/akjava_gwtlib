@@ -96,4 +96,11 @@ public CanvasGraphics fill(double  x,double y){
 	public Canvas getCanvas() {
 		return canvas;
 	}
+
+	public void drawTo(Canvas resultCanvas,double x,double y) {
+		resultCanvas.getContext2d().drawImage(canvas.getCanvasElement(), x, y);
+	}
+	public void drawTo(Canvas resultCanvas) {
+		drawTo(resultCanvas,0,0);
+	}
 }
