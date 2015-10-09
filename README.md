@@ -8,7 +8,7 @@ gwthtml5 is merging this.
 Developing Concept
 -------
 
-as possible as replace with newer Guava
+I'll as possible as replace with newer Guava
 
 How to use
 -----------
