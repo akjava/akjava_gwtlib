@@ -67,8 +67,14 @@ private FileUploadForm uploadForm;
 	}
 	
 	public TextAreaBasedDataList(StorageDataList dataList) {
+		this(dataList,null);
+	}
+	public TextAreaBasedDataList(StorageDataList dataList,SimpleTextData defaultOnEmptyData) {
 		super(dataList);
+		this.defaultOnEmptyData=defaultOnEmptyData;
+		
 		textArea=new TabInputableTextArea();
+		
 		
 		addKeyHandler(textArea);
 		 
@@ -76,6 +82,25 @@ private FileUploadForm uploadForm;
 		 getSimpleDataListWidget().setCellContextMenu(new TestContextMenu());
 		 
 		 unselect();
+		 
+		 if(getDataList().getDataList().isEmpty()){
+			
+			 for(SimpleTextData data:getDefaultOnEmptyData().asSet()){
+				
+				 for(Integer id:add(data).asSet()){
+					
+					select(id); 
+				 }
+			 }
+		 }
+		 
+	}
+	private SimpleTextData defaultOnEmptyData;
+	
+
+
+	private Optional<SimpleTextData> getDefaultOnEmptyData(){
+		return Optional.fromNullable(defaultOnEmptyData);
 	}
 	
 	private boolean saved;
@@ -261,11 +286,13 @@ private FileUploadForm uploadForm;
 	}
 	
 
-	public void add(SimpleTextData data) {
+	public Optional<Integer> add(SimpleTextData data) {
 		if(data!=null){
-		getDataList().addData(data.getName(), data.getCdate()+","+data.getData());
+		int id=getDataList().addData(data.getName(), data.getCdate()+","+data.getData());
 		updateList();
+		return Optional.of(id);
 		}
+		return Optional.absent();
 	}
 
 	@Override

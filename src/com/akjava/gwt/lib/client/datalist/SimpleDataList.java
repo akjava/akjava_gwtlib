@@ -615,7 +615,7 @@ public class SimpleDataListItem extends HorizontalPanel{
 */
 
 public void select(int index) {
-	if(index<0){
+	if(index<0 || index>=dataListDatas.size()){
 	LogUtils.log("invalid index:"+index);
 	}
 	DataListData<SimpleTextData> data=dataListDatas.get(index);

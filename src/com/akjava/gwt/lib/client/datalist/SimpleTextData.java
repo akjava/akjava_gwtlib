@@ -57,6 +57,13 @@ public SimpleTextData(int id,String name,String data,long cdate){
 public SimpleTextData(int id,String name,String data){
 	this(id,name,data,System.currentTimeMillis());
 }
+
+/*
+ * cerate by manual id is automatically set when success add
+ */
+public SimpleTextData(String name,String data){
+	this(-1,name,data,System.currentTimeMillis());
+}
 @Override
 public int hashCode() {
 	final int prime = 31;
