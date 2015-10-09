@@ -50,6 +50,13 @@ public class CanvasUtils {
 		}
 		return canvas;
 	}
+
+	/*
+	 * convert int
+	 */
+	public static Canvas createCanvas(double w,double h){
+		return createCanvas((int)w,(int)h);
+	}
 	
 public static Canvas createCanvas(int w,int h){
 	Canvas canvas=Canvas.createIfSupported();
@@ -681,6 +688,7 @@ public static void drawPoint(Canvas canvas, List<PointXY> points,boolean stroke,
 	}
 	
 }
+
 public static void draw(Canvas canvas, Point[]  points,boolean stroke,@Nullable String style) {
 	if(style!=null){
 		canvas.getContext2d().setStrokeStyle(style);

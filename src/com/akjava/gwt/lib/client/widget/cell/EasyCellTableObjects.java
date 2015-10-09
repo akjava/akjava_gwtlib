@@ -3,6 +3,8 @@ package com.akjava.gwt.lib.client.widget.cell;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import com.akjava.lib.common.utils.ListUtils;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
@@ -45,6 +47,17 @@ public abstract class EasyCellTableObjects<T> {
 		return selectionModel.getSelectedObject();
 	}
 	
+	public Optional<Integer> getSelectedIndex(@Nullable T data){
+		if(data==null){
+			return Optional.absent();
+		}
+		int value=datas.indexOf(data);
+		if(value==-1){
+			return Optional.absent();
+		}
+		return Optional.of(value);
+	}
+	
 	public abstract void onSelect(T selection);
 
 	public void setSelected(T item,boolean selected){
@@ -80,6 +93,11 @@ public abstract class EasyCellTableObjects<T> {
 		datas.add(data);
 		update();
 	}
+	
+	public void insertItem(int index,T data){
+		datas.add(index,data);
+		update();
+	}
 	public void clearAllItems(){
 		unselect();
 		datas.clear();
@@ -91,6 +109,21 @@ public abstract class EasyCellTableObjects<T> {
 		datas.remove(data);
 		
 		update();
+	}
+	public Optional<T> getItemAt(int index){
+		if(index>=0 && index<datas.size()){
+			return Optional.of(datas.get(index));
+		}
+		return Optional.absent();
+	}
+	public T removeItem(int index){
+		for(T data:getItemAt(index).asSet()){
+			selectionModel.setSelected(data, false);
+			datas.remove(data);
+			update();
+			return data;
+		}
+		return null;
 	}
 	/**
 	 * @deprecated

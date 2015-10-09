@@ -171,6 +171,14 @@ public  class CanvasDragMoveControler{
 	}
 	
 	private double scaleX=1;
+	public double getScaleX() {
+		return scaleX;
+	}
+
+	public double getScaleY() {
+		return scaleY;
+	}
+
 	private double scaleY=1;
 	
 	

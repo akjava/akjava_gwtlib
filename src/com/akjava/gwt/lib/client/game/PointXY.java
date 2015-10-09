@@ -1,5 +1,6 @@
 package com.akjava.gwt.lib.client.game;
 
+import com.akjava.lib.common.graphics.Point;
 import com.akjava.lib.common.utils.ValuesUtils;
 
 /*
@@ -50,6 +51,10 @@ public PointXY incrementXY(int x,int y){
 	return this;
 }
 
+public Point toPoint(){
+	return new Point(x,y);
+}
+
 public PointD toPointD(){
 	return new PointD(x,y);
 }
@@ -78,6 +83,9 @@ public int y ;
 	public PointXY(int x,int y){
 		this.x=x;
 		this.y=y;
+	}
+	public PointXY(Point pt) {
+		this(pt.getIntX(),pt.getIntY());
 	}
 	public void set(int x,int y){
 		this.x=x;

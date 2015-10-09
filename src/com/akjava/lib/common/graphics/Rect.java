@@ -82,7 +82,7 @@ public boolean collision(Rect targetRect){
 	return false;
 }
 
-public static Rect fromCenterPoint(int cx,int cy,int hw,int hh){
+public static Rect fromCenterPoint(double cx,double cy,double hw,double hh){
 	return new Rect(cx-hw,cy-hh,hw*2,hh*2);
 }
 public static Rect fromString(String kanmaValues){
@@ -140,11 +140,11 @@ public Rect expandIn(int w,int h,int maxW,int maxH){
 	return r;
 }
 
-public static Rect fromPoints(List<PointXY> points){
+public static Rect fromPoints(List<Point> points){
 	Rect rect=new Rect();
-	int minX=Integer.MAX_VALUE;int minY=Integer.MAX_VALUE;int maxX=Integer.MIN_VALUE;int maxY=Integer.MIN_VALUE;
+	double minX=Double.MAX_VALUE;double minY=Double.MAX_VALUE;double maxX=Double.MIN_VALUE;double maxY=Double.MIN_VALUE;
 	
-	for(PointXY pt:points){
+	for(Point pt:points){
 		if(pt.getX()<minX){
 			minX=pt.getX();
 		}
@@ -158,8 +158,8 @@ public static Rect fromPoints(List<PointXY> points){
 			maxY=pt.getY();
 		}
 	}
-	int w=maxX-minX;
-	int h= maxY-minY;
+	double w=maxX-minX;
+	double h= maxY-minY;
 	
 	rect.set(minX, minY, w,h);
 	return rect;
