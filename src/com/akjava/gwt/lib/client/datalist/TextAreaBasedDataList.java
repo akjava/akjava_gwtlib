@@ -75,6 +75,7 @@ private FileUploadForm uploadForm;
 		 
 		 getSimpleDataListWidget().setCellContextMenu(new TestContextMenu());
 		 
+		 unselect();
 	}
 	
 	private boolean saved;
