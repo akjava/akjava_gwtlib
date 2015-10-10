@@ -151,6 +151,9 @@ buttons1.add(deleteBt);
 copyBt = new Button("Copy",new ClickHandler() {
 	@Override
 	public void onClick(ClickEvent event) {
+		if(currentSelection==null){
+			return;
+		}
 		//copy before save data.
 		ioControler.copy(currentSelection.getData());
 	}
@@ -168,8 +171,12 @@ buttons1.add(pasteBt);
 cloneBt = new Button("Clone",new ClickHandler() {
 	@Override
 	public void onClick(ClickEvent event) {
+		if(currentSelection==null){
+			return;
+		}
 		ioControler.copy(currentSelection.getData());
 		ioControler.paste();
+		
 	}
 });
 buttons1.add(cloneBt);
@@ -479,8 +486,14 @@ public void setSelectionStatus(boolean selection){
 	copyBt.setEnabled(selection);
 	reloadBt.setEnabled(selection);
 	unselectBt.setEnabled(selection);
+	
+	cloneBt.setEnabled(selection);
 }
 
+
+public Button getReloadBt() {
+	return reloadBt;
+}
 
 public void next(){
 	int index=getSelectedIndex();

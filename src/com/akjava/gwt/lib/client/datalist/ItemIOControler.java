@@ -3,7 +3,14 @@ package com.akjava.gwt.lib.client.datalist;
 import java.util.List;
 import java.util.Stack;
 
+import javax.annotation.Nullable;
+
+import com.akjava.gwt.lib.client.LogUtils;
 import com.akjava.gwt.lib.client.StorageDataList;
+import com.akjava.gwt.lib.client.datalist.command.AddCommand;
+import com.akjava.gwt.lib.client.datalist.command.RemoveCommand;
+import com.akjava.gwt.lib.client.datalist.command.RenameCommand;
+import com.akjava.gwt.lib.client.experimental.undo.SimpleUndoControler;
 import com.google.common.base.Optional;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
@@ -18,6 +25,15 @@ import com.google.gwt.user.client.Window;
 public abstract class ItemIOControler implements HasValueChangeHandlers<SimpleTextData>{
 private StorageDataList dataList;	
 
+
+protected SimpleUndoControler undoControler;
+public SimpleUndoControler getUndoControler() {
+	return undoControler;
+}
+
+public void setUndoControler(@Nullable SimpleUndoControler undoControler) {
+	this.undoControler = undoControler;
+}
 
 public void setDataList(StorageDataList dataList) {
 	this.dataList = dataList;
@@ -83,26 +99,49 @@ public boolean saveAs(){
 }
 
 
-public String rename(String newName){
+public void rename(String newName){
 	
 	
-	SimpleTextData hv=createSaveData(newName);
-	dataList.updateData(selectedId, hv.getName(), hv.getCdate()+","+hv.getData());
-	setCurrentName(newName);//doit for avoid reload
-	ValueChangeEvent.fire(this, hv);
-	return newName;
+	 execRename(newName,true);
+	
 }
 	
+public void execRename(String newName,boolean needUndo){
+	
+	
+	SimpleTextData current=dataList.getDataValue(selectedId);
+	if(current==null){
+		LogUtils.log("execRename:current selection is null.can't rename it");
+		return;
+	}
+	//if(current)
+	String oldName=current.getName()!=null?current.getName():"";
+	
+	//i have no idea why create new data.there already exist current data.
+	SimpleTextData hv=createSaveData(newName);
+	dataList.updateData(selectedId, hv.getName(), hv.getCdate()+","+hv.getData());
+	
+	setCurrentName(newName);//doit for avoid reload
+	
+	
+	updateList();
+	ValueChangeEvent.fire(this, hv);
+	
+	if(needUndo){
+		undoControler.execute(new RenameCommand(this, oldName,newName));
+	}
+	
+	
+	
+}
 public String rename(){
 	String saveName=Window.prompt("name", getCurrentName());
 	if(saveName==null){
 		return null;
 	}
 	
-	SimpleTextData hv=createSaveData(saveName);
-	dataList.updateData(selectedId, hv.getName(), hv.getCdate()+","+hv.getData());
-	setCurrentName(saveName);//doit for avoid reload
-	ValueChangeEvent.fire(this, hv);
+	execRename(saveName,true);
+	
 	return saveName;
 }
 
@@ -112,12 +151,22 @@ public boolean delete(){
 		return false;
 	}
 	
-	lastSaved=dataList.getDataValue(selectedId);//for backup
+	return execDelete(selectedId,true);
 	
-	dataList.clearData(selectedId);
+}
+
+public boolean execDelete(int id,boolean needUndo){
+	
+	lastSaved=dataList.getDataValue(id);//
+	
+	dataList.clearData(id);
 	selectedId=-1;
 	unselect();
 	ValueChangeEvent.fire(this, null);
+	if(undoControler!=null){
+		undoControler.execute(new RemoveCommand(this, lastSaved));
+	}
+	
 	return true;
 }
 
@@ -149,7 +198,12 @@ public void load(int id){
 
 
 
+/**
+ * 
+ * @param name
+ */
 public abstract void setCurrentName(String name);
+
 public abstract String getCurrentName();
 public abstract SimpleTextData createSaveData(String fileName);
 public abstract SimpleTextData createNewData(String fileName);
@@ -208,11 +262,31 @@ public SimpleTextData doNew(String defaultName){
 	
 	SimpleTextData hv=createNewData(saveName);
 	
-	int selection=dataList.addData(hv.getName(), hv.getCdate()+","+hv.getData());
-	selectedId=selection;
-	updateList();
-	ValueChangeEvent.fire(this, hv);
+	execAdd(hv,true);
+	
 	return hv;
+}
+
+public int execAdd(SimpleTextData data,boolean needUndo){
+	int selection=dataList.addData(data.getName(), data.getCdate()+","+data.getData());
+	selectedId=selection;
+	data.setId(selection);
+	updateList();
+	ValueChangeEvent.fire(this, data);
+	
+	if(undoControler!=null){
+		undoControler.execute(new AddCommand(this, data));
+	}
+	return selection;
+}
+//not only update,but also insert (called from undo)
+public void execUpdate(SimpleTextData data,boolean needUndo){
+	
+	dataList.updateData(data.getId(),data.getName(), data.getCdate()+","+data.getData());
+	selectedId=data.getId();
+	updateList();
+	ValueChangeEvent.fire(this, data);
+	
 }
 
 public void back() {

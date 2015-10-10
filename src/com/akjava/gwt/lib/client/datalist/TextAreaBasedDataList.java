@@ -322,8 +322,12 @@ public static interface TextAreaBasedDataListListener{
 	@Override
 	public void paste() {
 		if(copiedValue!=null){
-		getDataList().addData(copiedValue.getName()+" copy", copiedValue.getData());
-		updateList();
+			SimpleTextData copy=copiedValue.copy();
+			copy.setName(copy.getName()+" copy");
+			execAdd(copy,true);
+		//modified
+		//getDataList().addData(copiedValue.getName()+" copy", copiedValue.getData());
+		//updateList();
 		}
 	}
 
