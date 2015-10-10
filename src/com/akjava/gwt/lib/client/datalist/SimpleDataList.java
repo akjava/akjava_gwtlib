@@ -45,6 +45,24 @@ private SingleSelectionModel<DataListData<SimpleTextData>> selectionModel;
 
 private Handler selectionChangeHandler;
 
+private Button cloneBt;
+
+public Button getCloneBt() {
+	return cloneBt;
+}
+
+public Button getExpandButton() {
+	return expandButton;
+}
+
+public Button getCopyBt() {
+	return copyBt;
+}
+
+public Button getPasteBt() {
+	return pasteBt;
+}
+
 public void setModified(boolean modified) {
 	if(getSelection()==null){
 		return;
@@ -68,9 +86,9 @@ public List<DataListData<SimpleTextData>> getCellData(){
 public SimpleDataList(ItemIOControler io,int selection){
 this.ioControler=io;
 
-HorizontalPanel buttons=new HorizontalPanel();
-add(buttons);
-HorizontalPanel buttons2=new HorizontalPanel();
+buttons1 = new HorizontalPanel();
+add(buttons1);
+buttons2 = new HorizontalPanel();
 add(buttons2);
 
 
@@ -89,7 +107,7 @@ saveBt.addClickHandler(new ClickHandler() {
 	}
 });
 saveBt.setEnabled(false);
-buttons.add(saveBt);
+buttons1.add(saveBt);
 
 saveAsBt = new Button("SaveAs",new ClickHandler() {
 	@Override
@@ -100,7 +118,7 @@ saveAsBt = new Button("SaveAs",new ClickHandler() {
 		}
 	}
 });
-buttons.add(saveAsBt);
+buttons1.add(saveAsBt);
 saveAsBt.setEnabled(false);
 
 renameBt = new Button("Rename",new ClickHandler() {
@@ -113,7 +131,7 @@ renameBt = new Button("Rename",new ClickHandler() {
 		}
 	}
 });
-buttons.add(renameBt);
+buttons1.add(renameBt);
 
 deleteBt = new Button("Delete",new ClickHandler() {
 	@Override
@@ -126,7 +144,7 @@ deleteBt = new Button("Delete",new ClickHandler() {
 		}
 	}
 });
-buttons.add(deleteBt);
+buttons1.add(deleteBt);
 
 
 
@@ -137,15 +155,25 @@ copyBt = new Button("Copy",new ClickHandler() {
 		ioControler.copy(currentSelection.getData());
 	}
 });
-buttons.add(copyBt);
+buttons1.add(copyBt);
 
-Button paste=new Button("Paste",new ClickHandler() {
+pasteBt = new Button("Paste",new ClickHandler() {
 	@Override
 	public void onClick(ClickEvent event) {
 		ioControler.paste();
 	}
 });
-buttons.add(paste);
+buttons1.add(pasteBt);
+
+cloneBt = new Button("Clone",new ClickHandler() {
+	@Override
+	public void onClick(ClickEvent event) {
+		ioControler.copy(currentSelection.getData());
+		ioControler.paste();
+	}
+});
+buttons1.add(cloneBt);
+cloneBt.setVisible(false);//on default use copy & paste
 
 Button exportAll=new Button("ExportAll",new ClickHandler() {
 	@Override
@@ -171,13 +199,13 @@ Button restore=new Button("Restore",new ClickHandler() {
 });
 expandButtons.add(restore);
 
-Button clearAll=new Button("ClearAll",new ClickHandler() {
+clearAllBt = new Button("ClearAll",new ClickHandler() {
 	@Override
 	public void onClick(ClickEvent event) {
 		ioControler.clearAll();
 	}
 });
-expandButtons.add(clearAll);
+expandButtons.add(clearAllBt);
 
 Button recover=new Button("Recover",new ClickHandler() {
 	@Override
@@ -298,6 +326,7 @@ selectionModel.addSelectionChangeHandler(selectionChangeHandler);
 
 
 HorizontalPanel downButtons=new HorizontalPanel();
+downButtons.setVerticalAlignment(ALIGN_MIDDLE);
 add(downButtons);
 downButtons2 = new HorizontalPanel();
 add(downButtons2);
@@ -305,13 +334,13 @@ add(downButtons2);
 optionButtons3=new VerticalPanel();
 add(optionButtons3);
 
-Button back=new Button("Back",new ClickHandler() {
+backBt = new Button("Back",new ClickHandler() {
 	@Override
 	public void onClick(ClickEvent event) {
 		ioControler.back();
 	}
 });
-downButtons.add(back);
+downButtons.add(backBt);
 
 Button prev=new Button("Prev",new ClickHandler() {
 	@Override
@@ -342,6 +371,7 @@ final ListBox orderList=new ListBox();
 orderList.addItem("id");
 orderList.addItem("id desc");
 orderList.addItem("a-z");
+orderList.addItem("z-a");
 orderList.setSelectedIndex(1);
 orderList.addChangeHandler(new ChangeHandler() {
 	
@@ -358,6 +388,23 @@ downButtons.add(orderList);
 //cellContextMenu=new TestContextMenu();//for test
 
 update();
+}
+
+public Button getClearAllBt() {
+	return clearAllBt;
+}
+
+public Button getBackBt() {
+	return backBt;
+}
+
+//change single line
+public void mergeButton1AndButton2(){
+	buttons1.add(buttons2);
+}
+//temporaly
+public void moveClearAllToButton1(){
+	buttons1.add(clearAllBt);
 }
 
 /*
@@ -387,6 +434,10 @@ private class TestContextMenu implements CellContextMenu{
 	}
 	
 }*/
+
+public Button getUnselectBt() {
+	return unselectBt;
+}
 
 public void save() {
 	//save.setEnabled(false);
@@ -468,6 +519,7 @@ private DataListData<SimpleTextData> currentSelection;
 public static final int ORDER_ID=0;
 public static final int ORDER_ID_DESC=1;
 public static final int ORDER_AZ=2;
+public static final int ORDER_ZA=3;
 private int order=1;
 private SimpleTextDataComparator comparator=new SimpleTextDataComparator();
 private String getConfirmMessage(){
@@ -527,6 +579,9 @@ public int compare(SimpleTextData o1, SimpleTextData o2) {
 	}
 	if(order==ORDER_AZ){
 		return o1.getName().compareTo(o2.getName());
+	}
+	if(order==ORDER_ZA){
+		return o2.getName().compareTo(o1.getName());
 	}
 	return o1.getId()-o2.getId();
 }
@@ -649,6 +704,18 @@ private DataListDataCell cell;
 
 private Button saveBt;
 
+public Button getSaveAsBt() {
+	return saveAsBt;
+}
+
+public void setSaveAsBt(Button saveAsBt) {
+	this.saveAsBt = saveAsBt;
+}
+
+public Button getSaveBt() {
+	return saveBt;
+}
+
 private Button saveAsBt;
 
 private Button unselectBt;
@@ -690,6 +757,16 @@ public void setCellContextMenu(CellContextMenu cellContextMenu) {
 protected DateTimeFormat dateFormat=DateTimeFormat.getFormat("yy/MM/dd hh:mm:ss");
 
 private CheckBox showDate;
+
+private Button pasteBt;
+
+private HorizontalPanel buttons2;
+
+private HorizontalPanel buttons1;
+
+private Button backBt;
+
+private Button clearAllBt;
 
 @SuppressWarnings("unchecked")
 public class DataListDataCell  extends AbstractContextCell<DataListData<SimpleTextData>>{

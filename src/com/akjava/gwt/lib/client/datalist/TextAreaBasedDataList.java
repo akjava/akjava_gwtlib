@@ -50,6 +50,10 @@ private SimpleTextData copiedValue;
 private HorizontalPanel uploadPanel;
 private FileUploadForm uploadForm;
 
+public static interface TextAreaBasedDataListListener{
+	public void onLoad(Optional<SimpleTextData> hv);
+}
+
 /**
  * if you need call addkeyUpHandler() for update modified
  * @param textArea
@@ -201,6 +205,16 @@ private FileUploadForm uploadForm;
 
 	protected String unselectedText="CREATE NEW or SELECT";
 	
+	private TextAreaBasedDataListListener textAreaBasedDataListListener;
+	public TextAreaBasedDataListListener getTextAreaBasedDataListListener() {
+		return textAreaBasedDataListListener;
+	}
+
+	public void setTextAreaBasedDataListListener(
+			TextAreaBasedDataListListener textAreaBasedDataListListener) {
+		this.textAreaBasedDataListListener = textAreaBasedDataListListener;
+	}
+
 	@Override
 	public void loadData(Optional<SimpleTextData> hv) {
 		if(hv.isPresent()){
@@ -210,6 +224,11 @@ private FileUploadForm uploadForm;
 			textArea.setReadOnly(true);
 			textArea.setText(unselectedText);
 		}
+		
+		if(textAreaBasedDataListListener!=null){
+			textAreaBasedDataListListener.onLoad(hv);
+		}
+		
 		onLoad();
 	}
 	
