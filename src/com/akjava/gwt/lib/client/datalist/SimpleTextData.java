@@ -3,9 +3,25 @@ package com.akjava.gwt.lib.client.datalist;
 import com.akjava.lib.common.utils.ValuesUtils;
 
 /**
- * In future replace SimpleTextData
+ * 
  * @author aki
+ * 
+ * for store key-value storage.
+ * 
+ * FORMAT
+ * 
+ * header valus is saves at
+ * key+KEY_HEADER+id 
+ * 
+ * data value is saved at
+ * key+KEY_DATA+i 
+ * 
+ * data value stored as 'ctime','data'
+ * for reduce access-io time,combining value is good.
+ * however read & write take some cost.
  *
+ * incremental id saved at 
+ * key+KEY_INDEX
  */
 public class SimpleTextData {
 private int id;
