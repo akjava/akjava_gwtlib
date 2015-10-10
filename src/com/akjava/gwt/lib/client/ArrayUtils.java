@@ -2,7 +2,6 @@ package com.akjava.gwt.lib.client;
 
 import java.util.Collection;
 
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
 
 

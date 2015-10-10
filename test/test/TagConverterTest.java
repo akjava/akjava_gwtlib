@@ -1,9 +1,9 @@
 package test;
 
+import junit.framework.TestCase;
+
 import com.akjava.lib.common.tag.Tag;
 import com.akjava.lib.common.tag.TagToStringConverter;
-
-import junit.framework.TestCase;
 
 public class TagConverterTest extends TestCase {
 

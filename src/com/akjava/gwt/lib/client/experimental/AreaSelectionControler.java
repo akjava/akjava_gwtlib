@@ -4,9 +4,6 @@ import javax.annotation.Nullable;
 
 import com.akjava.gwt.lib.client.CanvasUtils;
 import com.akjava.gwt.lib.client.LogUtils;
-import com.akjava.gwt.lib.client.experimental.CanvasDragMoveControler;
-import com.akjava.gwt.lib.client.experimental.CanvasMoveListener;
-import com.akjava.gwt.lib.client.experimental.CursorUtils;
 import com.akjava.lib.common.graphics.IntRect;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.event.dom.client.MouseMoveEvent;

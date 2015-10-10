@@ -1,16 +1,13 @@
 package com.akjava.gwt.lib.client;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.ObjectArrays;
 import com.google.gwt.user.client.ui.RootPanel;
 
 /**

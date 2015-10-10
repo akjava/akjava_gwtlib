@@ -3,9 +3,6 @@ package com.akjava.gwt.lib.client.widget.cell;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.akjava.gwt.lib.client.LogUtils;
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;

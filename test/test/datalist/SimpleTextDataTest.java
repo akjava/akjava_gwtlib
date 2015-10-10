@@ -1,9 +1,9 @@
 package test.datalist;
 
+import junit.framework.TestCase;
+
 import com.akjava.gwt.lib.client.datalist.SimpleTextData;
 import com.akjava.gwt.lib.client.datalist.SimpleTextDataDataConverter;
-
-import junit.framework.TestCase;
 
 public class SimpleTextDataTest extends TestCase{
 

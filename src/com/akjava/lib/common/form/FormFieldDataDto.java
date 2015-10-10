@@ -11,8 +11,6 @@ import com.akjava.lib.common.tag.LabelAndValue;
 import com.akjava.lib.common.tag.Tag;
 import com.akjava.lib.common.tag.TagBuilder;
 import com.akjava.lib.common.utils.HTMLUtils;
-import com.akjava.lib.common.utils.TagUtil;
-import com.akjava.lib.common.utils.ValuesUtils;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 

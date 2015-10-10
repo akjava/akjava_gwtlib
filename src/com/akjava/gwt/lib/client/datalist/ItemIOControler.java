@@ -12,7 +12,6 @@ import com.akjava.gwt.lib.client.datalist.command.RemoveCommand;
 import com.akjava.gwt.lib.client.datalist.command.RenameCommand;
 import com.akjava.gwt.lib.client.experimental.undo.SimpleUndoControler;
 import com.google.common.base.Optional;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;

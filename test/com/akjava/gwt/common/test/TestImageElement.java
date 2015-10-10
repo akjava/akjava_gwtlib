@@ -1,7 +1,6 @@
 package com.akjava.gwt.common.test;
 
 import com.akjava.gwt.lib.client.CanvasUtils;
-import com.akjava.gwt.lib.client.ImageElementUtils;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.ImageData;
 import com.google.gwt.junit.client.GWTTestCase;

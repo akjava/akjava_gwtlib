@@ -1,14 +1,9 @@
 package com.akjava.lib.common.form.page;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
-
-//import javax.servlet.http.HttpServletRequest;
 
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;

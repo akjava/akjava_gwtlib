@@ -8,7 +8,6 @@ import com.akjava.gwt.html5.client.file.FileIOUtils.MakeDirectoryCallback;
 import com.akjava.gwt.html5.client.file.FileIOUtils.ReadStringCallback;
 import com.akjava.gwt.html5.client.file.FileIOUtils.RemoveCallback;
 import com.akjava.gwt.html5.client.file.FileIOUtils.WriteCallback;
-import com.akjava.gwt.lib.client.LogUtils;
 import com.akjava.lib.common.utils.FileNames;
 import com.akjava.lib.common.utils.StringUtils;
 import com.google.gwt.user.client.Window;

@@ -2,9 +2,9 @@ package test.utils;
 
 
 
-import com.akjava.lib.common.utils.URLUtils;
-
 import junit.framework.TestCase;
+
+import com.akjava.lib.common.utils.URLUtils;
 
 public class URLUtilsTest extends TestCase{
 

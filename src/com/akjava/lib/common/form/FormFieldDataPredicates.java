@@ -1,6 +1,5 @@
 package com.akjava.lib.common.form;
 
-import com.akjava.lib.common.form.FormFieldData;
 import com.google.common.base.Predicate;
 
 public class FormFieldDataPredicates {

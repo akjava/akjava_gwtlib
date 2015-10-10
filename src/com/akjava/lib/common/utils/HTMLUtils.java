@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.akjava.gwt.lib.client.LogUtils;
 import com.google.gwt.core.client.GWT;
 
 public class HTMLUtils {

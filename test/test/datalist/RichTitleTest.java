@@ -1,8 +1,8 @@
 package test.datalist;
 
-import com.akjava.gwt.lib.client.datalist.RichTitle;
-
 import junit.framework.TestCase;
+
+import com.akjava.gwt.lib.client.datalist.RichTitle;
 
 public class RichTitleTest extends TestCase{
 

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.akjava.gwt.lib.client.CanvasUtils;
-import com.akjava.gwt.lib.client.LogUtils;
 import com.akjava.lib.common.graphics.IntRect;
 import com.google.common.collect.Lists;
 import com.google.gwt.canvas.client.Canvas;

@@ -1,7 +1,6 @@
 package com.akjava.gwt.lib.client.experimental;
 
 import com.akjava.gwt.html5.client.file.webkit.FileEntry;
-import com.google.common.base.Strings;
 import com.google.common.collect.Ordering;
 
 public class FileEntryOrdering {

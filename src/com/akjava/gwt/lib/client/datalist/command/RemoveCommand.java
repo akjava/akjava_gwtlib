@@ -2,9 +2,8 @@ package com.akjava.gwt.lib.client.datalist.command;
 
 import com.akjava.gwt.lib.client.datalist.ItemIOControler;
 import com.akjava.gwt.lib.client.datalist.SimpleTextData;
-import com.akjava.gwt.lib.client.experimental.undo.SimpleUndoControler.Command;
 
-public class RemoveCommand implements Command{
+public class RemoveCommand implements DataListCommand{
 
 	private ItemIOControler controler;
 	private SimpleTextData data;

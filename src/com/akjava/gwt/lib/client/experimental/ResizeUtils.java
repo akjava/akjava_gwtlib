@@ -1,8 +1,6 @@
 package com.akjava.gwt.lib.client.experimental;
 
-import com.akjava.gwt.lib.client.CanvasUtils;
 import com.akjava.gwt.lib.client.LogUtils;
-import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.ImageData;
 import com.google.gwt.typedarrays.client.Uint8ArrayNative;
 

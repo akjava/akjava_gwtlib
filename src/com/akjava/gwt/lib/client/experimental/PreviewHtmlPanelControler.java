@@ -1,6 +1,5 @@
 package com.akjava.gwt.lib.client.experimental;
 
-import com.akjava.gwt.lib.client.LogUtils;
 import com.akjava.gwt.lib.client.experimental.CellBaseEntryPoint.PreviewControler;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.Window;

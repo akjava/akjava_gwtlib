@@ -3,7 +3,6 @@ package com.akjava.gwt.lib.client.experimental;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.akjava.gwt.lib.client.CanvasUtils;
-import com.akjava.gwt.lib.client.LogUtils;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.MouseDownEvent;

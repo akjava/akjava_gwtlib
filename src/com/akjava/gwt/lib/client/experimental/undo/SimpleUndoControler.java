@@ -7,22 +7,22 @@ import com.google.common.base.Optional;
 //TODO create interface?
 public class SimpleUndoControler {
 
-	public static interface UndoStateListener{
-		public void updateState(boolean undoable,boolean redoable);
-	}
-	
-	public static interface Command{
-		public void execute();
-		public void undo();
-		public void redo();
-	}
-	
 	private Stack<Command> undoHistory;
     private Stack<Command> redoHistory;
 
     private UndoStateListener listener;
+    private UndoListener undoListener;
     
-    public UndoStateListener getListener() {
+    
+    public UndoListener getUndoListener() {
+		return undoListener;
+	}
+
+	public void setUndoListener(UndoListener undoListener) {
+		this.undoListener = undoListener;
+	}
+
+	public UndoStateListener getListener() {
 		return listener;
 	}
 
@@ -35,12 +35,43 @@ public class SimpleUndoControler {
          redoHistory = new Stack<Command>();
     }
 
+	public void update(Command command){
+		fireUpdate(command);
+	}
+	
     public void execute(Command command) {
         command.execute();
         redoHistory.clear();
         undoHistory.push(command);
         
         fireUndoState(true,false);
+        fireExecute(command);
+    }
+    
+    private void fireUpdate(Command command){
+    	if(undoListener==null){
+    		return;
+    	}
+    	undoListener.onExecute(this, command);
+    }
+    
+    private void fireExecute(Command command){
+    	if(undoListener==null){
+    		return;
+    	}
+    	undoListener.onExecute(this, command);
+    }
+    private void fireUndo(Command command){
+    	if(undoListener==null){
+    		return;
+    	}
+    	undoListener.onUndo(this, command);
+    }
+    private void fireRedo(Command command){
+    	if(undoListener==null){
+    		return;
+    	}
+    	undoListener.onRedo(this, command);
     }
     
     private void fireUndoState(boolean undoable,boolean redoable){
@@ -59,6 +90,7 @@ public class SimpleUndoControler {
 	redoHistory.push(command);
 	
 	fireUndoState(undoHistory.isEmpty()?false:true,true);
+	fireUndo(command);
     }
 
     public void redo() {
@@ -70,6 +102,7 @@ public class SimpleUndoControler {
 	undoHistory.push(command);
 	
 	 fireUndoState(true,redoHistory.isEmpty()?false:true);
+	 fireRedo(command);
     }
     
     public Optional<Command> getLastUndoCommand(){

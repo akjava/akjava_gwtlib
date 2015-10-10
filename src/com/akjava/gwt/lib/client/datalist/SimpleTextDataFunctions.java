@@ -1,10 +1,6 @@
 package com.akjava.gwt.lib.client.datalist;
 
-import java.util.List;
-
 import com.akjava.gwt.lib.client.HeaderAndValue;
-import com.akjava.lib.common.functions.StringFunctions;
-import com.akjava.lib.common.utils.FileNames;
 import com.google.common.base.Function;
 
 public class SimpleTextDataFunctions {

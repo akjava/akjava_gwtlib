@@ -6,8 +6,6 @@ import java.util.List;
 import junit.framework.TestCase;
 
 import com.akjava.lib.common.csv.CSVProcessor;
-import com.akjava.lib.common.csv.CSVReader;
-import com.akjava.lib.common.csv.NewCSVReader;
 import com.akjava.lib.common.utils.CSVUtils;
 import com.google.common.io.CharSource;
 

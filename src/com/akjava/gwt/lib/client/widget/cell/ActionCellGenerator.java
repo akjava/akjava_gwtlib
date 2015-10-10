@@ -1,6 +1,5 @@
 package com.akjava.gwt.lib.client.widget.cell;
 
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 

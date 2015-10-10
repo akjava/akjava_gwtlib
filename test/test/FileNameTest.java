@@ -1,8 +1,8 @@
 package test;
 
-import com.akjava.lib.common.utils.FileNames;
-
 import junit.framework.TestCase;
+
+import com.akjava.lib.common.utils.FileNames;
 
 
 public class FileNameTest extends TestCase{

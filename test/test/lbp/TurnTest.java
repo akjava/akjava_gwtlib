@@ -5,7 +5,6 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
-import com.akjava.gwt.lib.client.LogUtils;
 import com.akjava.gwt.lib.client.experimental.lbp.BinaryPattern;
 import com.akjava.gwt.lib.client.experimental.lbp.SimpleLBP;
 import com.google.common.base.Joiner;

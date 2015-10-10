@@ -1,7 +1,6 @@
 package com.akjava.gwt.lib.client.canvas;
 
 import com.akjava.gwt.lib.client.CanvasUtils;
-import com.akjava.gwt.lib.client.LogUtils;
 import com.akjava.lib.common.graphics.IntRect;
 import com.akjava.lib.common.utils.ValuesUtils;
 import com.google.gwt.canvas.client.Canvas;

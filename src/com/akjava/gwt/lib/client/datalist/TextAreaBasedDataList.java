@@ -392,6 +392,42 @@ public static interface TextAreaBasedDataListListener{
 		}
 		updateList();
 	}
+	
+	public void execRestore(List<SimpleTextData> list){
+		//clear first
+		List<SimpleTextData> hvs= getDataList().getDataList();
+		for(SimpleTextData hv:hvs){
+			getDataList().clearData(hv.getId());
+		}
+		//getDataList().setCurrentId(0);
+		
+		int maxId=0;
+		
+		
+		//do offset
+		//LogUtils.log("force offset");
+		//doOffset(parts.getKey(),list);
+		
+		//LogUtils.log("upload-size:"+list.size());
+		for(SimpleTextData hv:list){
+			if(hv.getId()>maxId){
+				maxId=hv.getId();
+			}
+			//LogUtils.log("update:"+hv.getId());
+			getDataList().updateData(hv.getId(),hv.getName(), hv.getData());
+		}
+		
+		getDataList().setCurrentId(maxId+1);
+		
+		//LogUtils.log("current-id:"+getDataList().getCurrentId());
+		
+		if(uploadPanel!=null){
+			uploadPanel.removeFromParent();
+		}
+		selectedId=-1;
+		updateList();
+	}
+
 
 	@Override
 	public void doDoubleClick(int clientX, int clientY) {

@@ -2,7 +2,6 @@ package com.akjava.gwt.lib.client.widget.cell;
 
 import java.util.List;
 
-import com.akjava.gwt.lib.client.LogUtils;
 import com.google.common.collect.ForwardingList;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.view.client.SelectionChangeEvent;

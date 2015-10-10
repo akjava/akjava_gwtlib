@@ -6,7 +6,6 @@ import java.util.Map;
 import junit.framework.TestCase;
 
 import com.akjava.lib.common.form.FormFieldData;
-import com.akjava.lib.common.form.FormFieldDataDto;
 import com.akjava.lib.common.form.FormFieldDataDto.FormFieldToInputEditTagFunction;
 import com.akjava.lib.common.tag.LabelAndValue;
 import com.akjava.lib.common.tag.Tag;

@@ -5,7 +5,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.util.List;
 
 import com.akjava.gwt.lib.client.game.PointD;
-import com.akjava.gwt.lib.client.game.PointXY;
 import com.akjava.lib.common.utils.ValuesUtils;
 
 public class Rect {

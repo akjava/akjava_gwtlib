@@ -1,7 +1,5 @@
 package com.akjava.gwt.lib.client.widget;
 
-import com.akjava.gwt.lib.client.LogUtils;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.TextArea;

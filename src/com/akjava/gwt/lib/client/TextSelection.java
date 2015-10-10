@@ -2,7 +2,6 @@ package com.akjava.gwt.lib.client;
 
 import com.google.common.base.Ascii;
 import com.google.common.base.Optional;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.TextArea;
 
 public class TextSelection {
