@@ -77,6 +77,24 @@ public abstract class SimpleDataListItemControler extends ItemIOControler{
 		//LogUtils.log("select by id:"+getCurrentName()+","+id);
 		simpleDataList.selectById(id);
 	}
+
+	/**
+	 * super class save no care about widget selection.
+	 * and widget.update seems costly 
+	 */
+	@Override
+	public boolean save() {
+		boolean result=super.save();
+		
+		SimpleTextData savedData=getDataList().getDataValue(selectedId);
+		
+		
+		DataListData<SimpleTextData> selection=getSimpleDataListWidget().getSelection();
+		//not replace sipletextdata directlly,because take care of possible use reference.
+		selection.getData().setData(savedData.getData());
+		
+		return result;
+	}
 	
 	
 }

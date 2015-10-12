@@ -49,6 +49,9 @@ public SimpleTextData getLastSaved() {
 	return lastSaved;
 }
 
+/*
+ * this save not effect current data list
+ */
 public boolean save(){
 	if(selectedId==-1){
 		return saveAs();
@@ -68,6 +71,7 @@ public boolean save(){
 		}
 		
 		ValueChangeEvent.fire(this, hv);
+		
 		return true;
 	}
 }
