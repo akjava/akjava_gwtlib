@@ -68,6 +68,10 @@ public abstract class SimpleDataListItemControler extends ItemIOControler{
 		simpleDataList.next();
 	}
 	
+	public boolean isEmpty(){
+		return simpleDataList.getItemCount()==0;
+	}
+	
 	public void select(int index){
 		simpleDataList.select(index);
 	}

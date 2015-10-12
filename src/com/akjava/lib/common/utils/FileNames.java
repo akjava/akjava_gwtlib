@@ -144,6 +144,38 @@ public class FileNames {
 		
 		return name.substring(0,index+1);
 	}
+	/*
+	 * try name (03) > name , name(1) > name
+	 */
+	public  static String getRemovedLastDownloadNumbers(String name){
+		if(name==null || name.isEmpty()){
+			return name;
+		}
+		
+		//need ends with )
+		if(name.charAt(name.length()-1)!=')'){
+			return name;
+		}
+		
+		int index=name.length()-1;
+		for(int i=name.length()-2;i>=0;i--){
+			if(!Character.isDigit(name.charAt(i))){
+				index=i;
+				break;
+			}
+		}
+		
+		if(name.charAt(index)!='('){
+			return name;
+		}
+		
+		if(name.length()>index && name.charAt(index-1) ==' '){
+			index--;
+		}
+		
+		
+		return name.substring(0,index);
+	}
 	
 	//TODO support pattern?
 	/*

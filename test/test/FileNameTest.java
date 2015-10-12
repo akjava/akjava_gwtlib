@@ -86,4 +86,49 @@ public class FileNameTest extends TestCase{
 		assertEquals(collect, FileNames.as(FileNames.SLASH).getDirectoryPath(base,true));
 	}
 	
+	public void testDownloadName1(){
+		String test="hello";
+		String correct="hello";
+		assertEquals(correct, FileNames.getRemovedLastDownloadNumbers(test));
+	}
+	public void testDownloadName2(){
+		String test="hello()";
+		String correct="hello";
+		assertEquals(correct, FileNames.getRemovedLastDownloadNumbers(test));
+	}
+	public void testDownloadName3(){
+		String test="hello(1)";
+		String correct="hello";
+		assertEquals(correct, FileNames.getRemovedLastDownloadNumbers(test));
+	}
+	public void testDownloadName4(){
+		String test="hello (1)";
+		String correct="hello";
+		assertEquals(correct, FileNames.getRemovedLastDownloadNumbers(test));
+	}
+	public void testDownloadName5(){
+		String test="hello (10)";
+		String correct="hello";
+		assertEquals(correct, FileNames.getRemovedLastDownloadNumbers(test));
+	}
+	public void testDownloadName6(){
+		String test="hello (10";
+		String correct="hello (10";
+		assertEquals(correct, FileNames.getRemovedLastDownloadNumbers(test));
+	}
+	public void testDownloadName7(){
+		String test="hello 10)";
+		String correct="hello 10)";
+		assertEquals(correct, FileNames.getRemovedLastDownloadNumbers(test));
+	}
+	public void testDownloadName8(){
+		String test="hello (-10)";
+		String correct="hello (-10)";
+		assertEquals(correct, FileNames.getRemovedLastDownloadNumbers(test));
+	}
+	public void testDownloadName9(){
+		String test="hello2";
+		String correct="hello2";
+		assertEquals(correct, FileNames.getRemovedLastDownloadNumbers(test));
+	}
 }
