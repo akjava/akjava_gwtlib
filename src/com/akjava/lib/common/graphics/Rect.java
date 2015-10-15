@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.akjava.gwt.lib.client.game.PointD;
 import com.akjava.lib.common.utils.ValuesUtils;
+import com.google.common.collect.Lists;
 
 public class Rect {
 private double x;
@@ -185,6 +186,16 @@ public Rect bottom(int size){
 	return new Rect(x,y+height-size,width,size);
 }
 
+public List<Point> toPoints(){
+	List<Point> points=Lists.newArrayList();
+	
+	points.add(new Point(x,y));
+	points.add(new Point(x+width,y));
+	points.add(new Point(x+width,y+height));
+	points.add(new Point(x,y+height));
+	
+	return points;
+}
 
 public Rect leftTop(int size){
 	return new Rect(x,y,size,size);

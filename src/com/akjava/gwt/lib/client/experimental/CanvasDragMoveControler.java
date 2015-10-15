@@ -82,7 +82,7 @@ public  class CanvasDragMoveControler{
 		canvas.addMouseMoveHandler(new MouseMoveHandler() {
 			@Override
 			public void onMouseMove(MouseMoveEvent event) {
-				if(isStarted()){
+				if(isTouchDowning()){
 					keyDownState.setAltKeyDown(event.isAltKeyDown());
 					keyDownState.setShiftKeyDown(event.isShiftKeyDown());
 					keyDownState.setControlKeyDown(event.isControlKeyDown());
@@ -189,14 +189,11 @@ public  class CanvasDragMoveControler{
 	
 	private int startX;
 	private boolean started;
-	public boolean isStarted() {
+	public boolean isTouchDowning() {
 		return started;
 	}
 
-	public void setStarted(boolean started) {
-		this.started = started;
-	}
-
+	
 	public void start(int x,int y){
 		startX=x;
 		startY=y;

@@ -334,7 +334,7 @@ canvasControler = new CanvasDragMoveControler(canvas,new CanvasMoveListener() {
 		int x=event.getX();
 		int y=event.getY();
 		
-		if(canvasControler.isStarted()){
+		if(canvasControler.isTouchDowning()){
 			//LogUtils.log("dragged");
 			return;
 		}
