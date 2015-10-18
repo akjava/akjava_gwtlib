@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='html5gwt'>
+  <!-- Inherit the core Web Toolkit stuff.                        -->
+  <inherits name='com.google.gwt.user.User'/>
+
+  <!-- Inherit the default GWT style sheet.  You can change       -->
+  <!-- the theme of your GWT application by uncommenting          -->
+  <!-- any one of the following lines.                            -->
+  <inherits name='com.google.gwt.user.theme.clean.Clean'/>
+  <!-- <inherits name='com.google.gwt.user.theme.standard.Standard'/> -->
+  <!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
+  <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
+
+  <!-- Other module inherits                                      -->
+  <inherits name='com.google.common.base.Base'/>
+   <inherits name='com.google.common.collect.Collect'/>
+  <!-- Specify the app entry point class.                         -->
+
+  <!-- Specify the paths for translatable code                    -->
+  <source path='client'/>
+  <source path='shared'/>
+
+ <replace-with class="com.akjava.gwt.html5.client.CanvasInputRange">
+    <when-type-is class="com.akjava.gwt.html5.client.InputRangeWidget"/>
+ </replace-with>
+
+
+  <replace-with class="com.akjava.gwt.html5.client.HTML5InputRange">
+    <when-type-is class="com.akjava.gwt.html5.client.InputRangeWidget"/>
+    <any>
+      <when-property-is name="user.agent" value="safari"/>
+
+      
+      </any>
+  </replace-with>
+  
+   <replace-with class="com.akjava.gwt.html5.client.download.NullFileDownload">
+    <when-type-is class="com.akjava.gwt.html5.client.download.FileDownload"/>
+ </replace-with>
+
+
+  <replace-with class="com.akjava.gwt.html5.client.download.HTML5Download">
+    <when-type-is class="com.akjava.gwt.html5.client.download.FileDownload"/>
+    <any>
+       <when-property-is name="user.agent" value="gecko1_8"/>
+      <when-property-is name="user.agent" value="safari"/>
+      </any>
+  </replace-with>
+  
+  	<!-- 
+   <set-property name="user.agent" value="safari"/>
+  	 -->
+  	 	
+</module>
