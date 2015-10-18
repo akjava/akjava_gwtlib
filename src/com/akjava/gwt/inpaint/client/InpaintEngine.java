@@ -9,6 +9,7 @@ import com.akjava.gwt.inpaint.client.InPaint;
 import com.akjava.gwt.lib.client.CanvasUtils;
 import com.akjava.gwt.lib.client.ImageElementUtils;
 import com.akjava.gwt.lib.client.LogUtils;
+import com.akjava.gwt.lib.client.experimental.ImageDataUtils;
 import com.akjava.lib.common.utils.Benchmark;
 import com.akjava.lib.common.utils.ColorUtils;
 import com.google.gwt.canvas.client.Canvas;
@@ -26,14 +27,21 @@ public class InpaintEngine {
 	}
 	
 	public static interface InpaintListener{
-		public void createMixedImage(String dataUrl);
-		public void createInpaintImage(String dataUrl);//cutted mask
-		public void createGreyScaleMaks(String dataUrl);
-		public void createInpainteMaks(String dataUrl);
+		public void createMixedImage(ImageData imageData);
+		public void createInpaintImage(ImageData imageData);//cutted mask
+		public void createGreyScaleMaks(ImageData imageData);
+		public void createInpainteMaks(ImageData imageData);
 	}
 	
+	/**
+	 * 
+	 * @param element must loaded
+	 * @param radius
+	 * @param maskDatas
+	 * @param listener
+	 */
 	public void doInpaint(ImageElement element,int radius,List<MaskData> maskDatas,InpaintListener listener){
-				checkArgument(element.getWidth()!=0 && element.getHeight()==0,"doInpaint:0 image element maybe need load");
+				checkArgument(element.getWidth()!=0 && element.getHeight()!=0,"doInpaint:0 image element maybe need load");
 		
 				Benchmark.start("total");
 				
@@ -71,7 +79,7 @@ public class InpaintEngine {
 				
 				CanvasUtils.copyTo(maskData,sharedCanvas);
 				String dataUrl=sharedCanvas.toDataUrl();
-				listener.createGreyScaleMaks(dataUrl);
+				listener.createGreyScaleMaks(ImageDataUtils.copyFrom(sharedCanvas));
 				
 				
 				
@@ -102,7 +110,7 @@ public class InpaintEngine {
 				//CanvasUtils.copyTo(imageData,sharedCanvas);
 				
 				String inpaintDataUrl=sharedCanvas.toDataUrl();
-				listener.createInpaintImage(inpaintDataUrl);
+				listener.createInpaintImage(ImageDataUtils.copyFrom(sharedCanvas));
 				
 				
 				
@@ -128,7 +136,7 @@ public class InpaintEngine {
 				InPaint.createImageDataFromMaskAsGray(maskData2,drawByte);
 				
 				CanvasUtils.copyTo(maskData,sharedCanvas);
-				listener.createInpainteMaks(sharedCanvas.toDataUrl());
+				listener.createInpainteMaks(ImageDataUtils.copyFrom(sharedCanvas));
 				
 				//createAndInsertImage(drawByte,inpaintMaskPanel);
 					
@@ -149,9 +157,9 @@ public class InpaintEngine {
 				
 				
 				//cut off margin
-				String lastImage=CanvasUtils.toDataUrl(sharedCanvas, sharedCanvas, margin, margin, sharedCanvas.getCoordinateSpaceWidth()-margin*2, sharedCanvas.getCoordinateSpaceHeight()-margin*2);
+				//String lastImage=CanvasUtils.toDataUrl(sharedCanvas, sharedCanvas, margin, margin, sharedCanvas.getCoordinateSpaceWidth()-margin*2, sharedCanvas.getCoordinateSpaceHeight()-margin*2);
 				
-				listener.createMixedImage(lastImage);
+				listener.createMixedImage(sharedCanvas.getContext2d().getImageData(margin, margin, sharedCanvas.getCoordinateSpaceWidth()-margin*2, sharedCanvas.getCoordinateSpaceHeight()-margin*2));
 				
 			}
 		

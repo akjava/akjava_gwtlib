@@ -440,6 +440,16 @@ public static double[] calcurateFitSize(int canvasWidth,int canvasHeight,int ima
 		public static int VALIGN_BOTTOM=2;
 
 	
+		
+		public static void drawCenter(Canvas canvas,CanvasElement img){
+			int cw=canvas.getCoordinateSpaceWidth();
+			int ch=canvas.getCoordinateSpaceHeight();
+			int dx=(cw-img.getWidth())/2;
+			int dy=(ch-img.getHeight())/2;
+			//log("draw:"+dx+","+dy);
+			canvas.getContext2d().drawImage(img, dx, dy, img.getWidth(), img.getHeight());
+			}
+		
 	//simple draw center,no resize
 public static void drawCenter(Canvas canvas,ImageElement img){
 	int cw=canvas.getCoordinateSpaceWidth();
