@@ -3,6 +3,7 @@ package com.akjava.gwt.lib.client.experimental;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.akjava.gwt.lib.client.CanvasUtils;
+import com.akjava.gwt.lib.client.LogUtils;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.MouseDownEvent;
@@ -90,8 +91,8 @@ public  class CanvasDragMoveControler{
 					if(scaleX==1 && scaleY==1){
 						move(event.getX(), event.getY());
 					}else{
-						int x=(int)(event.getX()/scaleX);
-						int y=(int)(event.getY()/scaleY);
+						int x=mouseToCanvasX(event.getX());
+						int y=mouseToCanvasY(event.getY());
 						move(x,y);
 					}
 				}
@@ -115,8 +116,8 @@ public  class CanvasDragMoveControler{
 				if(scaleX==1 && scaleY==1){
 					end(event.getX(), event.getY());
 				}else{
-					int x=(int)(event.getX()/scaleX);
-					int y=(int)(event.getY()/scaleY);
+					int x=mouseToCanvasX(event.getX());
+					int y=mouseToCanvasY(event.getY());
 					end(x,y);
 				}
 				
@@ -139,8 +140,8 @@ public  class CanvasDragMoveControler{
 				if(scaleX==1 && scaleY==1){
 					start(event.getX(), event.getY());
 				}else{
-					int x=(int)(event.getX()/scaleX);
-					int y=(int)(event.getY()/scaleY);
+					int x=mouseToCanvasX(event.getX());
+					int y=mouseToCanvasY(event.getY());
 					start(x,y);
 				}
 			}
@@ -161,13 +162,34 @@ public  class CanvasDragMoveControler{
 				if(scaleX==1 && scaleY==1){
 					end(event.getX(), event.getY());
 				}else{
-					int x=(int)(event.getX()/scaleX);
-					int y=(int)(event.getY()/scaleY);
+					int x=mouseToCanvasX(event.getX());
+					int y=mouseToCanvasY(event.getY());
 					end(x,y);
 				}
 			}
 		});
 	}
+	
+	//FUTURE
+	private int mouseToCanvasX(int mouseX){
+		return (int)((mouseX-scrollX)/scaleX);
+	}
+	private int mouseToCanvasY(int mouseY){
+		return (int)((mouseY-scrollY)/scaleY);
+	}
+	
+	private int scrollX;
+	public int getScrollX() {
+		return scrollX;
+	}
+
+	public void setScrollX(int scrollX) {
+		this.scrollX = scrollX;
+		LogUtils.log("setScrollX:"+scrollX+"x"+scrollY);
+		
+	}
+
+	private int scrollY;//TODO
 	
 	private double scaleX=1;
 	public double getScaleX() {
@@ -227,8 +249,9 @@ public  class CanvasDragMoveControler{
 		startY=y;
 	}
 	
+	//mouse down click start.never change until next click
 	private int clickStartX;
-	//click start
+	
 	public int getClickStartX() {
 		return clickStartX;
 	}
@@ -246,7 +269,7 @@ public  class CanvasDragMoveControler{
 	}
 	
 	
-	//drag start
+	//drag start,replace moved.
 	public int getStartX() {
 		return startX;
 	}
@@ -259,6 +282,7 @@ public  class CanvasDragMoveControler{
 	public void setStartY(int startY) {
 		this.startY = startY;
 	}
+	//drag end,every drag event
 	public int getMovedX() {
 		return movedX;
 	}

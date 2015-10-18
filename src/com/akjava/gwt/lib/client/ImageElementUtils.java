@@ -1,5 +1,6 @@
 package com.akjava.gwt.lib.client;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import javax.annotation.Nullable;
@@ -18,11 +19,14 @@ public class ImageElementUtils {
 private ImageElementUtils(){}
 
 /**
+ * 
  * watch out!
- * sometime return 0x0 withxheight on IE11
+ * sometime return 0x0 withxheight on IE11 and chrome
  * use new ImageElementLoader().load
  * @param url
  * @return
+ * 
+ * 
  */
 public static ImageElement create(String url){
 	checkNotNull(url,"ImageElementUtils:imageElement need url");
@@ -30,6 +34,9 @@ public static ImageElement create(String url){
 	element.setSrc(url);
 	return element;
 }
+
+
+
 public static ImageElementLoader createWithLoader(String url,ImageElementListener listener){
 	ImageElementLoader loader=new ImageElementLoader();
 	loader.load(url, listener);
@@ -93,6 +100,7 @@ public static Canvas copytoCanvas(ImageElement element,Canvas canvas,boolean dra
 	if(canvas==null){
 		canvas=Canvas.createIfSupported();
 	}
+	checkArgument(element.getWidth()!=0 && element.getHeight()!=0,"0 size width or height element,need load image");
 	canvas.setWidth(element.getWidth()+"px");
 	canvas.setHeight(element.getHeight()+"px");
 	canvas.setCoordinateSpaceWidth(element.getWidth());
@@ -186,6 +194,9 @@ public static Canvas copytoCanvasWithMargin(ImageElement element,Canvas canvas,b
 	}
 	int originW=element.getWidth();
 	int originH=element.getHeight();
+	
+	checkArgument(originH!=0 && originH!=0,"copytoCanvasWithMargin 0 width or height,maybe need image-loading");
+	
 	int w=originW+margin*2;
 	int h=originH+margin*2;
 	canvas.setWidth(w+"px");

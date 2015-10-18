@@ -5,15 +5,30 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Button;
 
-public abstract class ExecuteButton extends Button{
-	public ExecuteButton(String label){
+public abstract class ExecuteWaitAsyncButton extends Button{
+	public ExecuteWaitAsyncButton(String label){
 		this(label,true);
 	}
-	public ExecuteButton(String label,final boolean autoEnableButton){
+	private int schedule=10;
+	private boolean readyExecute;
+	public int getSchedule() {
+		return schedule;
+	}
+	public void setSchedule(int schedule) {
+		this.schedule = schedule;
+	}
+	public boolean isReadyExecute() {
+		return readyExecute;
+	}
+	public void setReadyExecute(boolean readyExecute) {
+		this.readyExecute = readyExecute;
+	}
+	public ExecuteWaitAsyncButton(String label,final boolean autoEnableButton){
 		super(label);
 		this.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+				readyExecute=false;
 				startExecute(autoEnableButton);
 			}
 		});
@@ -27,6 +42,8 @@ public abstract class ExecuteButton extends Button{
 		Timer timer=new Timer(){
 			@Override
 			public void run() {
+				if(readyExecute){
+					cancel();
 				try{
 					executeOnClick();
 				}catch(Exception e){
@@ -36,10 +53,11 @@ public abstract class ExecuteButton extends Button{
 					setEnabled(true);
 					}
 				}
+				}
 			}
 			
 		};
-		timer.schedule(10);
+		timer.scheduleRepeating(schedule);
 	}
 	public void beforeExecute(){}
 	public abstract void executeOnClick();
