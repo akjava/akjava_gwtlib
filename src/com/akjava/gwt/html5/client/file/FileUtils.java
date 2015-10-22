@@ -23,9 +23,14 @@ import java.util.List;
 import com.akjava.gwt.html5.client.file.webkit.DirectoryCallback;
 import com.akjava.gwt.html5.client.file.webkit.FileEntry;
 import com.akjava.gwt.html5.client.file.webkit.Item;
+import com.akjava.gwt.lib.client.ImageElementListener;
+import com.akjava.gwt.lib.client.ImageElementLoader;
+import com.akjava.gwt.lib.client.LogUtils;
+import com.akjava.gwt.lib.client.experimental.LoggingImageElementLoader;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.gwt.core.client.JsArray;
+import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -35,6 +40,7 @@ import com.google.gwt.event.dom.client.DragOverEvent;
 import com.google.gwt.event.dom.client.DragOverHandler;
 import com.google.gwt.event.dom.client.DropEvent;
 import com.google.gwt.event.dom.client.DropHandler;
+import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.user.client.Timer;
 
 
@@ -72,6 +78,106 @@ public class FileUtils {
 		return createSingleFileUploadForm(listener, reset, true);//change default support drop
 	}
 		
+	//only single file & wait loading
+	public static FileUploadForm createImageFileUploadForm(final ImageFileListener listener,final boolean reset,boolean supportOnDrop){
+		final FileUploadForm form=new FileUploadForm();
+		form.getDropPanel().addDragOverHandler(new DragOverHandler() {
+
+			@Override
+			public void onDragOver(DragOverEvent event) {
+				event.preventDefault();
+				if(form.isShowDragOverBorder()){
+					form.getDropPanel().setBorderWidth(2);
+				}
+			}
+		});
+		form.getDropPanel().addDragLeaveHandler(new DragLeaveHandler() {
+			
+			@Override
+			public void onDragLeave(DragLeaveEvent event) {
+				event.preventDefault();
+				if(form.isShowDragOverBorder()){
+				form.getDropPanel().setBorderWidth(0);
+				}
+			}
+		});
+		if(supportOnDrop){
+		form.getDropPanel().addDropHandler(new DropHandler() {
+
+			@Override
+			public void onDrop(DropEvent event) {
+
+				event.preventDefault();
+				if(form.isShowDragOverBorder()){
+				form.getDropPanel().setBorderWidth(0);
+				}
+
+				final FileReader reader = FileReader.createFileReader();
+				final JsArray<File> files = FileUtils.transferToFile(event
+						.getNativeEvent());
+				if (files.length() > 0) {
+					reader.setOnLoad(new FileHandler() {
+						@Override
+						public void onLoad() {
+							new LoggingImageElementLoader(){
+
+								@Override
+								public void onLoad(ImageElement imageElement) {
+									listener.uploaded(files.get(0), imageElement);
+								}
+								
+							}.load(reader.getResultAsString());
+							if(reset){
+								form.reset();
+							}
+						}
+					});
+					reader.readAsDataURL(files.get(0));	
+				}
+			event.stopPropagation();//maybe stop root drop,//TODO 
+			}
+		});
+		}
+			
+		form.getFileUpload().addChangeHandler(new ChangeHandler() {
+			@Override
+			public void onChange(ChangeEvent event) {
+				final FileReader reader=FileReader.createFileReader();
+				final JsArray<File> files=FileUtils.toFile(event.getNativeEvent());
+				
+				final File file=files.get(0);
+				if(files.length()>0){
+					
+				reader.setOnLoad(new FileHandler() {
+					@Override
+					public void onLoad() {
+						//somehow files is dead here.
+						//LogUtils.log(files.length()+","+files.get(0));
+						
+						new LoggingImageElementLoader(){
+
+							@Override
+							public void onLoad(ImageElement imageElement) {
+								
+								listener.uploaded(file, imageElement);
+							}
+							
+						}.load(reader.getResultAsString());
+						
+						
+						if(reset){
+							form.reset();
+						}
+					}
+				});
+				reader.readAsDataURL(file);
+				}
+				
+			}
+		});
+		return form;
+	}
+	
 	//TODO support other case
 	/*
 	 * why need reset because sometime you would like to re-upload modified same file.in such case it need reset though it's use change-handler.
@@ -397,6 +503,12 @@ public class FileUtils {
 	public interface DataURLListener{//utf-8 text or base64
 		public void uploaded(final File file,String text);
 	}
+	
+	public interface ImageFileListener{//utf-8 text or base64
+		public void uploaded(final File file,ImageElement imageElement);
+	}
+	
+	
 	
 	public interface DataURLsListener{
 		public void uploaded(final List<File> files,List<String> values);

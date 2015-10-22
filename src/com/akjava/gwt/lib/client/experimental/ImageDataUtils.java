@@ -1,5 +1,7 @@
 package com.akjava.gwt.lib.client.experimental;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import javax.annotation.Nullable;
 
 import com.akjava.gwt.lib.client.CanvasUtils;
@@ -249,6 +251,11 @@ public static boolean isSameData(ImageData data1,ImageData data2){
 	}
 	
 	return true;
+}
+
+public static void putImageData(ImageData data,Canvas canvas) {
+	checkNotNull(canvas,"putImageData:need canvas");
+	canvas.getContext2d().putImageData(data, 0, 0);
 }
 
 /**

@@ -12,8 +12,9 @@
   <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
 
   <!-- Other module inherits                                      -->
+  <inherits name='com.akjava.gwt.common.Common'/>
   <inherits name='com.google.common.base.Base'/>
-   <inherits name='com.google.common.collect.Collect'/>
+  <inherits name='com.google.common.collect.Collect'/>
   <!-- Specify the app entry point class.                         -->
 
   <!-- Specify the paths for translatable code                    -->

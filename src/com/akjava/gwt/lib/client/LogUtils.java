@@ -1,6 +1,7 @@
 package com.akjava.gwt.lib.client;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.user.client.Window;
 
 
 public class LogUtils {
@@ -25,6 +26,9 @@ if(typeof console === "undefined"){
 	}
 	public static final  void log(Number value){
 		log(""+value);
+	}
+	public static final  void logImageDataUrl(String dataUrl){
+		Window.open(dataUrl, ""+System.currentTimeMillis(), null);
 	}
 	
 	public static final native void log(String object)/*-{

@@ -2,19 +2,32 @@ package com.akjava.lib.common.utils;
 
 import java.util.List;
 
+import com.akjava.gwt.lib.client.LogUtils;
 import com.akjava.gwt.lib.client.experimental.ArrayTool;
+import com.google.common.collect.ImmutableList;
 
 public class ListUtils {
 	
+	
+	/**
+	 * 
+	 * if undefined error happen maybe list is immutable
+	 * 
+	 * @param list
+	 * @param object
+	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void top(List list,Object object){
+		
 		if(list.size()>1){//to move need more
 			int index=list.indexOf(object);
+			
 			if(index!=-1){
 				list.remove(object);
 				list.add(0,object);
 			}
 			}
+		
 	}
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void bottom(List list,Object object){

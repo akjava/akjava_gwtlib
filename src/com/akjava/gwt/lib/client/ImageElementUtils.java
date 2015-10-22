@@ -100,7 +100,7 @@ public static Canvas copytoCanvas(ImageElement element,Canvas canvas,boolean dra
 	if(canvas==null){
 		canvas=Canvas.createIfSupported();
 	}
-	checkArgument(element.getWidth()!=0 && element.getHeight()!=0,"0 size width or height element,need load image");
+	checkArgument(element.getWidth()!=0 && element.getHeight()!=0,"copytoCanvas:0 size width or height element,need load image");
 	canvas.setWidth(element.getWidth()+"px");
 	canvas.setHeight(element.getHeight()+"px");
 	canvas.setCoordinateSpaceWidth(element.getWidth());

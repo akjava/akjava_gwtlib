@@ -99,5 +99,9 @@ public static String toCssColor(int rgb){
 }
 public static String toCssColor(int r,int g,int b,double alpha){
 	return "rgba("+r+","+g+","+b+","+alpha+")";
+}
+public static String toCssColor(String color, double alpha) {
+	int[] rgb=toRGB(color);
+	return toCssColor(rgb[0], rgb[1], rgb[2], alpha);
 }	
 }

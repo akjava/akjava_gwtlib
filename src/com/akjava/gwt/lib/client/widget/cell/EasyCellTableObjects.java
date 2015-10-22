@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import com.akjava.gwt.lib.client.LogUtils;
 import com.akjava.lib.common.utils.ListUtils;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
@@ -156,11 +157,15 @@ public abstract class EasyCellTableObjects<T> {
 		}
 	}
 	public void topItem(T object){
+		
 		if(datas.size()<=1){//no need
 			return;
 		}
+		
 		ListUtils.top(datas, object);
+		
 		update();
+		
 	}
 	public void bottomItem(T object){
 		if(datas.size()<=1){//no need
