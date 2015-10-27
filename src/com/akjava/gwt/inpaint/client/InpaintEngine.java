@@ -22,6 +22,7 @@ public class InpaintEngine {
 	
 	private Canvas sharedCanvas;
 	
+	
 	public InpaintEngine(){
 		sharedCanvas=Canvas.createIfSupported();
 	}
@@ -32,7 +33,138 @@ public class InpaintEngine {
 		public void createGreyScaleMaks(ImageData imageData);
 		public void createInpainteMaks(ImageData imageData);
 	}
-	
+	public static int INPAINT_MARGIN=2;
+	public void doInpaint(ImageElement element,int radius,final ImageElement maskImage,InpaintListener listener){
+		checkArgument(element.getWidth()!=0 && element.getHeight()!=0,"doInpaint: image element maybe need load");
+		checkArgument(maskImage.getWidth()!=0 && maskImage.getHeight()!=0,"doInpaint: maskImage element maybe need load");
+		
+		Benchmark.start("total");
+		
+		//resultPanel.add(new Image(element.getSrc()));
+		
+		//use edge case
+		//INPAINT_MARGIN = 2;//there are inpaint problem.so it's better expand
+		
+		Benchmark.start("expand");
+		
+		
+		//canvas and sharedCanvas is same
+		ImageElementUtils.copytoCanvasWithMargin(element, sharedCanvas,true,INPAINT_MARGIN,true);
+		ImageData expandedImageData=CanvasUtils.getImageData(sharedCanvas);
+		
+		
+		Benchmark.endAndLog("expand");
+		Uint8Array array=null;
+		
+		//Uint8Array grayByte=null;
+		
+		
+		//created by maskData
+		//Uint8Array merged=createMaskData(sharedCanvas,maskDatas);
+		
+		/*
+		Uint8Array expanded=InPaint.expandMaskByte(merged,  imageData.getWidth(),data.getExpand());
+		createAndInsertImage(expanded,resultPanel);
+		
+		grayByte=InPaint.expandMaskByteAsGray(expanded,  imageData.getWidth(),data.getFade());
+		*/
+		
+		ImageElementUtils.copytoCanvasWithMargin(maskImage, sharedCanvas,true,INPAINT_MARGIN,true);
+		
+		Canvas grayscale=CanvasUtils.convertToGrayScale(sharedCanvas, null);
+		CanvasUtils.copyTo(grayscale, sharedCanvas);
+		
+		
+		ImageData maskData=CanvasUtils.getImageData(sharedCanvas);
+		
+		
+		//CanvasUtils.copyTo(maskData,sharedCanvas);
+		//String dataUrl=sharedCanvas.toDataUrl();
+		listener.createGreyScaleMaks(maskData);
+		
+		
+		
+		
+		
+		
+		Uint8Array newByte=InPaint.createMaskByColor(maskData, 0,0,0,false);//not 0 is mask
+		
+		//return 0 or 1
+		
+		array=newByte;
+		
+		
+		
+		
+		Benchmark.start("inpaint");
+		InPaint.inpaint(expandedImageData, array, radius);
+		
+		//somehow(maybe transparent problem) expanded to result should keep same size
+		
+		
+		sharedCanvas.setCoordinateSpaceWidth(expandedImageData.getWidth()-4);
+		sharedCanvas.setCoordinateSpaceHeight(expandedImageData.getHeight()-4);
+		sharedCanvas.getContext2d().putImageData(expandedImageData,-2,-2);
+		
+		
+		//CanvasUtils.copyTo(imageData,sharedCanvas);
+		//CanvasUtils.copyTo(imageData,sharedCanvas);
+		
+		String inpaintDataUrl=sharedCanvas.toDataUrl();
+		listener.createInpaintImage(ImageDataUtils.copyFrom(sharedCanvas));
+		
+		
+		
+		//createAndInsertImage use sizes
+		sharedCanvas.setCoordinateSpaceWidth(expandedImageData.getWidth());
+		sharedCanvas.setCoordinateSpaceHeight(expandedImageData.getHeight());
+		
+		//for support mergin
+		
+		
+		
+		//create grayscale later
+		
+		Uint8Array drawByte=Uint8Array.createUint8(newByte.length());
+		//better to do last ?
+		for(int i=0;i<newByte.length();i++){
+			drawByte.set(i, newByte.get(i)*255);
+		}
+		
+		ImageData maskData2=CanvasUtils.createSameSizeImageData(sharedCanvas);
+		//LogUtils.log(maskByte.length()+","+maskData.getWidth()+"x"+maskData.getHeight());
+		//InPaint.createImageDataFromMask(maskData,maskByte,0,0,0,255,true);//for black & white
+		InPaint.createImageDataFromMaskAsGray(maskData2,drawByte);
+		
+		CanvasUtils.copyTo(maskData2,sharedCanvas);
+		listener.createInpainteMaks(ImageDataUtils.copyFrom(sharedCanvas));
+		
+		//createAndInsertImage(drawByte,inpaintMaskPanel);
+			
+		
+		
+		Benchmark.endAndLog("inpaint");
+		
+		Benchmark.start("mix");
+		CanvasUtils.copyTo(expandedImageData,sharedCanvas);//sharedcanvas broken by last create-image
+		ImageData paintedData=CanvasUtils.getImageData(sharedCanvas);
+		CanvasUtils.drawImage(sharedCanvas,element,INPAINT_MARGIN,INPAINT_MARGIN);
+		
+		
+		
+		
+		CanvasUtils.copyFromCanvasRedToImageDataAlpha(grayscale,paintedData);
+		Canvas paintedCanvas=CanvasUtils.createCanvas(null, paintedData);
+		CanvasUtils.drawImage(sharedCanvas,paintedCanvas);
+		
+		Benchmark.endAndLog("mix");
+		
+		//cut off margin
+		//String lastImage=CanvasUtils.toDataUrl(sharedCanvas, sharedCanvas, margin, margin, sharedCanvas.getCoordinateSpaceWidth()-margin*2, sharedCanvas.getCoordinateSpaceHeight()-margin*2);
+		
+		listener.createMixedImage(sharedCanvas.getContext2d().getImageData(INPAINT_MARGIN, INPAINT_MARGIN, sharedCanvas.getCoordinateSpaceWidth()-INPAINT_MARGIN*2, sharedCanvas.getCoordinateSpaceHeight()-INPAINT_MARGIN*2));
+		Benchmark.endAndLog("total");
+	}
 	/**
 	 * 
 	 * @param element must loaded
@@ -64,7 +196,7 @@ public class InpaintEngine {
 				
 				
 				//created by maskData
-				Uint8Array merged=createMaskData(sharedCanvas,maskDatas);
+				Uint8Array mergedGrayScale=createMaskData(sharedCanvas,maskDatas);
 				
 				/*
 				Uint8Array expanded=InPaint.expandMaskByte(merged,  imageData.getWidth(),data.getExpand());
@@ -74,11 +206,11 @@ public class InpaintEngine {
 				*/
 				
 				ImageData maskData=CanvasUtils.getImageData(sharedCanvas,false);
-				InPaint.createImageDataFromMaskAsGray(maskData,merged);
+				InPaint.createImageDataFromMaskAsGray(maskData,mergedGrayScale);
 				
 				
 				CanvasUtils.copyTo(maskData,sharedCanvas);
-				String dataUrl=sharedCanvas.toDataUrl();
+				//String dataUrl=sharedCanvas.toDataUrl();
 				listener.createGreyScaleMaks(ImageDataUtils.copyFrom(sharedCanvas));
 				
 				
@@ -130,12 +262,12 @@ public class InpaintEngine {
 					drawByte.set(i, newByte.get(i)*255);
 				}
 				
-				ImageData maskData2=CanvasUtils.getImageData(sharedCanvas,false);
+				ImageData maskData2=CanvasUtils.createSameSizeImageData(sharedCanvas);
 				//LogUtils.log(maskByte.length()+","+maskData.getWidth()+"x"+maskData.getHeight());
 				//InPaint.createImageDataFromMask(maskData,maskByte,0,0,0,255,true);//for black & white
 				InPaint.createImageDataFromMaskAsGray(maskData2,drawByte);
 				
-				CanvasUtils.copyTo(maskData,sharedCanvas);
+				CanvasUtils.copyTo(maskData2,sharedCanvas);
 				listener.createInpainteMaks(ImageDataUtils.copyFrom(sharedCanvas));
 				
 				//createAndInsertImage(drawByte,inpaintMaskPanel);
@@ -149,8 +281,8 @@ public class InpaintEngine {
 				ImageData paintedData=CanvasUtils.getImageData(sharedCanvas, true);
 				CanvasUtils.drawImage(sharedCanvas,element,margin,margin);
 				
-				if(merged!=null){
-				CanvasUtils.copyAlpha(paintedData,merged);
+				if(mergedGrayScale!=null){
+				CanvasUtils.copyAlpha(paintedData,mergedGrayScale);
 				Canvas paintedCanvas=CanvasUtils.createCanvas(null, paintedData);
 				CanvasUtils.drawImage(sharedCanvas,paintedCanvas);
 				}

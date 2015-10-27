@@ -253,7 +253,15 @@ public static boolean isSameData(ImageData data1,ImageData data2){
 	return true;
 }
 
+public static void rezieAndImageData(ImageData data,Canvas canvas) {
+	checkNotNull(data,"putImageData:need data");
+	checkNotNull(canvas,"putImageData:need canvas");
+	CanvasUtils.setSize(canvas, data.getWidth(), data.getHeight());
+	putImageData(data, canvas);
+}
+
 public static void putImageData(ImageData data,Canvas canvas) {
+	checkNotNull(data,"putImageData:need data");
 	checkNotNull(canvas,"putImageData:need canvas");
 	canvas.getContext2d().putImageData(data, 0, 0);
 }

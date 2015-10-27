@@ -1,6 +1,7 @@
 package com.akjava.gwt.inpaint.client;
 
 import com.akjava.gwt.html5.client.file.Uint8Array;
+import com.akjava.gwt.lib.client.LogUtils;
 import com.akjava.lib.common.utils.ColorUtils;
 import com.google.gwt.canvas.dom.client.ImageData;
 import com.google.gwt.core.client.JavaScriptObject;
@@ -164,10 +165,12 @@ public class InPaint  extends JavaScriptObject{
 				
 				return bytes;
 			}
+			//TODO change,not so good
 			//return 0-255 value
 			public static Uint8Array expandMaskByteAsGray(Uint8Array bytes,int width,int rad) {
 				int height=bytes.length()/width;
-				double perv=256.0/rad;
+				double perv=255.0/rad;
+				int powrad=rad*rad;
 				Uint8Array copied=Uint8Array.createUint8(width*height);
 				for(int y=0;y<height;y++){
 					for(int x=0;x<width;x++){
@@ -175,16 +178,26 @@ public class InPaint  extends JavaScriptObject{
 						if(value==1){
 							for(int dx = -rad; dx <= rad; dx++){
 								for(int dy = -rad; dy <= rad; dy++){
-									if(dx * dx + dy * dy <= rad * rad){
+									int powx=dx*dx;
+									int powy=dy*dy;
+									if(powx + powy <= powrad){
 										
-										double length=Math.sqrt(Math.pow(Math.abs(dx),2)+Math.pow(Math.abs(dy),2));
-										int v=255-((int) Math.min(255,(int)(perv*length)));
+										double length=Math.sqrt(powx+powy);
+										int v=255-((int) Math.min(255,(int)(perv*length)))+(int)(perv/2);
 										
-										
+										if(v<0){
+											v=0;
+										}
+										if(v>255){
+											v=255;
+										}
 										int sx=x+dx;
 										int sy=y+dy;
+										if(x==310 && y==189){
+										//	LogUtils.log(dx+","+dy+","+v+",length="+length+",perv="+perv);
+										}
 										if(sx>=0 && sx<width && sy>=0 &&sy<height){//valid in
-											int at=(y+dy)*width+x+dx;
+											int at=(sy)*width+sx;
 											if(copied.get(at)<v){
 												copied.set(at, v);
 											}
@@ -200,7 +213,40 @@ public class InPaint  extends JavaScriptObject{
 						}
 					}
 				}
-				return copied;
+				
+				Uint8Array averaged=Uint8Array.createUint8(width*height);
+				for(int y=0;y<height;y++){
+					for(int x=0;x<width;x++){
+						//int value=bytes.get(y*width+x);
+						//if(value!=1){
+							int count=0;
+							double total=0;
+							for(int dx = -rad; dx <= rad; dx++){
+								for(int dy = -rad; dy <= rad; dy++){
+									int powx=dx*dx;
+									int powy=dy*dy;
+									if(powx + powy <= powrad){
+									int sx=x+dx;
+									int sy=y+dy;
+										if(sx>=0 && sx<width && sy>=0 &&sy<height){//valid in
+										int at=(sy)*width+sx;
+										total+=copied.get(at);
+										count++;
+										}
+									}
+								}
+							}
+							int avg=(int)(total/count);
+							averaged.set(y*width+x, avg);
+						//}else{
+							//averaged.set(y*width+x, 255);
+						//}
+						
+					}
+				}
+				
+				return averaged;
+				//return copied;
 			}
 			
 }

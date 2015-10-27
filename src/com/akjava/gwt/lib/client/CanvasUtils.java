@@ -1,5 +1,6 @@
 package com.akjava.gwt.lib.client;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.List;
@@ -460,12 +461,24 @@ public static void drawCenter(Canvas canvas,ImageElement img){
 	canvas.getContext2d().drawImage(img, dx, dy, img.getWidth(), img.getHeight());
 	}
 
+/**
+ * @deprecated
+ * @param canvas
+ * @param copy
+ * @return
+ */
 public static ImageData getImageData(Canvas canvas,boolean copy) {
 	if(copy){
 	return canvas.getContext2d().getImageData(0, 0, canvas.getCoordinateSpaceWidth(), canvas.getCoordinateSpaceHeight());
 	}else{
 	return canvas.getContext2d().createImageData(canvas.getCoordinateSpaceWidth(), canvas.getCoordinateSpaceHeight());
 	}
+}
+public static ImageData getImageData(Canvas canvas) {
+	return canvas.getContext2d().getImageData(0, 0, canvas.getCoordinateSpaceWidth(), canvas.getCoordinateSpaceHeight());
+}
+public static ImageData createSameSizeImageData(Canvas canvas) {
+	return canvas.getContext2d().createImageData(canvas.getCoordinateSpaceWidth(), canvas.getCoordinateSpaceHeight());
 }
 
 public static Canvas copyTo(ImageData imageData,@Nullable Canvas canvas) {
@@ -577,10 +590,23 @@ public static void drawImage(Canvas sharedCanvas,ImageElement element,int x,int 
 	sharedCanvas.getContext2d().drawImage(element, x,y);
 }
 
+
+
 public static void copyAlpha(ImageData paintedData, Uint8Array grayByte) {
 	for(int y=0;y<paintedData.getHeight();y++){
 		for(int x=0;x<paintedData.getWidth();x++){
 			paintedData.setAlphaAt(grayByte.get(y*paintedData.getWidth()+x), x, y);
+		}
+	}
+}
+
+public static void copyFromCanvasRedToImageDataAlpha(Canvas canvas,ImageData paintedData) {
+	
+	ImageData canvasData=ImageDataUtils.copyFrom(canvas);
+	checkArgument(canvasData.getWidth()==paintedData.getWidth() && canvasData.getHeight()==paintedData.getHeight(),"copyToImageDataRedAsAlpha:must same size");
+	for(int y=0;y<paintedData.getHeight();y++){
+		for(int x=0;x<paintedData.getWidth();x++){
+			paintedData.setAlphaAt(canvasData.getRedAt(x, y), x, y);
 		}
 	}
 }
@@ -647,7 +673,7 @@ public static void setBackgroundImage(Canvas canvas,String imageUrl,int iw,int i
 	
 }
 
-public static Canvas convertToGrayScale(Canvas canvas,Canvas target) {
+public static Canvas convertToGrayScale(Canvas canvas,@Nullable Canvas target) {
 	ImageData data=canvas.getContext2d().getImageData(0, 0, canvas.getCoordinateSpaceWidth(), canvas.getCoordinateSpaceHeight());
 	for(int y=0;y<data.getHeight();y++){
 		for(int x=0;x<data.getWidth();x++){
