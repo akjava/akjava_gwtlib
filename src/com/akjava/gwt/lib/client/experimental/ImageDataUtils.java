@@ -9,6 +9,7 @@ import com.akjava.gwt.lib.client.ImageElementUtils;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.ImageData;
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.typedarrays.client.Uint8ArrayNative;
 
@@ -203,6 +204,10 @@ return dst;
 
 public  static  native final Uint8ArrayNative getUint8(ImageData data)/*-{
 return data.data;
+}-*/;
+
+public  static  native final JavaScriptObject getArrayBuffer(ImageData data)/*-{
+return data.data.buffer;
 }-*/;
 
 public static ImageData setGrayscale(ImageData imageData,Uint8ArrayNative nativeArray,boolean setRGBA){

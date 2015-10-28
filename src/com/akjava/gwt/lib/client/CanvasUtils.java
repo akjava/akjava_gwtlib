@@ -805,6 +805,12 @@ public static void resizeCanvasFrom(ImageElement imageElement, Canvas canvas) {
 	ImageElementUtils.copytoCanvas(imageElement, canvas,false);
 }
 
+/**
+ * @deprecated not image element safe
+ * @param canvas
+ * @param width
+ * @param height
+ */
 public static void expandCanvas(Canvas canvas, double width, double height) {
 	if(width%2!=0 || height%2!=0){
 		LogUtils.log("expandCanvas:width or height not even number.expand size is not same as arg");

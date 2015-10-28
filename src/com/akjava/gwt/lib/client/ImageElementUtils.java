@@ -23,11 +23,30 @@ private ImageElementUtils(){}
  * watch out!
  * sometime return 0x0 withxheight on IE11 and chrome
  * use new ImageElementLoader().load
+
+
+ * @deprecated
  * @param url
  * @return
  * 
  * 
- */
+ * 
+ 
+ //one of replace case
+ ImageElementUtils.createWithLoader(text,new ImageElementListener() {
+					
+					@Override
+					public void onLoad(ImageElement element) {
+						
+					}
+					
+					@Override
+					public void onError(String url, ErrorEvent event) {
+						LogUtils.log(event.getNativeEvent());
+					}
+				});
+ 
+ **/
 public static ImageElement create(String url){
 	checkNotNull(url,"ImageElementUtils:imageElement need url");
 	ImageElement element=Document.get().createImageElement();
@@ -35,6 +54,18 @@ public static ImageElement create(String url){
 	return element;
 }
 
+/*
+ * url must be loaded url;
+ */
+public static ImageElement createFromLoadedUrl(String url){
+	checkNotNull(url,"ImageElementUtils:imageElement need url");
+	ImageElement element=Document.get().createImageElement();
+	element.setSrc(url);
+	if(element.getWidth()==0 || element.getHeight()==0){
+		LogUtils.log("createFromLoadedUrl:possible not loaded");
+	}
+	return element;
+}
 
 
 public static ImageElementLoader createWithLoader(String url,ImageElementListener listener){
