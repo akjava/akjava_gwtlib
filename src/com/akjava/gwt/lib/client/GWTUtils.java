@@ -1,8 +1,11 @@
 package com.akjava.gwt.lib.client;
 
 import com.google.common.base.Ascii;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Navigator;
+import com.google.gwt.user.client.ui.RootPanel;
 
 public class GWTUtils {
 public static String getSimpleName(Class clazz){
@@ -14,6 +17,14 @@ public static String getSimpleName(Class clazz){
 		return name;
 	}
 }
+
+
+//maybe almost same
+public static void addKeyDownHandlerToDocument(KeyDownHandler handler){
+	RootPanel.get().addDomHandler(handler,KeyDownEvent.getType());
+}
+
+
 /**
  * via http://stackoverflow.com/questions/9038625/detect-if-device-is-ios
  * @return

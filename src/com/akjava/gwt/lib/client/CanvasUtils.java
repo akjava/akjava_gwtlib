@@ -59,6 +59,12 @@ public class CanvasUtils {
 		return createCanvas((int)w,(int)h);
 	}
 	
+public static Canvas createFrom(ImageData imageData){
+	checkNotNull(imageData,"createFrom:need imageData");
+	Canvas canvas=CanvasUtils.createCanvas(imageData.getWidth(), imageData.getHeight());
+	canvas.getContext2d().putImageData(imageData, 0, 0);
+	return canvas;
+}
 public static Canvas createCanvas(int w,int h){
 	Canvas canvas=Canvas.createIfSupported();
 	return createCanvas(canvas,w,h);

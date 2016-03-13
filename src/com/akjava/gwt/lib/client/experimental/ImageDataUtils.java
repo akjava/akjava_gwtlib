@@ -210,6 +210,9 @@ public  static  native final JavaScriptObject getArrayBuffer(ImageData data)/*-{
 return data.data.buffer;
 }-*/;
 
+public static native ImageData set(ImageData imageData,Uint8ArrayNative nativeArray)/*-{
+return imageData.data.set(nativeArray);
+}-*/;
 public static ImageData setGrayscale(ImageData imageData,Uint8ArrayNative nativeArray,boolean setRGBA){
 	int w=imageData.getWidth();
 	for(int i=0;i<nativeArray.length();i++){

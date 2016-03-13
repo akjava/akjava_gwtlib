@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
+import com.google.gwt.core.client.JsArrayBoolean;
 import com.google.gwt.core.client.JsArrayNumber;
 import com.google.gwt.core.client.JsArrayString;
 
@@ -45,4 +46,44 @@ public class JavaScriptUtils {
 		}
 		return array;
 		}
+	
+	public static  JsArrayNumber toArray(double[] ints){
+		JsArrayNumber array=JsArrayNumber.createArray().cast();
+		for(int i=0;i<ints.length;i++){
+			array.push(ints[i]);
+		}
+		return array;
+		}
+	public static  JsArrayBoolean toArray(boolean[] ints){
+		JsArrayBoolean array=JsArrayNumber.createArray().cast();
+		for(int i=0;i<ints.length;i++){
+			array.push(ints[i]);
+		}
+		return array;
+		}
+	
+	public static  JsArrayString toArray(String[] ints){
+		JsArrayString array=JsArrayNumber.createArray().cast();
+		for(int i=0;i<ints.length;i++){
+			array.push(ints[i]);
+		}
+		return array;
+		}
+	
+	public final native String getTypeName(JavaScriptObject object)/*-{
+	var typeName = typeof object;
+	return typeName;
+	}-*/;
+	
+	public final native double toNumber(JavaScriptObject object)/*-{
+	return object;
+	}-*/;
+	
+	public final native boolean toBoolean(JavaScriptObject object)/*-{
+	return object;
+	}-*/;
+	
+	public final native String toString(JavaScriptObject object)/*-{
+	return object;
+	}-*/;
 }

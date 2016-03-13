@@ -2,21 +2,22 @@ package com.akjava.gwt.lib.client.canvas;
 
 import com.akjava.gwt.lib.client.CanvasUtils;
 import com.akjava.lib.common.graphics.IntRect;
+import com.akjava.lib.common.graphics.Rect;
 import com.akjava.lib.common.utils.ValuesUtils;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.TextMetrics;
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
 
-public class CanvasTextUtils {
+public class RectCanvasTextUtils {
 
 	//TODO Test
-	public static void drawCenterInRect(Canvas canvas,String text,IntRect rect){
+	public static void drawCenterInRect(Canvas canvas,String text,Rect rect){
 		canvas.getContext2d().save();
 		TextMetrics metrix=canvas.getContext2d().measureText(text);
 		
 		int dx=(int) ((rect.getWidth()-metrix.getWidth())/2);
-		int dy=rect.getHeight()/2;
+		double dy=rect.getHeight()/2;
 		
 		//int size=parseFontSize(canvas.getContext2d().getFont());
 		//double descentOffset=(double)size/4; offset no need anymore
@@ -37,7 +38,7 @@ public class CanvasTextUtils {
 		return 0;
 	}
 	
-	public static IntRect getAlignRect(Canvas canvas,int cw,int ch,String text,int align,int valign){
+	public static Rect getAlignRect(Canvas canvas,int cw,int ch,String text,int align,int valign){
 		TextMetrics metrix=canvas.getContext2d().measureText(text);
 		
 		double width=metrix.getWidth();
@@ -59,9 +60,9 @@ public class CanvasTextUtils {
 		dy=ch-height;	
 		}
 		
-		return new IntRect((int)dx,(int)dy,(int)width,size);
+		return new Rect(dx,dy,width,size);
 	}
-	public static IntRect getAlignRect(Canvas canvas,String text,int align,int valign){
+	public static Rect getAlignRect(Canvas canvas,String text,int align,int valign){
 		int cw=canvas.getCoordinateSpaceWidth();
 		int ch=canvas.getCoordinateSpaceHeight();
 		return getAlignRect(canvas,cw,ch,text,align,valign);

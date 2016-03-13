@@ -82,6 +82,8 @@ private static Canvas sharedCanvas=Canvas.createIfSupported();//TODO delay
 		fillCircle(canvas,rect.getX(),rect.getY(),rect.getWidth(),rect.getHeight(),inbox);
 	}
 	
+
+	
 	public static void fillCircle(Canvas canvas,int x,int y,int width,int height,boolean inbox){
 		drawCircle(canvas,x,y,width,height,inbox,false);
 	}
