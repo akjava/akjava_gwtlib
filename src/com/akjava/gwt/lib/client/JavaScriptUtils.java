@@ -86,4 +86,13 @@ public class JavaScriptUtils {
 	public final native String toString(JavaScriptObject object)/*-{
 	return object;
 	}-*/;
+	
+	//some js code check arg value undefined instead of null.
+	public final native JavaScriptObject createUndefinedValue()/*-{
+	return undefined;
+	}-*/;
+	
+	public final native boolean isUndefined(JavaScriptObject object)/*-{
+	return object === undefined;
+	}-*/;
 }
