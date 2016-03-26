@@ -11,9 +11,16 @@ import com.google.gwt.core.client.JsArrayString;
 
 public class JavaScriptUtils {
 	//much compatible
-	public static native final JsArray<JavaScriptObject> createJSArray()/*-{
+	public static native final <T extends JavaScriptObject> JsArray<T> createJSArray()/*-{
 	return $wnd.eval("new Array()");
 	}-*/;
+	
+	  	public final static native <T extends JavaScriptObject> JsArray<T> createJSArray( T object) /*-{
+		var array= $wnd.eval("new Array()");
+		array.push(object);
+		return array;
+		}-*/;
+
 	
 	public static List<String> toList(JsArrayString array){
 	List<String> list=new ArrayList<String>();

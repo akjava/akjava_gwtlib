@@ -9,7 +9,12 @@ public class StringUtils {
 	 public static boolean isWhitespace(String text){
 	    	return text.equals(" ") || text.equals("\t");
 	    }
-	 
+	 /**
+	  * 
+	  * @param text
+	  * @param values replace src-dest pairs.
+	  * @return
+	  */
 	 public static String replaceStrings(String text,List<List<String>> values){
 		 String result=text;
 		 for(List<String> value:values){

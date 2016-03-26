@@ -11,6 +11,7 @@ import java.util.Set;
 import com.akjava.gwt.lib.client.LogUtils;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
+import com.google.common.collect.Maps;
 
 public class TemplateUtils {
 	public final static String TEMPLATE_VALUE_END_STRING="${";
@@ -38,6 +39,11 @@ public class TemplateUtils {
 			}
 		}
 		return result;
+	}
+	public static String createAdvancedText(String template,String value){
+		Map<String,String> map=Maps.newHashMap();
+		map.put("value", value);
+		return createAdvancedText(template, map);
 	}
 	/**
 	 * please dont insert null-key

@@ -61,4 +61,12 @@ public class AudioContext extends JavaScriptObject{
 	public static interface DecodeErrorListener{
 		public void onError(JavaScriptObject error);
 	}
+	
+	public final  native OscillatorNode createOscillator()/*-{
+	return this.createOscillator();
+	}-*/;
+	
+	public final  native void close()/*-{
+	this.close();
+	}-*/;
 }
