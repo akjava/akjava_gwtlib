@@ -99,9 +99,9 @@ public static List<List<String>> csvToListList(String text,boolean tabbedCsv,boo
 	return Lists.transform(Lists.newArrayList(lines), new SplitLineFunction(tabbedCsv,conmaCsv));
 }
 
-public static List<String[]> csvTextToArrayList(String line,char separator){
-	line=toNLineSeparator(line);
-	String[] lines=line.split("\n");
+public static List<String[]> csvTextToArrayList(String text,char separator){
+	text=toNLineSeparator(text);
+	String[] lines=text.split("\n");
 	
 	List<String[]> ret=new ArrayList<String[]>();
 	for (int i = 0; i < lines.length; i++) {

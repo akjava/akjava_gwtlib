@@ -30,7 +30,9 @@ public class StorageControler implements IStorageControler {
 		return storage!=null;
 	}
 	
-	/* (non-Javadoc)
+	/* 
+	 * Quota error usually happen
+	 * (non-Javadoc)
 	 * @see com.akjava.gwt.lib.client.IStorageControler#setValue(java.lang.String, java.lang.String)
 	 */
 	@Override

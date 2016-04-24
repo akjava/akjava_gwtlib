@@ -596,6 +596,7 @@ public int compare(SimpleTextData o1, SimpleTextData o2) {
 	if(order==ORDER_ZA){
 		return o2.getName().compareTo(o1.getName());
 	}
+	//ORDER_ID
 	return o1.getId()-o2.getId();
 }
 	

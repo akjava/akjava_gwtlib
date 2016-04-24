@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.akjava.gwt.lib.client.datalist.SimpleTextData;
+import com.akjava.gwt.lib.client.datalist.SimpleTextDataDataConverter;
 
 /**
- * try to use Storage data as simple list datas
+ * trying to use Storage data as simple list datas
+ * 
+ * however little bit complex
  * @author aki
  *
  */
@@ -90,6 +93,8 @@ try{
 		
 		return result;
 	}
+	
+	//this split cdate & data
 	public List<SimpleTextData> getDataList(){
 try{
 	List<SimpleTextData> values=new ArrayList<SimpleTextData>();
@@ -104,6 +109,24 @@ try{
 			SimpleTextData sdata=new SimpleTextData(i, header,data_cdate[0],data_cdate[1]);
 			//LogUtils.log(i+","+sdata.getName()+","+sdata.getData()+",cdate="+sdata.getCdate());
 			values.add(sdata);
+		}
+	}
+	return values;
+		}catch(StorageException e){
+			onError(e);
+		}
+		return null;
+	}
+	
+	public List<HeaderAndValue> getDatas(){
+try{
+	List<HeaderAndValue> values=new ArrayList<HeaderAndValue>();
+	int id=getCurrentId();
+	for(int i=0;i<id;i++){
+		String header=controler.getValue(key+KEY_HEADER+i, null);
+		if(header!=null){
+			String data=controler.getValue(key+KEY_DATA+i, "");//now null as empty
+			values.add(new HeaderAndValue(i,header,data));
 		}
 	}
 	return values;
@@ -139,6 +162,24 @@ try{
 		
 		
 	}
+	
+	private static SimpleTextDataDataConverter converter=new SimpleTextDataDataConverter();
+	
+	public int addData(SimpleTextData data){
+		int id=-1;
+		try{
+			id=getCurrentId();
+			controler.setValue(key+KEY_DATA+id, converter.convert(data));
+			controler.setValue(key+KEY_HEADER+id, data.getName());
+			incrementId();
+			data.setId(id);
+			
+			return id;
+		}catch(StorageException e){
+			onError(e);
+		}
+		return -1;
+		}
 	
 	public int addData(String header,String value){
 	int id=-1;
@@ -182,6 +223,17 @@ try{
 		
 	}
 	
+	public void updateData(SimpleTextData data){
+try{
+	int id=data.getId();
+	controler.setValue(key+KEY_HEADER+id, data.getName());
+	controler.setValue(key+KEY_DATA+id, converter.convert(data));
+		}catch(StorageException e){
+			onError(e);
+		}
+		
+	}
+	
 	public SimpleTextData getDataValue(int id){
 try{
 	String header=controler.getValue(key+KEY_HEADER+id, null);
@@ -197,6 +249,23 @@ try{
 		}
 	return null;
 	}
+	
+	
+	public HeaderAndValue getDataAt(int id){
+try{
+	String header=controler.getValue(key+KEY_HEADER+id, null);
+	if(header!=null){
+		String data=controler.getValue(key+KEY_DATA+id, "");
+		return new HeaderAndValue(id,header,data);
+	}
+	return null;
+		}catch(StorageException e){
+			onError(e);
+		}
+	return null;
+	}
+	
+
 	
 	/**
 	 * @deprecated

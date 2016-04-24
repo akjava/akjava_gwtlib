@@ -95,11 +95,11 @@ public class JavaScriptUtils {
 	}-*/;
 	
 	//some js code check arg value undefined instead of null.
-	public final native JavaScriptObject createUndefinedValue()/*-{
+	public static final native JavaScriptObject createUndefinedValue()/*-{
 	return undefined;
 	}-*/;
 	
-	public final native boolean isUndefined(JavaScriptObject object)/*-{
+	public static final native boolean isUndefined(JavaScriptObject object)/*-{
 	return object === undefined;
 	}-*/;
 }

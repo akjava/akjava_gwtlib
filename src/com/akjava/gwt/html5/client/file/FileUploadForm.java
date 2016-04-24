@@ -9,6 +9,7 @@ import com.google.common.collect.Iterables;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FormPanel;
+import com.google.gwt.user.client.ui.Panel;
 
 public class FileUploadForm extends FormPanel{
 private FileUpload fileUpload;
@@ -23,6 +24,7 @@ public static String ACCEPT_AUDIO="audio/*";
 public static String ACCEPT_VIDEO="video/*";
 public static String ACCEPT_ZIP=".zip";
 public static String ACCEPT_TXT=".txt";
+public static String ACCEPT_CSV=".csv";
 public static String ACCEPT_JAVASCRIPT=".js,.json";
 public boolean isShowDragOverBorder() {
 	return showDragOverBorder;
@@ -57,15 +59,23 @@ public void setEnabled(boolean bool){
  * .zip
  * @param accept
  */
-public void setAccept(String accept){
+public FileUploadForm setAccept(String accept){
 	fileUpload.getElement().setAttribute("accept", accept);
+	return this;
 }
-public void setAccept(String... accepts){
+public FileUploadForm setAccept(String... accepts){
 	fileUpload.getElement().setAttribute("accept", Joiner.on(",").join(accepts));
+	return this;
 }
 
-public void setAccept(List<String> accepts){
+public FileUploadForm setAccept(List<String> accepts){
 	fileUpload.getElement().setAttribute("accept", Joiner.on(",").join(accepts));
+	return this;
+}
+
+public FileUploadForm insertTo(Panel panel){
+	panel.add(this);
+	return this;
 }
 
 public FileUploadForm(){

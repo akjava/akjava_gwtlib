@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.cellview.client.CellTable.Resources;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
@@ -41,8 +42,12 @@ public abstract class SimpleCellTable<T> extends VerticalPanel{
 	public SimpleCellTable(){
 		this(Integer.MAX_VALUE);
 	}
-	public SimpleCellTable(int pageSize){
+	public SimpleCellTable(int pageSize,Resources resources){
+		if(resources==null){
 		table=new CellTable<T>();
+		}else{
+			table=new CellTable<T>(15,resources);
+		}
 		table.setRowCount(0);
 		dataProvider.addDataDisplay(table);
 		
@@ -58,6 +63,9 @@ public abstract class SimpleCellTable<T> extends VerticalPanel{
 		pager.setPageSize(pageSize);
 		//pager.setRangeLimited(false);
 		 this.add(table);
+	}
+	public SimpleCellTable(int pageSize){
+		this(pageSize,null);
 	}
 	
 	@Override

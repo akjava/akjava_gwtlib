@@ -48,6 +48,10 @@ public abstract class EasyCellTableObjects<T> {
 		return selectionModel.getSelectedObject();
 	}
 	
+	public boolean isSelected(){
+		return getSelection()!=null;
+	}
+	
 	public Optional<Integer> getSelectedIndex(@Nullable T data){
 		if(data==null){
 			return Optional.absent();
@@ -58,8 +62,19 @@ public abstract class EasyCellTableObjects<T> {
 		}
 		return Optional.of(value);
 	}
+	public Optional<Integer> getSelectedIndex(){
+		T data=getSelection();
+		if(data==null){
+			return Optional.absent();
+		}
+		int value=datas.indexOf(data);
+		if(value==-1){
+			return Optional.absent();
+		}
+		return Optional.of(value);
+	}
 	
-	public abstract void onSelect(T selection);
+	public abstract void onSelect(@Nullable T selection);
 
 	public void setSelected(T item,boolean selected){
 		selectionModel.setSelected(item, selected);
