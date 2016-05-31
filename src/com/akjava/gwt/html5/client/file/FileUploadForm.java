@@ -24,6 +24,7 @@ public static String ACCEPT_AUDIO="audio/*";
 public static String ACCEPT_VIDEO="video/*";
 public static String ACCEPT_ZIP=".zip";
 public static String ACCEPT_TXT=".txt";
+public static String ACCEPT_JSON=".json";
 public static String ACCEPT_CSV=".csv";
 public static String ACCEPT_JAVASCRIPT=".js,.json";
 public boolean isShowDragOverBorder() {

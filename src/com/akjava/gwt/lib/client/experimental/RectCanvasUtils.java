@@ -175,4 +175,9 @@ private static Canvas sharedCanvas=Canvas.createIfSupported();//TODO delay
 		canvas.getContext2d().setFillStyle(rectColor);
 		canvas.getContext2d().fillRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 	}
+
+	public static void clear(Canvas canvas, Rect r) {
+		canvas.getContext2d().clearRect(r.getX(), r.getY(), r.getWidth(),r.getHeight());
+		
+	}
 }

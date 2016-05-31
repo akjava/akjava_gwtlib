@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 
 import com.akjava.gwt.lib.client.CanvasUtils;
 import com.akjava.gwt.lib.client.ImageElementUtils;
+import com.akjava.lib.common.utils.ColorUtils;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.ImageData;
@@ -272,6 +273,70 @@ public static void putImageData(ImageData data,Canvas canvas) {
 	checkNotNull(data,"putImageData:need data");
 	checkNotNull(canvas,"putImageData:need canvas");
 	canvas.getContext2d().putImageData(data, 0, 0);
+}
+
+public static void replaceColor(ImageData data, int oldColor, int newColor) {
+	int[] rgb=ColorUtils.toRGB(oldColor);
+	int[] newrgb=ColorUtils.toRGB(newColor);
+	for(int x=0;x<data.getWidth();x++){
+		for(int y=0;y<data.getHeight();y++){
+			if(data.getAlphaAt(x, y)!=255){
+			//	continue;
+			}
+			
+			int r=data.getRedAt(x, y);
+			if(r!=rgb[0]){
+				continue;
+			}
+			int g=data.getGreenAt(x, y);
+			if(g!=rgb[1]){
+				continue;
+			}
+			int b=data.getBlueAt(x, y);
+			if(b!=rgb[2]){
+				continue;
+			}
+			
+			ImageDataUtils.setRGBAt(data,newrgb[0],newrgb[1],newrgb[2],x,y);
+		}
+	}
+}
+
+
+public static void executeRGBFilter(ImageData data, RGBColorFilter filter) {
+	for(int x=0;x<data.getWidth();x++){
+		for(int y=0;y<data.getHeight();y++){
+			int a=data.getAlphaAt(x, y);
+			
+			int r=data.getRedAt(x, y);
+			
+			int g=data.getGreenAt(x, y);
+			
+			int b=data.getBlueAt(x, y);
+			
+			int[] rgb=filter.filterRGB(r, g, b, a);
+			
+			ImageDataUtils.setRGBAt(data,rgb[0],rgb[1],rgb[2],x,y);
+		}
+	}
+}
+
+public static interface RGBColorFilter{
+	public int[] filterRGB(int r,int g,int b,int a);
+}
+
+
+
+public static void setRGBAt(ImageData data, int color, int x, int y) {
+	int[] rgb=ColorUtils.toRGB(color);
+	data.setRedAt(rgb[0], x, y);
+	data.setGreenAt(rgb[1], x, y);
+	data.setBlueAt(rgb[2], x, y);
+}
+public static void setRGBAt(ImageData data, int r,int g,int b, int x, int y) {
+	data.setRedAt(r, x, y);
+	data.setGreenAt(g, x, y);
+	data.setBlueAt(b, x, y);
 }
 
 /**

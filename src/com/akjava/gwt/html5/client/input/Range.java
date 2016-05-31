@@ -30,6 +30,7 @@ import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.HasName;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -40,7 +41,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author aki
  *
  */
-public class Range extends Widget implements HasName,HasValue<Number>, IsEditor<LeafValueEditor<Number>> {
+public class Range extends FocusWidget implements HasName,HasValue<Number>, IsEditor<LeafValueEditor<Number>> {
 
   /**
    * Creates a range widget that wraps an existing &lt;input type='range'&gt;
@@ -287,6 +288,18 @@ public void setValue(Number value, boolean fireEvents) {
       }
       
 	//setValue(value);
+}
+
+
+//TODO make style
+@Override
+public void setEnabled(boolean enabled) {
+  getInputElement().setDisabled(!enabled);
+  if (enabled) {
+    removeStyleDependentName("disabled");
+  } else {
+    addStyleDependentName("disabled");
+  }
 }
 
 private boolean valueChangeHandlerInitialized;

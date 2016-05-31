@@ -85,7 +85,7 @@ public  abstract class AsyncMultiCaller<T>{
 		}
 		
 		public void onFaild(T data){
-			LogUtils.log("faild:"+data);
+			LogUtils.log("AsyncMultiCaller-faild:"+data);
 		}
 		
 		public abstract void doFinally(boolean cancelled);
