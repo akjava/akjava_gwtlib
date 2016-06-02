@@ -20,6 +20,14 @@ public class JavaScriptUtils {
 		array.push(object);
 		return array;
 		}-*/;
+	  	
+	  	public static  final JsArrayNumber createJSArrayNumber(double... values){
+	  		JsArrayNumber numbers=createJSArray().cast();
+	  		for(double v:values){
+	  			numbers.push(v);
+	  		}
+	  		return numbers;
+	  	}
 
 	
 	public static List<String> toList(JsArrayString array){
