@@ -110,4 +110,7 @@ public class JavaScriptUtils {
 	public static final native boolean isUndefined(JavaScriptObject object)/*-{
 	return object === undefined;
 	}-*/;
+	public static final native boolean isNaN(double object)/*-{
+	return $wnd.isNaN(object);
+	}-*/;
 }
