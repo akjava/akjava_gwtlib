@@ -1,5 +1,8 @@
 package com.akjava.gwt.lib.client;
 
+import java.util.concurrent.TimeUnit;
+
+import com.google.common.base.Stopwatch;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.user.client.Window;
 
@@ -29,6 +32,17 @@ if(typeof console === "undefined"){
 	}
 	public static final  void logImageDataUrl(String dataUrl){
 		Window.open(dataUrl, ""+System.currentTimeMillis(), null);
+	}
+	
+	public static final  Stopwatch stopwatch(){
+		return Stopwatch.createStarted();
+	}
+	
+	public static final  void millisecond(String head,Stopwatch watch){
+		log(head+" "+watch.elapsed(TimeUnit.MILLISECONDS)+" ms");
+	}
+	public static final  void microsecond(String head,Stopwatch watch){
+		log(head+" "+watch.elapsed(TimeUnit.MICROSECONDS)+" micro second");
 	}
 	
 	public static final native void log(String object)/*-{
