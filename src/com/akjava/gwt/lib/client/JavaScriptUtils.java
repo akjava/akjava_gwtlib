@@ -121,4 +121,14 @@ public class JavaScriptUtils {
 	public static final native boolean isNaN(double object)/*-{
 	return $wnd.isNaN(object);
 	}-*/;
+
+	public static JsArrayNumber clone(JsArrayNumber pos) {
+		JsArrayNumber number=createJSArray().cast();
+		for(int i=0;i<pos.length();i++){
+			number.set(i, pos.get(i));
+		}
+		return number;
+	}
+	
+	
 }
