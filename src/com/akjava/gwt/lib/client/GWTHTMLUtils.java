@@ -1,5 +1,6 @@
 package com.akjava.gwt.lib.client;
 
+import com.akjava.lib.common.utils.ValuesUtils;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.ScriptElement;
@@ -23,6 +24,21 @@ public class GWTHTMLUtils {
 			return defaultValue;
 		}
 	}
+	
+	/**
+	 * try to avoid cache
+	 * @param id
+	 * @return
+	 */
+	public static String parameterFile(String id){
+		double t=System.currentTimeMillis();
+		return GWTHTMLUtils.getInputValueById(id, null)+"?t="+t;
+	}
+	public double parameterDouble(String id,double defaultValue){
+		return ValuesUtils.toDouble(GWTHTMLUtils.getInputValueById(id,null),defaultValue);
+	}
+	
+	
 	
 	public static void addFloatLeftStyle(UIObject object){
 		object.getElement().getStyle().setProperty("float", "left");

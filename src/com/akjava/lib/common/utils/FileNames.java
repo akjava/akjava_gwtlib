@@ -27,6 +27,10 @@ public class FileNames {
 		this.fileSeparator=fileSeparator;
 	}
 	
+	public static String getFileNameAsSlashFileSeparator(String url){
+		return asSlashFileName.getFileName(url);
+	}
+	
 	public boolean isEndsWithFileSeparator(String path){
 		if(Strings.isNullOrEmpty(path)){
 			return false;
