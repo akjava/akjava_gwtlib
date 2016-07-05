@@ -54,6 +54,13 @@ public static ImageElement create(String url){
 	return element;
 }
 
+public static ImageElement createNotLoadedImage(String url){
+	checkNotNull(url,"ImageElementUtils:imageElement need url");
+	ImageElement element=Document.get().createImageElement();
+	element.setSrc(url);
+	return element;
+}
+
 /*
  * url must be loaded url;
  */

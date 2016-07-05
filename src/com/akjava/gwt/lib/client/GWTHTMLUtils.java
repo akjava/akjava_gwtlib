@@ -3,6 +3,7 @@ package com.akjava.gwt.lib.client;
 import com.akjava.lib.common.utils.ValuesUtils;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.dom.client.ScriptElement;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -31,10 +32,22 @@ public class GWTHTMLUtils {
 	 * @return
 	 */
 	public static String parameterFile(String id){
+		String file=GWTHTMLUtils.getInputValueById(id, null);
+		if(file==null){
+			return null;
+		}
 		double t=System.currentTimeMillis();
-		return GWTHTMLUtils.getInputValueById(id, null)+"?t="+t;
+		return file+"?t="+t;
 	}
-	public double parameterDouble(String id,double defaultValue){
+	public static ImageElement parameterImage(String id){
+		
+		String url=parameterFile(id);
+		if(url==null){
+			return null;
+		}
+		return ImageElementUtils.createNotLoadedImage(url);
+	}
+	public static double parameterDouble(String id,double defaultValue){
 		return ValuesUtils.toDouble(GWTHTMLUtils.getInputValueById(id,null),defaultValue);
 	}
 	
