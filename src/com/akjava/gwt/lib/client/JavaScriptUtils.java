@@ -130,5 +130,13 @@ public class JavaScriptUtils {
 		return number;
 	}
 	
+	public final static double fixNumber(int v,double number){
+		String fixed=toFixed(number, v);
+		return Double.valueOf(fixed);
+	}
+	
+	  private  final static native String toFixed(double number, int n) /*-{
+	    return number.toFixed(n);
+	  }-*/;
 	
 }
