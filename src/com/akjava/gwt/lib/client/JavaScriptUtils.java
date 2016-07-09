@@ -29,7 +29,9 @@ public class JavaScriptUtils {
 	  		return numbers;
 	  	}
 	  	
-	  	public static  final JsArray createJSArray(JavaScriptObject... values){
+	  	
+	  	@SuppressWarnings({ "rawtypes", "unchecked" })
+		public static  final  JsArray createJSArray(JavaScriptObject... values){
 	  		JsArray numbers=createJSArray().cast();
 	  		for(JavaScriptObject v:values){
 	  			numbers.push(v);
