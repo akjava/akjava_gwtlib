@@ -41,6 +41,9 @@ public class JavaScriptUtils {
 
 	
 	public static List<String> toList(JsArrayString array){
+		if(array==null){
+			return null;
+		}
 	List<String> list=new ArrayList<String>();
 	for(int i=0;i<array.length();i++){
 		list.add(array.get(i));
@@ -55,6 +58,43 @@ public class JavaScriptUtils {
 	}
 	return list;
 	}
+	
+	public static List<Double> toList(JsArrayNumber array){
+		if(array==null){
+			return null;
+		}
+	List<Double> list=new ArrayList<Double>();
+	for(int i=0;i<array.length();i++){
+		list.add(array.get(i));
+	}
+	return list;
+	}
+	public static List<Boolean> toList(JsArrayBoolean array){
+		if(array==null){
+			return null;
+		}
+		List<Boolean> list=new ArrayList<Boolean>();
+		for(int i=0;i<array.length();i++){
+			list.add(array.get(i));
+		}
+		return list;
+		}
+	
+	public static JsArrayNumber toArrayNumber(List<Double> list){
+		JsArrayNumber array=JsArray.createArray().cast();
+		for(Double data:list){
+			array.push(data);
+		}
+		return array;
+		}
+	
+	public static JsArrayBoolean toArrayBoolean(List<Boolean> list){
+		JsArrayBoolean array=JsArray.createArray().cast();
+		for(Boolean data:list){
+			array.push(data);
+		}
+		return array;
+		}
 	
 	public static <E extends JavaScriptObject> JsArray<E> toArray(List<E> list){
 		JsArray<E> array=JsArray.createArray().cast();

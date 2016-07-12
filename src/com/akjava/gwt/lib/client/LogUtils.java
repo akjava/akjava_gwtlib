@@ -45,6 +45,13 @@ if(typeof console === "undefined"){
 		log(head+" "+watch.elapsed(TimeUnit.MICROSECONDS)+" micro second");
 	}
 	
+	public static final  void logAndAlert(String log){
+		logAndAlert(log, log);
+	}
+	public static final  void logAndAlert(String log,String alert){
+		log(log);
+		Window.alert(alert);
+	}
 	public static final native void log(String object)/*-{
 if(typeof console === "undefined"){
     console = { log: function() { },error:function(){},warn:function(){} };
