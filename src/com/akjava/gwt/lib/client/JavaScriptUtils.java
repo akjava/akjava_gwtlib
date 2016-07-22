@@ -39,6 +39,13 @@ public class JavaScriptUtils {
 	  		return numbers;
 	  	}
 
+	  	
+	public static void concat(JsArrayNumber target,JsArrayNumber values){
+			for(int i=0;i<values.length();i++){
+				target.push(values.get(i));
+			}
+	}
+		
 	
 	public static List<String> toList(JsArrayString array){
 		if(array==null){
