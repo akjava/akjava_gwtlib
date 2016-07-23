@@ -9,6 +9,9 @@ public abstract class ExecuteButton extends Button{
 	public ExecuteButton(String label){
 		this(label,true);
 	}
+	
+	
+	
 	public ExecuteButton(String label,final boolean autoEnableButton){
 		super(label);
 		this.addClickHandler(new ClickHandler() {
