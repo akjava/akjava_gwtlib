@@ -113,6 +113,10 @@ public class FileNames {
 		return ext;
 	}
 	
+	public static boolean hasNoExtension(String name){
+		return getExtension(name).isEmpty();
+	}
+	
 	/**
 	 * not support directory name contain .
 	 * @param name
