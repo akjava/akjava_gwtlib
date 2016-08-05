@@ -142,6 +142,12 @@ public class JavaScriptUtils {
 		return array;
 		}
 	
+	
+	public static final native void remove(JsArrayNumber array,int index)/*-{
+	array.splice(index,1);
+	}-*/;
+	
+	
 	public final native String getTypeName(JavaScriptObject object)/*-{
 	var typeName = typeof object;
 	return typeName;
