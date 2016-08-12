@@ -154,4 +154,8 @@ public class GWTHTMLUtils {
 	};
 
 	}-*/;
+
+	public static boolean parameterBoolean(String id, boolean b) {
+		return ValuesUtils.toBoolean(GWTHTMLUtils.getInputValueById(id,null),b);
+	}
 }
