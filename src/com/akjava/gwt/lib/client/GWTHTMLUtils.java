@@ -39,6 +39,9 @@ public class GWTHTMLUtils {
 		double t=System.currentTimeMillis();
 		return file+"?t="+t;
 	}
+	public static String parameterTime(){
+		return "?t="+System.currentTimeMillis();
+	}
 	public static ImageElement parameterImage(String id){
 		
 		String url=parameterFile(id);

@@ -596,7 +596,9 @@ public static void drawImage(Canvas sharedCanvas,ImageElement element,int x,int 
 	sharedCanvas.getContext2d().drawImage(element, x,y);
 }
 
-
+public static void drawImage(Canvas sharedCanvas,ImageElement element,int x,int y,int w,int h) {
+	sharedCanvas.getContext2d().drawImage(element, x,y,w,h);
+}
 
 public static void copyAlpha(ImageData paintedData, Uint8Array grayByte) {
 	for(int y=0;y<paintedData.getHeight();y++){

@@ -215,7 +215,7 @@ public class ColorBox extends Widget implements HasName,HasValue<String>, IsEdit
    * @param value value to set
    */
   public void setValue(String value) {
-    getInputElement().setValue(value);
+	  setValue(value,false);
   }
 
   private InputElement getInputElement() {
@@ -233,7 +233,18 @@ public HandlerRegistration addValueChangeHandler(ValueChangeHandler<String> hand
 
 @Override
 public void setValue(String value, boolean fireEvents) {
-	setValue(value);
+		if(value==null){
+			value="";
+		}
+	
+	    String oldValue = getValue();
+	    getInputElement().setValue(value);
+	    if (value.equals(oldValue)) {
+	      return;
+	    }
+	    if (fireEvents) {
+	      ValueChangeEvent.fire(this, value);
+	    }
 }
 
 private boolean valueChangeHandlerInitialized;
