@@ -8,7 +8,10 @@ import java.util.Map;
 
 import com.akjava.lib.common.functions.SplitLineFunction;
 import com.google.common.base.Joiner;
+import com.google.common.base.Predicate;
 import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
 
 public class CSVUtils {
@@ -23,11 +26,18 @@ public static String toNLineSeparator(String text){
 
 
 public static List<String> splitLinesWithGuava(String text){
+	return splitLinesWithGuava(text,false);
+}
+public static List<String> splitLinesWithGuava(String text,boolean removeEmptyLine){
 	if(text.isEmpty()){
 		//return Lists.newArrayList();//return empty;
 	}
     text=toNLineSeparator(text);
+    if(removeEmptyLine){
+    	return removeEmptyLine(NLinerSplitter.split(text));
+    }else{
     return Lists.newArrayList(NLinerSplitter.split(text));
+    }
 }
 
 /**
@@ -194,6 +204,19 @@ for(String line:lines){
 	return map;
 }
 
+public static List<String> removeEmptyLine(Iterable<String> lines){
+	return Lists.newArrayList(FluentIterable.from(lines).filter(new Predicate<String>(){
+		@Override
+		public boolean apply(String input) {
+			return !Strings.isNullOrEmpty(input);
+		}}));
+}
+
+/**
+ * need \r\n to \n
+ * @param line
+ * @return
+ */
 public static String removeEmptyLine(String line){
 	line=toNLineSeparator(line);
 	String[] lines=line.split("\n");
