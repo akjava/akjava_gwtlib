@@ -1,5 +1,6 @@
 package com.akjava.gwt.lib.client.widget.cell;
 
+import com.akjava.gwt.lib.client.LogUtils;
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.cell.client.SafeHtmlCell;
 import com.google.gwt.safehtml.shared.SafeHtml;
@@ -50,6 +51,7 @@ public abstract class StyledTextColumn<T> extends Column<T,SafeHtml>{
    	          + "\">");
    	      sb.appendEscaped(styleAndLabel.getLabel());
    	      sb.appendHtmlConstant("</span>");
+   	     
     	 return sb.toSafeHtml();
 	}
 	

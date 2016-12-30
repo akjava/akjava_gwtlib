@@ -188,5 +188,39 @@ public class TimeUtils {
 		public String toString(){
 			return year+" "+"."+day+" "+hour+":"+minute+":"+second+"."+millisecond;
 		}
+		public String toMinuteString(){
+			String m=String.valueOf(minute);
+			if(m.length()<2){
+				m="0"+m;
+			}
+			String s=String.valueOf(second);
+			if(s.length()<2){
+				s="0"+s;
+			}
+			String ms=String.valueOf(millisecond);
+			while(ms.length()<4){
+				ms="0"+ms;
+			}
+			return m+":"+s+"."+ms;
+		}
+		public String toHourString(){
+			String h=String.valueOf(hour);
+			if(h.length()<2){
+				h="0"+h;
+			}
+			String m=String.valueOf(minute);
+			if(m.length()<2){
+				m="0"+m;
+			}
+			String s=String.valueOf(second);
+			if(s.length()<2){
+				s="0"+s;
+			}
+			String ms=String.valueOf(millisecond);
+			while(ms.length()<4){
+				ms="0"+ms;
+			}
+			return h+":"+toMinuteString();
+		}
 	}
 }
