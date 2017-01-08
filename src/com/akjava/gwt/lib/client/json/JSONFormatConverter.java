@@ -32,6 +32,55 @@ private String type;
 private double version;
 private String generator="JSONFormatConverter";
 
+/*
+ * return null if parse faild or not exist
+ */
+public static String parseDataType(String json){
+	JSONValue value=null;
+	try{
+	value=JSONParser.parseStrict(json);
+	}catch (Exception e) {
+		LogUtils.log("json parse-faild:"+e.getMessage()+"\n"+json);
+		return null;
+	}
+	if(value==null){
+		LogUtils.log("getDataType"+":parse json faild.not json "+json);
+		return null;
+	}
+	JSONObject object=value.isObject();
+	if(object==null){
+		LogUtils.log("getDataType"+":root is not json object:"+json);
+		return null;
+	}
+	
+	
+		if(object.get("metadata")==null){
+			LogUtils.log("getDataType"+":has no meta attribute:"+object.toString());
+			return null;
+		}
+		
+		JSONObject metaObject=object.get("metadata").isObject();
+		if(metaObject==null){
+			LogUtils.log("getDataType"+":meta is not object:"+object.toString());
+			return null;
+		}
+		
+		if(metaObject.get("type")==null){
+			LogUtils.log("getDataType"+":has no type attribute:"+metaObject.toString());
+			return null;
+		}
+		
+		JSONString typeJSONString=metaObject.get("type").isString();
+		if(typeJSONString==null){
+			LogUtils.log("getDataType"+":has type,but not string:"+metaObject.toString());
+			return null;
+		}
+		
+		String typeString=typeJSONString.stringValue();
+		return typeString;
+	
+}
+
 	@Override
 	protected JSONValue doForward(String json) {
 		JSONValue value=null;
