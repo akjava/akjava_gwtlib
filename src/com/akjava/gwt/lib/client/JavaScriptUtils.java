@@ -103,7 +103,7 @@ public class JavaScriptUtils {
 		return array;
 		}
 	
-	public static <E extends JavaScriptObject> JsArray<E> toArray(List<E> list){
+	public static <E extends JavaScriptObject> JsArray<E> toArray(Iterable<E> list){
 		JsArray<E> array=JsArray.createArray().cast();
 		for(E data:list){
 			array.push(data);

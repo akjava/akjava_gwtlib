@@ -2,9 +2,12 @@ package com.akjava.gwt.lib.client.json;
 
 import java.util.List;
 
+import com.akjava.gwt.lib.client.JavaScriptUtils;
 import com.akjava.gwt.lib.client.LogUtils;
 import com.google.common.base.Converter;
 import com.google.common.collect.Lists;
+import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArray;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
@@ -32,6 +35,45 @@ private String type;
 private double version;
 private String generator="JSONFormatConverter";
 
+
+public static List<JSONObject> convertToJSONObject(JSONValue value){
+	List<JSONObject> objects=Lists.newArrayList();
+	JSONArray array=value.isArray();
+	if(array==null){
+		return null;
+	}
+	for(int i=0;i<array.size();i++){
+		JSONValue v=array.get(i);
+		if(v!=null){
+			JSONObject object=v.isObject();
+			if(object!=null){
+				objects.add(object);
+			}
+		}
+	}
+	return objects;
+}
+
+public static JSONArray createJSONArray(Iterable<JSONObject> objects){
+	if(objects==null){
+		LogUtils.log("createJSONArray:objects is null");
+	}
+	
+	JsArray<JavaScriptObject> array=JavaScriptUtils.createJSArray();
+
+	for(JSONObject object:objects){
+		if(object==null){
+			LogUtils.log("createJSONArray:object is null");
+		}
+		JavaScriptObject obj=object.getJavaScriptObject();
+		if(obj==null){
+			LogUtils.log("createJSONArray:js-obj is null");
+		}
+		array.push(object.getJavaScriptObject());
+	}	
+	JSONArray jsonArray=new JSONArray(array);
+	return jsonArray;
+}
 /*
  * return null if parse faild or not exist
  */
