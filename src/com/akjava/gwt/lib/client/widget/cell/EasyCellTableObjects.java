@@ -149,6 +149,9 @@ public abstract class EasyCellTableObjects<T> {
 		simpleCellTable.setData(datas,flush);
 	}
 	
+	/*
+	 * setData need update
+	 */
 	public void update(){
 		simpleCellTable.setData(datas);//no more flush support?
 	}
