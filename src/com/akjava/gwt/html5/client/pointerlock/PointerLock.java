@@ -1,10 +1,16 @@
 package com.akjava.gwt.html5.client.pointerlock;
 
 import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.dom.client.NativeEvent;
 
+/**
+ * Pointer Lock API
+ * see 
+ * https://developer.mozilla.org/ja/docs/API/Pointer_Lock_API
+ * @author aki
+ *
+ */
 public class PointerLock {
 
 	public final static  native boolean havePointerLock()/*-{
@@ -12,15 +18,16 @@ public class PointerLock {
 	}-*/;
 	
 	public final static  native boolean isPointerLockElement(Element element)/*-{
-	//	console.log($wnd.document.pointerLockElement);
 	return $wnd.document.pointerLockElement === element || $wnd.document.mozPointerLockElement === element || $wnd.document.webkitPointerLockElement === element;
 	}-*/;
 	
-	public final static  native boolean isPointerLock()/*-{
-	//	console.log($wnd.document.pointerLockElement);
+	public final static  native boolean isPointerLocked()/*-{
 	return $wnd.document.pointerLockElement  || $wnd.document.mozPointerLockElement || $wnd.document.webkitPointerLockElement ;
 	}-*/;
 	
+	/*
+	 * usually Body as  RootPanel.getBodyElement()
+	 */
 	public final static  native boolean requestPointerLock(Element element)/*-{
 	element.requestPointerLock();
 	}-*/;
