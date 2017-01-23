@@ -1,6 +1,7 @@
 package com.akjava.gwt.lib.client;
 
 import com.akjava.lib.common.utils.ValuesUtils;
+import com.google.gwt.core.client.JsArrayNumber;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.ImageElement;
@@ -161,4 +162,19 @@ public class GWTHTMLUtils {
 	public static boolean parameterBoolean(String id, boolean b) {
 		return ValuesUtils.toBoolean(GWTHTMLUtils.getInputValueById(id,null),b);
 	}
+	
+	public static JsArrayNumber parameterJsArrayNumber(String id) {
+		String line=GWTHTMLUtils.getInputValueById(id,null);
+		if(line==null){
+			return null;
+		}
+		JsArrayNumber numbers=JsArrayNumber.createArray().cast();
+		String[] vs=line.split(",");
+		for(String v:vs){
+			double d=ValuesUtils.toDouble(v, 0);
+			numbers.push(d);
+		}
+		return numbers;
+	}
+	
 }
